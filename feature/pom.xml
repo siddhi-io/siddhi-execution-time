@@ -27,7 +27,7 @@
 
     <artifactId>org.wso2.extension.siddhi.execution.time.feature</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Carbon - Siddhi Extension Time Feature</name>
+    <name>WSO2 Siddhi Extension - Time Feature</name>
     <url>http://wso2.org</url>
     <description>This feature contains Siddhi extension feature for Time.</description>
 
