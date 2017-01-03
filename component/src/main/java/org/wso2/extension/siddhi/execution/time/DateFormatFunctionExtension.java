@@ -176,22 +176,17 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
                         "dateTargetFormat) function" + ". Second " + "argument cannot be null");
             }
 
-            String targetDataFormat = null;
             // Format the Date to specified Format
             FastDateFormat targetFormat;
             long dateInMills;
-
-            String formattedNewDateValue = null;
-
             try {
-
-                targetDataFormat = (String) data[1];
+                String targetDataFormat = (String) data[1];
                 // Format the Date to specified Format
                 targetFormat = FastDateFormat.getInstance(targetDataFormat);
                 dateInMills = (Long) data[0];
                 calInstance.setTimeInMillis(dateInMills);
                 userSpecifiedSourceDate = calInstance.getTime();
-                formattedNewDateValue = targetFormat.format(userSpecifiedSourceDate);
+                String formattedNewDateValue = targetFormat.format(userSpecifiedSourceDate);
                 return formattedNewDateValue;
             } catch (ClassCastException e) {
                 String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();

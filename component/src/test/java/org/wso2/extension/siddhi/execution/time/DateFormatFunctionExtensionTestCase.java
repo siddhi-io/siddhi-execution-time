@@ -63,10 +63,10 @@ public class DateFormatFunctionExtensionTestCase {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
 
                 eventArrived = true;
-                for(int cnt=0;cnt<inEvents.length;cnt++){
+                for (Event inEvent : inEvents) {
                     count++;
-                    log.info("Event : " + count + ",formattedDate : " + inEvents[cnt].getData(1) + "," +
-                            "formattedMillsDate : " + inEvents[cnt].getData(2));
+                    log.info("Event : " + count + ",formattedDate : " + inEvent.getData(1) + "," +
+                            "formattedMillsDate : " + inEvent.getData(2));
 
                 }
             }
@@ -74,10 +74,10 @@ public class DateFormatFunctionExtensionTestCase {
 
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
         executionPlanRuntime.start();
-        inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, "ss" });
-        inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, "ss" });
-        inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44.657", "yyyy-MM-dd HH:mm:ss.SSS", 1415692424000L,
-                "yyyy-MM-dd" });
+        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, "ss"});
+        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, "ss"});
+        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44.657", "yyyy-MM-dd HH:mm:ss.SSS", 1415692424000L,
+                "yyyy-MM-dd"});
         Thread.sleep(100);
         Assert.assertEquals(3, count);
         Assert.assertTrue(eventArrived);

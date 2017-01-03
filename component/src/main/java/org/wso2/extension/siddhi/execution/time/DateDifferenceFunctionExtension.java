@@ -64,11 +64,11 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor {
 
     @Override
     protected void init(ExpressionExecutor[] attributeExpressionExecutors,
-            ExecutionPlanContext executionPlanContext) {
+                        ExecutionPlanContext executionPlanContext) {
 
-        if(attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
+        if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
                 .length == 3 || attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG &&
-                attributeExpressionExecutors.length == 2){
+                attributeExpressionExecutors.length == 2) {
             useDefaultDateFormat = true;
             firstDateFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
             secondDateFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
@@ -99,7 +99,7 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor {
                         " but found " + attributeExpressionExecutors[3].getReturnType().toString());
             }
         } else if (attributeExpressionExecutors.length == 2) {
-            if(useDefaultDateFormat){
+            if (useDefaultDateFormat) {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new ExecutionPlanValidationException("Invalid parameter type found for the first argument of " +
                             "time:dateDiff(dateValue1,dateValue2,dateFormat1,dateFormat2) function, " + "required "
@@ -172,7 +172,7 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor {
                             "dateValue2,dateFormat1,dateFormat2) function" + ". Second " + "argument cannot be null");
                 }
 
-                if(!useDefaultDateFormat){
+                if (!useDefaultDateFormat) {
                     if (data[2] == null) {
                         throw new ExecutionPlanRuntimeException("Invalid input given to time:dateDiff(dateValue1," +
                                 "dateValue2,dateFormat1,dateFormat2) function" + ". Third " + "argument cannot be null");
@@ -183,8 +183,8 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor {
                     }
                     firstDateFormat = (String) data[2];
                     secondDateFormat = (String) data[3];
-                } else{
-                    if(data.length != 2){
+                } else {
+                    if (data.length != 2) {
                         firstDateFormat = (String) data[2];
                     }
                 }
@@ -198,10 +198,10 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor {
                 String errorMsg =
                         "Provided format " + firstDateFormat + " does not match with the timestamp " + firstDate + e
                                 .getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
-            } catch (ClassCastException e){
-                String errorMsg ="Provided Data type cannot be cast to desired format. " + e.getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
+            } catch (ClassCastException e) {
+                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
             }
 
             try {
@@ -211,10 +211,10 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor {
                 String errorMsg =
                         "Provided format " + secondDateFormat + " does not match with the timestamp " + secondDate + e
                                 .getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
             }
 
-        } else if(data.length == 2){
+        } else if (data.length == 2) {
 
             if (data[0] == null) {
                 throw new ExecutionPlanRuntimeException("Invalid input given to time:dateDiff" +
@@ -226,13 +226,13 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor {
             }
 
             try {
-                long firstDateInMills = (Long)data[0];
-                long secondDateInMills = (Long)data[1];
+                long firstDateInMills = (Long) data[0];
+                long secondDateInMills = (Long) data[1];
                 firstCalInstance.setTimeInMillis(firstDateInMills);
                 secondCalInstance.setTimeInMillis(secondDateInMills);
-            } catch (ClassCastException e){
-                String errorMsg ="Provided Data type cannot be cast to desired format. " + e.getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
+            } catch (ClassCastException e) {
+                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
             }
         } else {
             throw new ExecutionPlanRuntimeException("Invalid set of arguments given to time:dateDiff() function." +

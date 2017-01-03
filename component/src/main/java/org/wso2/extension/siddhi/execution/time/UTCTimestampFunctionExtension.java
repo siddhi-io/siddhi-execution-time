@@ -40,10 +40,10 @@ public class UTCTimestampFunctionExtension extends FunctionExecutor {
 
     @Override
     protected void init(ExpressionExecutor[] attributeExpressionExecutors,
-            ExecutionPlanContext executionPlanContext) {
+                        ExecutionPlanContext executionPlanContext) {
 
         dateFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_UTC_TIMESTAMP_FORMAT,
-                TimeZone.getTimeZone("UTC"));
+                TimeZone.getTimeZone(TimeExtensionConstants.EXTENSION_TIME_TIME_ZONE));
     }
 
     @Override

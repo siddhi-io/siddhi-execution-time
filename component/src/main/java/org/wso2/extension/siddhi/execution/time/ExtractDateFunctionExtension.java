@@ -48,7 +48,7 @@ public class ExtractDateFunctionExtension extends FunctionExecutor {
 
     @Override
     protected void init(ExpressionExecutor[] attributeExpressionExecutors,
-            ExecutionPlanContext executionPlanContext) {
+                        ExecutionPlanContext executionPlanContext) {
 
         if (attributeExpressionExecutors.length > 2) {
             throw new ExecutionPlanValidationException("Invalid no of arguments passed to time:date(dateValue," +
@@ -100,10 +100,10 @@ public class ExtractDateFunctionExtension extends FunctionExecutor {
         } catch (ParseException e) {
             String errorMsg = "Provided format " + userFormat + " does not match with the timestamp " + source + e
                     .getMessage();
-            throw new ExecutionPlanRuntimeException(errorMsg,e);
-        } catch (ClassCastException e){
-            String errorMsg ="Provided Data type cannot be cast to desired format. " + e.getMessage();
-            throw new ExecutionPlanRuntimeException(errorMsg,e);
+            throw new ExecutionPlanRuntimeException(errorMsg, e);
+        } catch (ClassCastException e) {
+            String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
+            throw new ExecutionPlanRuntimeException(errorMsg, e);
         }
     }
 

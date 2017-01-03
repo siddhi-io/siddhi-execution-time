@@ -50,7 +50,7 @@ public class CurrentTimestampFunctionExtensionTestCase {
         String inStreamDefinition = "" +
                 "define stream inputStream (symbol string, price long, volume long);";
         String query = ("@info(name = 'query1') " +
-                "from inputStream select symbol , time:currentTimestamp() as currentTimestamp "+
+                "from inputStream select symbol , time:currentTimestamp() as currentTimestamp " +
                 "insert into outputStream;");
         ExecutionPlanRuntime executionPlanRuntime = siddhiManager
                 .createExecutionPlanRuntime(inStreamDefinition + query);
@@ -61,9 +61,9 @@ public class CurrentTimestampFunctionExtensionTestCase {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
 
                 eventArrived = true;
-                for(int cnt=0;cnt<inEvents.length;cnt++){
+                for (Event inEvent : inEvents) {
                     count++;
-                    log.info("Event : " + count + ",currentTimestamp : " + inEvents[cnt].getData(1));
+                    log.info("Event : " + count + ",currentTimestamp : " + inEvent.getData(1));
 
                 }
             }
@@ -71,9 +71,9 @@ public class CurrentTimestampFunctionExtensionTestCase {
 
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
         executionPlanRuntime.start();
-        inputHandler.send(new Object[]{"IBM", 700f, 100l});
-        inputHandler.send(new Object[]{"WSO2", 60.5f, 200l});
-        inputHandler.send(new Object[]{"XYZ", 60.5f, 200l});
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
+        inputHandler.send(new Object[]{"WSO2", 60.5f, 200L});
+        inputHandler.send(new Object[]{"XYZ", 60.5f, 200L});
         Thread.sleep(100);
         Assert.assertEquals(3, count);
         Assert.assertTrue(eventArrived);

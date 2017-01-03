@@ -64,9 +64,9 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 String day = "";
                 eventArrived = true;
-                for (int cnt = 0; cnt < inEvents.length; cnt++) {
+                for (Event inEvent : inEvents) {
                     count++;
-                    day = inEvents[cnt].getData(1).toString();
+                    day = inEvent.getData(1).toString();
                     outputDays.add(day);
                     log.info("Event : " + count + ",ExtractedDayOfWeek : " + day);
                 }
@@ -109,9 +109,9 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
                 eventArrived = true;
                 String day = "";
                 eventArrived = true;
-                for (int cnt = 0; cnt < inEvents.length; cnt++) {
+                for (Event inEvent : inEvents) {
                     count++;
-                    day = inEvents[cnt].getData(1).toString();
+                    day = inEvent.getData(1).toString();
                     outputDays.add(day);
                     log.info("Event : " + count + ",ExtractedDayOfWeek : " + day);
                 }

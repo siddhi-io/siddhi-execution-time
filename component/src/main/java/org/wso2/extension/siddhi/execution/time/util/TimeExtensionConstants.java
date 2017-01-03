@@ -39,7 +39,8 @@ public final class TimeExtensionConstants {
     public static final String EXTENSION_TIME_UTC_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String EXTENSION_TIME_CURRENT_TIME_FORMAT = "HH:mm:ss";
     public static final String EXTENSION_TIME_CURRENT_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
+    public static final String EXTENSION_TIME_SIMPLE_DATE_FORMAT = "EEEE";
+    public static final String EXTENSION_TIME_TIME_ZONE = "UTC";
 
 
 }

@@ -63,11 +63,11 @@ public class DateAddFunctionExtension extends FunctionExecutor {
 
     @Override
     protected void init(ExpressionExecutor[] attributeExpressionExecutors,
-            ExecutionPlanContext executionPlanContext) {
+                        ExecutionPlanContext executionPlanContext) {
 
 
-        if(attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
-                .length == 3){
+        if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
+                .length == 3) {
             useDefaultDateFormat = true;
             dateFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
         }
@@ -85,15 +85,15 @@ public class DateAddFunctionExtension extends FunctionExecutor {
             if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                 throw new ExecutionPlanValidationException("Invalid parameter type found for the third argument of " +
                         "time:dateAdd(dateValue,expr,unit,dateFormat) function, " + "required " + Attribute.Type
-                        .STRING +" but found " + attributeExpressionExecutors[2].getReturnType().toString());
+                        .STRING + " but found " + attributeExpressionExecutors[2].getReturnType().toString());
             }
             if (attributeExpressionExecutors[3].getReturnType() != Attribute.Type.STRING) {
                 throw new ExecutionPlanValidationException("Invalid parameter type found for the fourth argument of " +
                         "time:dateAdd(dateValue,expr,unit,dateFormat) function, " + "required " + Attribute.Type
-                        .STRING +" but found " + attributeExpressionExecutors[3].getReturnType().toString());
+                        .STRING + " but found " + attributeExpressionExecutors[3].getReturnType().toString());
             }
         } else if (attributeExpressionExecutors.length == 3) {
-            if(useDefaultDateFormat){
+            if (useDefaultDateFormat) {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new ExecutionPlanValidationException("Invalid parameter type found for the first argument of " +
                             "time:dateAdd(dateValue,expr,unit) function, " + "required " + Attribute.Type.STRING +
@@ -109,11 +109,11 @@ public class DateAddFunctionExtension extends FunctionExecutor {
                             "time:dateAdd(dateValue,expr,unit) function, " + "required " + Attribute.Type.STRING +
                             " but found " + attributeExpressionExecutors[2].getReturnType().toString());
                 }
-            } else{
+            } else {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG) {
                     throw new ExecutionPlanValidationException("Invalid parameter type found for the first argument of " +
                             "time:dateAdd(timestampInMilliseconds,expr,unit) function, " +
-                            "required " + Attribute.Type.LONG +" but found " + attributeExpressionExecutors[0]
+                            "required " + Attribute.Type.LONG + " but found " + attributeExpressionExecutors[0]
                             .getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
@@ -157,7 +157,7 @@ public class DateAddFunctionExtension extends FunctionExecutor {
                     throw new ExecutionPlanRuntimeException("Invalid input given to time:dateAdd(date,expr," +
                             "unit,dateFormat) function" + ". Second " + "argument cannot be null");
                 }
-                if(!useDefaultDateFormat){
+                if (!useDefaultDateFormat) {
                     if (data[3] == null) {
                         throw new ExecutionPlanRuntimeException("Invalid input given to time:dateAdd(date,expr," +
                                 "unit,dateFormat) function" + ". Fourth " + "argument cannot be null");
@@ -175,13 +175,13 @@ public class DateAddFunctionExtension extends FunctionExecutor {
             } catch (ParseException e) {
                 String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + date + e
                         .getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
-            } catch (ClassCastException e){
-                String errorMsg ="Provided Data type cannot be cast to desired format. " + e.getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
+            } catch (ClassCastException e) {
+                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
             }
 
-        } else if(data.length == 3){
+        } else if (data.length == 3) {
 
             if (data[0] == null) {
                 throw new ExecutionPlanRuntimeException("Invalid input given to time:dateAdd(timestampInMilliseconds," +
@@ -197,15 +197,15 @@ public class DateAddFunctionExtension extends FunctionExecutor {
             }
 
             try {
-                long dateInMills = (Long)data[0];
+                long dateInMills = (Long) data[0];
                 calInstance.setTimeInMillis(dateInMills);
                 unit = (String) data[2];
                 expression = (Integer) data[1];
                 getProcessedCalenderInstance(unit, calInstance, expression);
                 return String.valueOf((calInstance.getTimeInMillis()));
-            } catch (ClassCastException e){
-                String errorMsg ="Provided Data type cannot be cast to desired format. " + e.getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
+            } catch (ClassCastException e) {
+                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
             }
         } else {
             throw new ExecutionPlanRuntimeException("Invalid set of arguments given to time:dateAdd() function." +
@@ -213,7 +213,7 @@ public class DateAddFunctionExtension extends FunctionExecutor {
         }
     }
 
-    public Calendar getProcessedCalenderInstance(String unit, Calendar calInstance, int expression){
+    public Calendar getProcessedCalenderInstance(String unit, Calendar calInstance, int expression) {
 
 
         if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_YEAR)) {
