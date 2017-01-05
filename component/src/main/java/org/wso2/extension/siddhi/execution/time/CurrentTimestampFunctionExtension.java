@@ -39,7 +39,7 @@ public class CurrentTimestampFunctionExtension extends FunctionExecutor {
 
     @Override
     protected void init(ExpressionExecutor[] attributeExpressionExecutors,
-            ExecutionPlanContext executionPlanContext) {
+                        ExecutionPlanContext executionPlanContext) {
         dateFormat = FastDateFormat.getInstance(TimeExtensionConstants
                 .EXTENSION_TIME_CURRENT_TIMESTAMP_FORMAT);
     }

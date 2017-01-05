@@ -60,18 +60,18 @@ public class UTCTimestampFunctionExtensionTestCase {
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
-                for(int cnt=0;cnt<inEvents.length;cnt++){
+                for (Event inEvent : inEvents) {
                     count++;
-                    log.info("Event : " + count + ",utcTimestamp : " + inEvents[cnt].getData(1));
+                    log.info("Event : " + count + ",utcTimestamp : " + inEvent.getData(1));
                 }
             }
         });
 
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
         executionPlanRuntime.start();
-        inputHandler.send(new Object[]{"IBM", 700f, 100l});
-        inputHandler.send(new Object[]{"WSO2", 60.5f, 200l});
-        inputHandler.send(new Object[]{"XYZ", 60.5f, 200l});
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
+        inputHandler.send(new Object[]{"WSO2", 60.5f, 200L});
+        inputHandler.send(new Object[]{"XYZ", 60.5f, 200L});
         Thread.sleep(100);
         Assert.assertEquals(3, count);
         Assert.assertTrue(eventArrived);

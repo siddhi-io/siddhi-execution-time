@@ -60,10 +60,10 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
 
     @Override
     protected void init(ExpressionExecutor[] attributeExpressionExecutors,
-            ExecutionPlanContext executionPlanContext) {
+                        ExecutionPlanContext executionPlanContext) {
 
-        if(attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
-                .length == 2){
+        if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
+                .length == 2) {
             useDefaultDateFormat = true;
             dateFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
         }
@@ -85,13 +85,13 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
             }
 
             if (attributeExpressionExecutors[0] instanceof ConstantExpressionExecutor) {
-                unit = ((String)((ConstantExpressionExecutor)attributeExpressionExecutors[0]).getValue()).toUpperCase();
+                unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[0]).getValue()).toUpperCase();
             } else {
                 throw new OperationNotSupportedException("unit value has to be a constant");
             }
 
         } else if (attributeExpressionExecutors.length == 2) {
-            if(useDefaultDateFormat){
+            if (useDefaultDateFormat) {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new ExecutionPlanValidationException("Invalid parameter type found for the first argument of " +
                             "time:extract(unit,dateValue) function, " + "required " + Attribute.Type.STRING +
@@ -102,7 +102,7 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
                             "time:extract(unit,dateValue) function, " + "required " + Attribute.Type.STRING +
                             " but found " + attributeExpressionExecutors[1].getReturnType().toString());
                 }
-            } else{
+            } else {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG) {
                     throw new ExecutionPlanValidationException("Invalid parameter type found for the first argument of " +
                             "time:extract(timestampInMilliseconds,unit) function, " + "required " + Attribute.Type.LONG +
@@ -116,7 +116,7 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
             }
 
             if (attributeExpressionExecutors[1] instanceof ConstantExpressionExecutor) {
-                unit = ((String)((ConstantExpressionExecutor)attributeExpressionExecutors[1]).getValue()).toUpperCase();
+                unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[1]).getValue()).toUpperCase();
             } else {
                 throw new OperationNotSupportedException("unit value has to be a constant");
             }
@@ -138,7 +138,7 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
                     throw new ExecutionPlanRuntimeException("Invalid input given to time:extract(unit,dateValue," +
                             "dateFormat) function" + ". Second " + "argument cannot be null");
                 }
-                if(!useDefaultDateFormat){
+                if (!useDefaultDateFormat) {
                     if (data[2] == null) {
                         throw new ExecutionPlanRuntimeException("Invalid input given to time:extract(unit,dateValue," +
                                 "dateFormat) function" + ". Third " + "argument cannot be null");
@@ -154,10 +154,10 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
             } catch (ParseException e) {
                 String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + source + e
                         .getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
-            } catch (ClassCastException e){
-                String errorMsg ="Provided Data type cannot be cast to desired format. " + e.getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
+            } catch (ClassCastException e) {
+                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
             }
         } else {
 
@@ -166,11 +166,11 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
                         "unit) function" + ". First " + "argument cannot be null");
             }
             try {
-                long millis = (Long)data[0];
+                long millis = (Long) data[0];
                 cal.setTimeInMillis(millis);
-            } catch (ClassCastException e){
-                String errorMsg ="Provided Data type cannot be cast to desired format. " + e.getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg,e);
+            } catch (ClassCastException e) {
+                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
+                throw new ExecutionPlanRuntimeException(errorMsg, e);
             }
         }
 

@@ -51,7 +51,7 @@ public class DateSubFunctionExtensionTestCase {
                 "define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long,expr int);";
         String query = ("@info(name = 'query1') " +
                 "from inputStream select symbol ,time:dateSub(dateValue,expr,'year',dateFormat) as yearSubtracted,time:dateSub(dateValue,expr," +
-                "'month',dateFormat) as monthSubtracted,time:dateSub(timestampInMilliseconds,expr,'year') as yearSubtractedUnix "+
+                "'month',dateFormat) as monthSubtracted,time:dateSub(timestampInMilliseconds,expr,'year') as yearSubtractedUnix " +
                 "insert into outputStream;");
         ExecutionPlanRuntime executionPlanRuntime = siddhiManager.createExecutionPlanRuntime(inStreamDefinition + query);
 
@@ -60,20 +60,20 @@ public class DateSubFunctionExtensionTestCase {
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
-                for(int cnt=0;cnt<inEvents.length;cnt++){
+                for (Event inEvent : inEvents) {
                     count++;
-                    log.info("Event : " + count + ",YEAR_SUBTRACTED : " + inEvents[cnt].getData(1) +"," +
-                            "MONTH_SUBTRACTED : "+inEvents[cnt].getData(2) + "," +
-                            "YEAR_SUBTRACTED_IN_MILLS : "+inEvents[cnt].getData(3));
+                    log.info("Event : " + count + ",YEAR_SUBTRACTED : " + inEvent.getData(1) + "," +
+                            "MONTH_SUBTRACTED : " + inEvent.getData(2) + "," +
+                            "YEAR_SUBTRACTED_IN_MILLS : " + inEvent.getData(3));
                 }
             }
         });
 
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
         executionPlanRuntime.start();
-        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss",1415692424000L,2});
-        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss",1415692424000L,2});
-        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss",1415692424000L,2});
+        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
+        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
+        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
         Thread.sleep(100);
         Assert.assertEquals(3, count);
         Assert.assertTrue(eventArrived);

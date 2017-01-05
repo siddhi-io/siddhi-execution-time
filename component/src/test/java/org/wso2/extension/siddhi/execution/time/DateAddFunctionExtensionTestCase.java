@@ -56,7 +56,7 @@ public class DateAddFunctionExtensionTestCase {
                 "from inputStream " +
                 "select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearAdded," +
                 "time:dateAdd(dateValue,expr,'MONTH',dateFormat) as monthAdded," +
-                "time:dateAdd(timestampInMilliseconds,expr,'HOUR') as yearAddedMills "+
+                "time:dateAdd(timestampInMilliseconds,expr,'HOUR') as yearAddedMills " +
                 "insert into outputStream;");
         ExecutionPlanRuntime executionPlanRuntime = siddhiManager
                 .createExecutionPlanRuntime(inStreamDefinition + query);
@@ -87,8 +87,8 @@ public class DateAddFunctionExtensionTestCase {
 
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
         executionPlanRuntime.start();
-        inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L,2 });
-        inputHandler.send(new Object[] { "IBM", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L,2 });
+        inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
+        inputHandler.send(new Object[]{"IBM", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
         SiddhiTestHelper.waitForEvents(100, 2, count, 60000);
         Assert.assertEquals(2, count.get());
         Assert.assertTrue(eventArrived);

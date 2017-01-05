@@ -63,9 +63,9 @@ public class ExtractDateFunctionExtensionTestCase {
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
-                for(int cnt=0;cnt<inEvents.length;cnt++){
+                for (Event inEvent : inEvents) {
                     count.incrementAndGet();
-                    log.info("Event : " + count.get() + ",dateExtracted : " + inEvents[cnt].getData(1));
+                    log.info("Event : " + count.get() + ",dateExtracted : " + inEvent.getData(1));
 
                 }
             }

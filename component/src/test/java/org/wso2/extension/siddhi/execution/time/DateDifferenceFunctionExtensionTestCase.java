@@ -63,10 +63,10 @@ public class DateDifferenceFunctionExtensionTestCase {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
 
                 eventArrived = true;
-                for(int cnt=0;cnt<inEvents.length;cnt++){
+                for (Event inEvent : inEvents) {
                     count++;
-                    log.info("Event : " + count + ",dateDifference : " + inEvents[cnt].getData(1) +"," +
-                            "dateDifferenceInMilliseconds : "+inEvents[cnt].getData(2) );
+                    log.info("Event : " + count + ",dateDifference : " + inEvent.getData(1) + "," +
+                            "dateDifferenceInMilliseconds : " + inEvent.getData(2));
 
                 }
             }
@@ -75,11 +75,11 @@ public class DateDifferenceFunctionExtensionTestCase {
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
         executionPlanRuntime.start();
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss",
-                "2014-11-9 13:23:44", "yyyy-MM-dd HH:mm:ss",1415692424000L,1415519624000L});
+                "2014-11-9 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 1415519624000L});
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss",
-                "2014-10-9 13:23:44", "yyyy-MM-dd HH:mm:ss",1415692424000L,1412841224000L});
+                "2014-10-9 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 1412841224000L});
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss",
-                "2013-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss",1415692424000L,1384156424000L});
+                "2013-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 1384156424000L});
         Thread.sleep(1000);
         Assert.assertEquals(3, count);
         Assert.assertTrue(eventArrived);

@@ -42,7 +42,7 @@ import java.util.Date;
  * dateValue : STRING
  * dateFormat : STRING
  * Return Type(s): STRING
- *
+ * <p>
  * In the case of using only the datevalue as the parameter, user has to follow
  * the following specific format for the date
  * yyyy-MM-dd time
@@ -168,10 +168,9 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
 
     //private methods
     private String getDayOfWeek(Date date) {
-        DateFormat dateFormatDayOfWeek = new SimpleDateFormat("EEEE");
+        DateFormat dateFormatDayOfWeek = new SimpleDateFormat(TimeExtensionConstants.EXTENSION_TIME_SIMPLE_DATE_FORMAT);
         return dateFormatDayOfWeek.format(date);
     }
-
 
 
 }
