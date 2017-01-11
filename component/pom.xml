@@ -70,8 +70,11 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Private-Package>
+                            org.apache.commons.lang3.*
+                        </Private-Package>
                         <Export-Package>
-                            org.wso2.extension.siddhi.execution.time,
+                            !org.apache.commons.lang3.*,
                             org.wso2.extension.siddhi.execution.time.*
                         </Export-Package>
                         <Import-Package>

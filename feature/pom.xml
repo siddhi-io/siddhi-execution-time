@@ -62,9 +62,7 @@
                                 </properties>
                             </adviceFile>
                             <bundles>
-                                <bundleDef>
-                                    org.wso2.extension.siddhi.execution.time:siddhi-execution-time
-                                </bundleDef>
+                                <bundleDef>org.wso2.extension.siddhi.execution.time:siddhi-execution-time</bundleDef>
                             </bundles>
                         </configuration>
                     </execution>
