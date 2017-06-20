@@ -25,3 +25,6 @@ target
 # Ignore target directories
 target/
 *.*~
+
+component/siddhi-execution-time.iml
+siddhi-execution-time-parent.iml

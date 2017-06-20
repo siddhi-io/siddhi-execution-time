@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c)  2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -18,11 +18,11 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
-import junit.framework.Assert;
 import org.apache.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.wso2.siddhi.core.ExecutionPlanRuntime;
+import org.testng.AssertJUnit;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
@@ -31,11 +31,11 @@ import org.wso2.siddhi.core.util.EventPrinter;
 
 public class UTCTimestampFunctionExtensionTestCase {
 
-    static final Logger log = Logger.getLogger(UTCTimestampFunctionExtensionTestCase.class);
+    private static final Logger log = Logger.getLogger(UTCTimestampFunctionExtensionTestCase.class);
     private volatile int count;
     private volatile boolean eventArrived;
 
-    @Before
+    @BeforeMethod
     public void init() {
         count = 0;
         eventArrived = false;
@@ -53,7 +53,8 @@ public class UTCTimestampFunctionExtensionTestCase {
                 "from inputStream " +
                 "select symbol , time:utcTimestamp() as utcTimestamp " +
                 "insert into outputStream;");
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.createExecutionPlanRuntime(inStreamDefinition + query);
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.
+                createSiddhiAppRuntime(inStreamDefinition + query);
 
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
             @Override
@@ -73,8 +74,8 @@ public class UTCTimestampFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"WSO2", 60.5f, 200L});
         inputHandler.send(new Object[]{"XYZ", 60.5f, 200L});
         Thread.sleep(100);
-        Assert.assertEquals(3, count);
-        Assert.assertTrue(eventArrived);
+        AssertJUnit.assertEquals(3, count);
+        AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c)  2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -18,11 +18,11 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
-import junit.framework.Assert;
 import org.apache.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.wso2.siddhi.core.ExecutionPlanRuntime;
+import org.testng.AssertJUnit;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
@@ -32,13 +32,15 @@ import util.SiddhiTestHelper;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+
 public class ExtractDateFunctionExtensionTestCase {
 
-    static final Logger log = Logger.getLogger(ExtractDateFunctionExtensionTestCase.class);
+    private static final Logger log = Logger.getLogger(ExtractDateFunctionExtensionTestCase.class);
     private volatile AtomicInteger count;
     private volatile boolean eventArrived;
 
-    @Before
+    @BeforeMethod
     public void init() {
         count = new AtomicInteger(0);
         eventArrived = false;
@@ -56,7 +58,8 @@ public class ExtractDateFunctionExtensionTestCase {
                 "from inputStream " +
                 "select symbol,time:date(dateValue,dateFormat) as dateExtracted " +
                 "insert into outputStream;");
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.createExecutionPlanRuntime(inStreamDefinition + query);
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime
+                (inStreamDefinition + query);
 
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
             @Override
@@ -78,8 +81,8 @@ public class ExtractDateFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"XYZ", "2014-11-11", "yyyy-MM-dd"});
         SiddhiTestHelper.waitForEvents(100, 1, count, 60000);
         executionPlanRuntime.shutdown();
-        Assert.assertEquals(3, count.get());
-        Assert.assertTrue(eventArrived);
+        AssertJUnit.assertEquals(3, count.get());
+        AssertJUnit.assertTrue(eventArrived);
 
     }
 }

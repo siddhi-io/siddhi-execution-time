@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c)  2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -20,22 +20,29 @@ package org.wso2.extension.siddhi.execution.time;
 
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Logger;
-import org.wso2.siddhi.core.config.ExecutionPlanContext;
-import org.wso2.siddhi.core.exception.ExecutionPlanRuntimeException;
+import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
+import org.wso2.siddhi.annotation.Example;
+import org.wso2.siddhi.annotation.Extension;
+import org.wso2.siddhi.annotation.Parameter;
+import org.wso2.siddhi.annotation.ReturnAttribute;
+import org.wso2.siddhi.annotation.util.DataType;
+import org.wso2.siddhi.core.config.SiddhiAppContext;
+import org.wso2.siddhi.core.exception.SiddhiAppRuntimeException;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.executor.function.FunctionExecutor;
-import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
+import org.wso2.siddhi.core.util.config.ConfigReader;
 import org.wso2.siddhi.query.api.definition.Attribute;
-import org.wso2.siddhi.query.api.exception.ExecutionPlanValidationException;
+import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * dayOfWeek(dateValue,dateFormat)
- * Returns date part from a date or date/time expression.
+ * Returns day on which a given date falls.
  * dateValue - value of date. eg: "2014-11-11 13:23:44.657", "2014-11-11"
  * dateFormat - Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS
  * Accept Type(s) for dayOfWeek(dateValue,dateFormat):
@@ -47,29 +54,64 @@ import java.util.Date;
  * the following specific format for the date
  * yyyy-MM-dd time
  */
+
+/**
+ * Class representing the Time dayOfWeek implementation.
+ */
+@Extension(
+        name = "dayOfWeek",
+        namespace = "time",
+        description = "This methods returns the day on which a given date falls.",
+        parameters = {
+                @Parameter(name = "date.value",
+                        description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
+                                      "\"13:23:44.657\".",
+                        type = {DataType.STRING}),
+                @Parameter(name = "date.format",
+                        description = "Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
+        },
+        returnAttributes = @ReturnAttribute(
+                description = "Returned type will be string.",
+                type = {DataType.STRING}),
+        examples = {
+                @Example(
+                        syntax = "TBD",
+                        description = "TBD"
+                )
+        }
+)
 public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
 
     private static final Logger log = Logger.getLogger(ExtractDayOfWeekFunctionExtension.class);
     private Attribute.Type returnType = Attribute.Type.STRING;
 
     @Override
-    protected void init(ExpressionExecutor[] attributeExpressionExecutors,
-                        ExecutionPlanContext executionPlanContext) {
+    protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader,
+                        SiddhiAppContext siddhiAppContext) {
         if (attributeExpressionExecutors.length > 2) {
-            throw new ExecutionPlanValidationException("Invalid no of arguments passed to time:dayOfWeek(dateValue," +
-                    "dateFormat) function, " + "required 2, but found " + attributeExpressionExecutors.length);
+            throw new SiddhiAppValidationException("Invalid no of arguments passed to time:dayOfWeek(dateValue," +
+                                                   "dateFormat) function, " + "required 2, but found " +
+                                                   attributeExpressionExecutors.length);
         }
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
-            throw new ExecutionPlanValidationException("Invalid parameter type found for the first argument of " +
-                    "time:dayOfWeek(dateValue,dateFormat) function, " + "required " + Attribute.Type.STRING +
-                    " but found " + attributeExpressionExecutors[0].getReturnType().toString());
+            throw new SiddhiAppValidationException("Invalid parameter type found for the first argument of " +
+                                                       "time:dayOfWeek(dateValue,dateFormat) function, " +
+                                                       "required " + Attribute.Type.STRING +
+                                                       " but found " + attributeExpressionExecutors[0]
+                                                               .getReturnType().toString());
         }
         //User can omit sending the dateFormat thus using a default CEP Time format
         if (attributeExpressionExecutors.length > 0) {
-            if (attributeExpressionExecutors.length > 1 && attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
-                throw new ExecutionPlanValidationException("Invalid parameter type found for the second argument of " +
-                        "time:dayOfWeek(dateValue,dateFormat) function, " + "required " + Attribute.Type.STRING +
-                        " but found " + attributeExpressionExecutors[1].getReturnType().toString());
+            if (attributeExpressionExecutors.length > 1 && attributeExpressionExecutors[1].getReturnType()
+                                                           != Attribute.Type.STRING) {
+                throw new SiddhiAppValidationException("Invalid parameter type found for the second argument of " +
+                                                           "time:dayOfWeek(dateValue,dateFormat) function, " +
+                                                           "required " + Attribute.Type.STRING +
+                                                           " but found " + attributeExpressionExecutors[1]
+                                                                   .getReturnType().toString());
             }
         }
 
@@ -80,14 +122,14 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
     protected Object execute(Object[] data) {
         String userFormat;
         if (data[0] == null) {
-            throw new ExecutionPlanRuntimeException("Invalid input given to time:dayOfWeek(dateValue," +
-                    "dateFormat) function" + ". First " + "argument cannot be null");
+            throw new SiddhiAppRuntimeException("Invalid input given to time:dayOfWeek(dateValue," +
+                                                "dateFormat) function" + ". First " + "argument cannot be null");
         }
         if (data.length > 1) {
             if (data[1] == null) {
-                throw new ExecutionPlanRuntimeException(
+                throw new SiddhiAppRuntimeException(
                         "Invalid input given to time:dayOfWeek(dateValue,dateFormat) function" + ". Second " +
-                                "argument cannot be null");
+                        "argument cannot be null");
             } else {
                 userFormat = (String) data[1];
             }
@@ -105,10 +147,10 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
         } catch (ParseException e) {
             String errorMsg = "Provided format " + userFormat + " does not match with the timestamp " + source + e
                     .getMessage();
-            throw new ExecutionPlanRuntimeException(errorMsg, e);
+            throw new SiddhiAppRuntimeException(errorMsg, e);
         } catch (ClassCastException e) {
             String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
-            throw new ExecutionPlanRuntimeException(errorMsg, e);
+            throw new SiddhiAppRuntimeException(errorMsg, e);
         }
     }
 
@@ -118,8 +160,8 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
     protected Object execute(Object data) {
         String userFormat;
         if (data == null) {
-            throw new ExecutionPlanRuntimeException("Invalid input given to time:dayOfWeek(dateValue," +
-                    "dateFormat) function" + ". First " + "argument cannot be null");
+            throw new SiddhiAppRuntimeException("Invalid input given to time:dayOfWeek(dateValue," +
+                                                    "dateFormat) function" + ". First " + "argument cannot be null");
         }
         userFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
         String source;
@@ -133,11 +175,11 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
             } catch (ParseException e) {
                 String errorMsg = "Provided format " + userFormat + " does not match with the timestamp " + source + e
                         .getMessage();
-                throw new ExecutionPlanRuntimeException(errorMsg, e);
+                throw new SiddhiAppRuntimeException(errorMsg, e);
             }
         } catch (ClassCastException e) {
             String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
-            throw new ExecutionPlanRuntimeException(errorMsg, e);
+            throw new SiddhiAppRuntimeException(errorMsg, e);
         }
     }
 
@@ -157,12 +199,12 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
     }
 
     @Override
-    public Object[] currentState() {
-        return new Object[0]; //No need to maintain a state.
+    public Map<String, Object> currentState() { //No need to maintain a state.
+        return null;
     }
 
     @Override
-    public void restoreState(Object[] state) {
+    public void restoreState(Map<String, Object> state) {
         //Since there's no need to maintain a state, nothing needs to be done here.
     }
 

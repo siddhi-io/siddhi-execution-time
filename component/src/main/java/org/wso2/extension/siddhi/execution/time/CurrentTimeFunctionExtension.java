@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c)  2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -20,32 +20,57 @@ package org.wso2.extension.siddhi.execution.time;
 
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
-import org.wso2.siddhi.core.config.ExecutionPlanContext;
+import org.wso2.siddhi.annotation.Example;
+import org.wso2.siddhi.annotation.Extension;
+import org.wso2.siddhi.annotation.ReturnAttribute;
+import org.wso2.siddhi.annotation.util.DataType;
+import org.wso2.siddhi.core.config.SiddhiAppContext;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.executor.function.FunctionExecutor;
+import org.wso2.siddhi.core.util.config.ConfigReader;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * currentTime()
  * Returns System Time in HH:mm:ss format.
  * Return Type(s): STRING
  */
+
+/**
+ * Class representing the Time currentTime implementation.
+ */
+@Extension(
+        name = "currentTime",
+        namespace = "time",
+        description = "This methods returns system time in in HH:mm:ss format.",
+        returnAttributes = @ReturnAttribute(
+                description = "Returned type will be string.",
+                type = {DataType.STRING}),
+        examples = {
+                @Example(
+                        syntax = "TBD",
+                        description = "TBD"
+                )
+        }
+)
 public class CurrentTimeFunctionExtension extends FunctionExecutor {
 
     private Attribute.Type returnType = Attribute.Type.STRING;
     private FastDateFormat dateFormat = null;
 
     @Override
-    protected void init(ExpressionExecutor[] attributeExpressionExecutors,
-                        ExecutionPlanContext executionPlanContext) {
+    protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader,
+                        SiddhiAppContext siddhiAppContext) {
         dateFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_CURRENT_TIME_FORMAT);
     }
 
     @Override
     protected Object execute(Object[] data) {
-        return null; //Since the e function takes in no parameters, this method does not get called. Hence, not implemented.
+        return null; //Since the e function takes in no parameters, this method does not get called. Hence,
+        // not implemented.
     }
 
     @Override
@@ -70,12 +95,12 @@ public class CurrentTimeFunctionExtension extends FunctionExecutor {
     }
 
     @Override
-    public Object[] currentState() {
-        return new Object[0]; //No need to maintain a state.
+    public Map<String, Object> currentState() { //No need to maintain a state.
+        return null;
     }
 
     @Override
-    public void restoreState(Object[] state) {
+    public void restoreState(Map<String, Object> state) {
         //Since there's no need to maintain a state, nothing needs to be done here.
     }
 }

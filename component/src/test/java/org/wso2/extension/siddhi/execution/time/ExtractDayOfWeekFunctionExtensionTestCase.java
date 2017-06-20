@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c)  2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -18,11 +18,11 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
-import junit.framework.Assert;
 import org.apache.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.wso2.siddhi.core.ExecutionPlanRuntime;
+import org.testng.AssertJUnit;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
@@ -33,11 +33,11 @@ import java.util.ArrayList;
 
 public class ExtractDayOfWeekFunctionExtensionTestCase {
 
-    static final Logger log = Logger.getLogger(ExtractDayOfWeekFunctionExtensionTestCase.class);
+    private static final Logger log = Logger.getLogger(ExtractDayOfWeekFunctionExtensionTestCase.class);
     private volatile int count;
     private volatile boolean eventArrived;
 
-    @Before
+    @BeforeMethod
     public void init() {
         count = 0;
         eventArrived = false;
@@ -55,7 +55,8 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
                 "from inputStream " +
                 "select symbol,time:dayOfWeek(dateValue,dateFormat) as dayOfWeekExtracted " +
                 "insert into outputStream;");
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.createExecutionPlanRuntime(inStreamDefinition + query);
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime
+                (inStreamDefinition + query);
         final ArrayList<String> outputDays = new ArrayList<String>();
 
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
@@ -80,10 +81,10 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"WSO2", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss"});
         inputHandler.send(new Object[]{"XYZ", "2014-11-12", "yyyy-MM-dd"});
         Thread.sleep(100);
-        Assert.assertEquals(inputDays[0], outputDays.get(0));
-        Assert.assertEquals(inputDays[1], outputDays.get(1));
-        Assert.assertEquals(inputDays[2], outputDays.get(2));
-        Assert.assertTrue(eventArrived);
+        AssertJUnit.assertEquals(inputDays[0], outputDays.get(0));
+        AssertJUnit.assertEquals(inputDays[1], outputDays.get(1));
+        AssertJUnit.assertEquals(inputDays[2], outputDays.get(2));
+        AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
 
@@ -99,7 +100,7 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
                 "from inputStream " +
                 "select symbol,time:dayOfWeek(dateValue) as dayOfWeekExtracted " +
                 "insert into outputStream;");
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.createExecutionPlanRuntime(inStreamDefinition + query);
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
         final ArrayList<String> outputDays = new ArrayList<String>();
 
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
@@ -125,10 +126,10 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"WSO2", "2015-10-18 13:23:44"});
         inputHandler.send(new Object[]{"XYZ", "2014-9-22"});
         Thread.sleep(100);
-        Assert.assertEquals(inputDays[0], outputDays.get(0));
-        Assert.assertEquals(inputDays[1], outputDays.get(1));
-        Assert.assertEquals(inputDays[2], outputDays.get(2));
-        Assert.assertTrue(eventArrived);
+        AssertJUnit.assertEquals(inputDays[0], outputDays.get(0));
+        AssertJUnit.assertEquals(inputDays[1], outputDays.get(1));
+        AssertJUnit.assertEquals(inputDays[2], outputDays.get(2));
+        AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
 
