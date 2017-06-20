@@ -18,11 +18,11 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
-import junit.framework.Assert;
 import org.apache.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.wso2.siddhi.core.ExecutionPlanRuntime;
+import org.testng.AssertJUnit;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
@@ -31,11 +31,11 @@ import org.wso2.siddhi.core.util.EventPrinter;
 
 public class DateSubFunctionExtensionTestCase {
 
-    static final Logger log = Logger.getLogger(DateSubFunctionExtensionTestCase.class);
+    private static final Logger log = Logger.getLogger(DateSubFunctionExtensionTestCase.class);
     private volatile int count;
     private volatile boolean eventArrived;
 
-    @Before
+    @BeforeMethod
     public void init() {
         count = 0;
         eventArrived = false;
@@ -48,12 +48,16 @@ public class DateSubFunctionExtensionTestCase {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" +
-                "define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long,expr int);";
+                                    "define stream inputStream (symbol string,dateValue string," +
+                                    "dateFormat string,timestampInMilliseconds long,expr int);";
         String query = ("@info(name = 'query1') " +
-                "from inputStream select symbol ,time:dateSub(dateValue,expr,'year',dateFormat) as yearSubtracted,time:dateSub(dateValue,expr," +
-                "'month',dateFormat) as monthSubtracted,time:dateSub(timestampInMilliseconds,expr,'year') as yearSubtractedUnix " +
-                "insert into outputStream;");
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.createExecutionPlanRuntime(inStreamDefinition + query);
+                        "from inputStream select symbol ,time:dateSub(dateValue,expr,'year',dateFormat) as " +
+                        "yearSubtracted,time:dateSub(dateValue,expr," +
+                        "'month',dateFormat) as monthSubtracted,time:dateSub(timestampInMilliseconds,expr,'year') as " +
+                        "yearSubtractedUnix " +
+                        "insert into outputStream;");
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime
+                (inStreamDefinition + query);
 
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
             @Override
@@ -63,8 +67,8 @@ public class DateSubFunctionExtensionTestCase {
                 for (Event inEvent : inEvents) {
                     count++;
                     log.info("Event : " + count + ",YEAR_SUBTRACTED : " + inEvent.getData(1) + "," +
-                            "MONTH_SUBTRACTED : " + inEvent.getData(2) + "," +
-                            "YEAR_SUBTRACTED_IN_MILLS : " + inEvent.getData(3));
+                             "MONTH_SUBTRACTED : " + inEvent.getData(2) + "," +
+                             "YEAR_SUBTRACTED_IN_MILLS : " + inEvent.getData(3));
                 }
             }
         });
@@ -75,8 +79,8 @@ public class DateSubFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
         Thread.sleep(100);
-        Assert.assertEquals(3, count);
-        Assert.assertTrue(eventArrived);
+        AssertJUnit.assertEquals(3, count);
+        AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
 }

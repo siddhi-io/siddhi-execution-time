@@ -18,11 +18,11 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
-import junit.framework.Assert;
 import org.apache.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.wso2.siddhi.core.ExecutionPlanRuntime;
+import org.testng.AssertJUnit;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
@@ -31,11 +31,11 @@ import org.wso2.siddhi.core.util.EventPrinter;
 
 public class TimestampInMillisecondsFunctionExtensionTestCase {
 
-    static final Logger log = Logger.getLogger(TimestampInMillisecondsFunctionExtensionTestCase.class);
+    private static final Logger log = Logger.getLogger(TimestampInMillisecondsFunctionExtensionTestCase.class);
     private volatile int count;
     private volatile boolean eventArrived;
 
-    @Before
+    @BeforeMethod
     public void init() {
         count = 0;
         eventArrived = false;
@@ -48,12 +48,16 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" +
-                "define stream inputStream (symbol string, price long, volume long);";
+                                    "define stream inputStream (symbol string, price long, volume long);";
         String query = ("@info(name = 'query1') " +
-                "from inputStream " +
-                "select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19','yyyy-MM-DD HH:MM:SS') as " +
-                "timestampInMillisecondsWithArguments, time:timestampInMilliseconds('2007-11-30 10:30:19.000') as withOnlyDate insert into outputStream;");
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.createExecutionPlanRuntime(inStreamDefinition + query);
+                        "from inputStream " +
+                        "select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19','yyyy-MM-DD HH:MM:SS') " +
+                        "as " +
+                        "timestampInMillisecondsWithArguments, " +
+                        "time:timestampInMilliseconds('2007-11-30 10:30:19.000') " +
+                        "as withOnlyDate insert into outputStream;");
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime
+                (inStreamDefinition + query);
 
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
             @Override
@@ -72,8 +76,8 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         executionPlanRuntime.start();
         inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
-        Assert.assertEquals(1, count);
-        Assert.assertTrue(eventArrived);
+        AssertJUnit.assertEquals(1, count);
+        AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
 
@@ -84,12 +88,13 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" +
-                "define stream inputStream (symbol string, price long, volume long);";
+                                    "define stream inputStream (symbol string, price long, volume long);";
         String query = ("@info(name = 'query1') " +
-                "from inputStream " +
-                "select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19.000') as " +
-                "timestampInMillisecondsWithDateArgument insert into outputStream;");
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.createExecutionPlanRuntime(inStreamDefinition + query);
+                        "from inputStream " +
+                        "select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19.000') as " +
+                        "timestampInMillisecondsWithDateArgument insert into outputStream;");
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.
+                createSiddhiAppRuntime(inStreamDefinition + query);
 
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
             @Override
@@ -99,7 +104,8 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
                 for (int cnt = 0; cnt < inEvents.length; cnt++) {
                     count++;
                     log.info(
-                            "Event : " + count + " timestampInMillisecondsWithDateArgument : " + inEvents[cnt].getData(1));
+                            "Event : " + count + " timestampInMillisecondsWithDateArgument : " +
+                            inEvents[cnt].getData(1));
                 }
             }
         });
@@ -108,8 +114,8 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         executionPlanRuntime.start();
         inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
-        Assert.assertEquals(1, count);
-        Assert.assertTrue(eventArrived);
+        AssertJUnit.assertEquals(1, count);
+        AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
 
@@ -120,12 +126,13 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" +
-                "define stream inputStream (symbol string, price long, volume long);";
+                                    "define stream inputStream (symbol string, price long, volume long);";
         String query = ("@info(name = 'query1') " +
-                "from inputStream " +
-                "select symbol , time:timestampInMilliseconds() as " +
-                "timestampInMillisecondsWithoutArguments insert into outputStream;");
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.createExecutionPlanRuntime(inStreamDefinition + query);
+                        "from inputStream " +
+                        "select symbol , time:timestampInMilliseconds() as " +
+                        "timestampInMillisecondsWithoutArguments insert into outputStream;");
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.
+                 createSiddhiAppRuntime(inStreamDefinition + query);
 
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
             @Override
@@ -144,8 +151,8 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         executionPlanRuntime.start();
         inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
-        Assert.assertEquals(1, count);
-        Assert.assertTrue(eventArrived);
+        AssertJUnit.assertEquals(1, count);
+        AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
 }

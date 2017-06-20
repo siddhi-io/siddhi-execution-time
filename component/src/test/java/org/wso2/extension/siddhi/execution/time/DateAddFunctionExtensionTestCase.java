@@ -18,11 +18,11 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
-import junit.framework.Assert;
 import org.apache.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.wso2.siddhi.core.ExecutionPlanRuntime;
+import org.testng.AssertJUnit;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
@@ -32,13 +32,15 @@ import util.SiddhiTestHelper;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+
 public class DateAddFunctionExtensionTestCase {
 
-    static final Logger log = Logger.getLogger(DateAddFunctionExtensionTestCase.class);
+    private static final Logger log = Logger.getLogger(DateAddFunctionExtensionTestCase.class);
     private AtomicInteger count = new AtomicInteger(0);
     private volatile boolean eventArrived;
 
-    @Before
+    @BeforeMethod
     public void init() {
         count.set(0);
         eventArrived = false;
@@ -51,15 +53,16 @@ public class DateAddFunctionExtensionTestCase {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" +
-                "define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long,expr int);";
+                "define stream inputStream (symbol string,dateValue string,dateFormat string," +
+                                    "timestampInMilliseconds long,expr int);";
         String query = ("@info(name = 'query1') " +
                 "from inputStream " +
                 "select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearAdded," +
                 "time:dateAdd(dateValue,expr,'MONTH',dateFormat) as monthAdded," +
                 "time:dateAdd(timestampInMilliseconds,expr,'HOUR') as yearAddedMills " +
                 "insert into outputStream;");
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager
-                .createExecutionPlanRuntime(inStreamDefinition + query);
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager
+                .createSiddhiAppRuntime(inStreamDefinition + query);
 
 
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
@@ -70,15 +73,15 @@ public class DateAddFunctionExtensionTestCase {
                 for (Event event : inEvents) {
                     count.incrementAndGet();
                     if (count.get() == 1) {
-                        Assert.assertEquals("2016-11-11 13:23:44", event.getData(1));
-                        Assert.assertEquals("2015-01-11 13:23:44", event.getData(2));
-                        Assert.assertEquals("1415699624000", event.getData(3));
+                        AssertJUnit.assertEquals("2016-11-11 13:23:44", event.getData(1));
+                        AssertJUnit.assertEquals("2015-01-11 13:23:44", event.getData(2));
+                        AssertJUnit.assertEquals("1415699624000", event.getData(3));
                         eventArrived = true;
                     }
                     if (count.get() == 2) {
-                        Assert.assertEquals("2012-05-11 13:23:44", event.getData(1));
-                        Assert.assertEquals("2010-07-11 13:23:44", event.getData(2));
-                        Assert.assertEquals("1415699624000", event.getData(3));
+                        AssertJUnit.assertEquals("2012-05-11 13:23:44", event.getData(1));
+                        AssertJUnit.assertEquals("2010-07-11 13:23:44", event.getData(2));
+                        AssertJUnit.assertEquals("1415699624000", event.getData(3));
                         eventArrived = true;
                     }
                 }
@@ -90,8 +93,8 @@ public class DateAddFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
         inputHandler.send(new Object[]{"IBM", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
         SiddhiTestHelper.waitForEvents(100, 2, count, 60000);
-        Assert.assertEquals(2, count.get());
-        Assert.assertTrue(eventArrived);
+        AssertJUnit.assertEquals(2, count.get());
+        AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
 }
