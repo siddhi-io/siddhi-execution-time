@@ -46,7 +46,7 @@ import java.util.TimeZone;
 @Extension(
         name = "utcTimestamp",
         namespace = "time",
-        description = "This methods returns System time in yyyy-MM-dd HH:mm:ss format",
+        description = "This function returns System time in yyyy-MM-dd HH:mm:ss format",
         returnAttributes = @ReturnAttribute(
                 description = "The system time is returns in yyyy-MM-dd HH:mm:ss format.",
                 type = {DataType.STRING}),

@@ -68,7 +68,7 @@ import java.util.Map;
 @Extension(
         name = "dateAdd",
         namespace = "time",
-        description = "This methods returns added specified time interval to a date.If a STRING parameter passed as " +
+        description = "This function returns added specified time interval to a date.If a STRING parameter passed as " +
                       "the first argument then function accepts four parameters with last as optional which is the " +
                       "date.format. If a LONG parameter passed as the first argument, then function accepts three " +
                       "parameters which are timestamp.in.milliseconds,expr,unit in order.",

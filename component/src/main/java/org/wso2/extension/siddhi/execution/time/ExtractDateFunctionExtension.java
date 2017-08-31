@@ -55,7 +55,7 @@ import java.util.Map;
 @Extension(
         name = "date",
         namespace = "time",
-        description = "This methods returns date part from a date or date/time expression.",
+        description = "This function returns date part from a date or date/time expression.",
         parameters = {
                 @Parameter(name = "date.value",
                         description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +

@@ -45,7 +45,7 @@ import java.util.Map;
 @Extension(
         name = "currentDate",
         namespace = "time",
-        description = "This methods returns system time in yyyy-MM-dd format.",
+        description = "This function returns system time in yyyy-MM-dd format.",
         returnAttributes = @ReturnAttribute(
                 description = "Returned type will be string.",
                 type = {DataType.STRING}),

@@ -61,7 +61,7 @@ import java.util.Map;
 @Extension(
         name = "dayOfWeek",
         namespace = "time",
-        description = "This methods returns the day on which a given date falls.",
+        description = "This function returns the day on which a given date falls.",
         parameters = {
                 @Parameter(name = "date.value",
                         description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +

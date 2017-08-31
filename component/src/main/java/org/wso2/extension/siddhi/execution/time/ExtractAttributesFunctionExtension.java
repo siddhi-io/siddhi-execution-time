@@ -65,7 +65,8 @@ import java.util.Map;
 @Extension(
         name = "extract",
         namespace = "time",
-        description = "This methods returns date attributes from a date expression.If the first argument passed is a " +
+        description = "This function returns date attributes from a date expression. " +
+                     "If the first argument passed is a " +
                       "STRING then the function will accept three arguments with last parameter as optional which is " +
                       "date.format.Parameter order should be extract(unit,date.value,date.format). Else if the first " +
                       "argument passed is a LONG then function accepts two parameters.Parameter order is extract" +

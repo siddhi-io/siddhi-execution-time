@@ -28,17 +28,22 @@ import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
+import org.wso2.siddhi.core.util.SiddhiTestHelper;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DateFormatFunctionExtensionTestCase {
 
     private static final Logger log = Logger.getLogger(DateFormatFunctionExtensionTestCase.class);
-    private volatile int count;
     private volatile boolean eventArrived;
+    private int waitTime = 50;
+    private int timeout = 30000;
+    private AtomicInteger eventCount;
 
     @BeforeMethod
     public void init() {
-        count = 0;
         eventArrived = false;
+        eventCount = new AtomicInteger(0);
     }
 
     @Test
@@ -64,8 +69,8 @@ public class DateFormatFunctionExtensionTestCase {
 
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
-                    count++;
-                    log.info("Event : " + count + ",formattedDate : " + inEvent.getData(1) + "," +
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",formattedDate : " + inEvent.getData(1) + "," +
                             "formattedMillsDate : " + inEvent.getData(2));
 
                 }
@@ -78,8 +83,9 @@ public class DateFormatFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, "ss"});
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44.657", "yyyy-MM-dd HH:mm:ss.SSS", 1415692424000L,
                 "yyyy-MM-dd"});
-        Thread.sleep(100);
-        AssertJUnit.assertEquals(3, count);
+
+        SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
+        AssertJUnit.assertEquals(3, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }

@@ -28,17 +28,22 @@ import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
+import org.wso2.siddhi.core.util.SiddhiTestHelper;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DateSubFunctionExtensionTestCase {
 
     private static final Logger log = Logger.getLogger(DateSubFunctionExtensionTestCase.class);
-    private volatile int count;
     private volatile boolean eventArrived;
+    private int waitTime = 50;
+    private int timeout = 30000;
+    private AtomicInteger eventCount;
 
     @BeforeMethod
     public void init() {
-        count = 0;
         eventArrived = false;
+        eventCount = new AtomicInteger(0);
     }
 
     @Test
@@ -65,8 +70,8 @@ public class DateSubFunctionExtensionTestCase {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
-                    count++;
-                    log.info("Event : " + count + ",YEAR_SUBTRACTED : " + inEvent.getData(1) + "," +
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",YEAR_SUBTRACTED : " + inEvent.getData(1) + "," +
                              "MONTH_SUBTRACTED : " + inEvent.getData(2) + "," +
                              "YEAR_SUBTRACTED_IN_MILLS : " + inEvent.getData(3));
                 }
@@ -78,8 +83,8 @@ public class DateSubFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2});
-        Thread.sleep(100);
-        AssertJUnit.assertEquals(3, count);
+        SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
+        AssertJUnit.assertEquals(3, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }

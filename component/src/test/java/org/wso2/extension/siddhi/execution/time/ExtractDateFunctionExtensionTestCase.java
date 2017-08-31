@@ -37,13 +37,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ExtractDateFunctionExtensionTestCase {
 
     private static final Logger log = Logger.getLogger(ExtractDateFunctionExtensionTestCase.class);
-    private volatile AtomicInteger count;
     private volatile boolean eventArrived;
+    private int waitTime = 50;
+    private int timeout = 30000;
+    private AtomicInteger eventCount;
 
     @BeforeMethod
     public void init() {
-        count = new AtomicInteger(0);
         eventArrived = false;
+        eventCount = new AtomicInteger(0);
     }
 
     @Test
@@ -67,8 +69,8 @@ public class ExtractDateFunctionExtensionTestCase {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
-                    count.incrementAndGet();
-                    log.info("Event : " + count.get() + ",dateExtracted : " + inEvent.getData(1));
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",dateExtracted : " + inEvent.getData(1));
 
                 }
             }
@@ -79,9 +81,9 @@ public class ExtractDateFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44.657", "yyyy-MM-dd HH:mm:ss.SSS"});
         inputHandler.send(new Object[]{"WSO2", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss"});
         inputHandler.send(new Object[]{"XYZ", "2014-11-11", "yyyy-MM-dd"});
-        SiddhiTestHelper.waitForEvents(100, 1, count, 60000);
+        SiddhiTestHelper.waitForEvents(waitTime, 1, eventCount, timeout);
         executionPlanRuntime.shutdown();
-        AssertJUnit.assertEquals(3, count.get());
+        AssertJUnit.assertEquals(3, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
 
     }
