@@ -96,12 +96,30 @@ import java.util.Map;
                         type = {DataType.LONG})
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returned type will be string.",
+                description = "Returns date after adding specified time. Returned type will be string.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "TBD",
-                        description = "TBD"
+                        syntax = "define stream inputStream (symbol string,dateValue string,dateFormat string," +
+                                "expr int);\n" +
+                                "from inputStream\n " +
+                                "select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearAdded\n" +
+                                "insert into outputStream;",
+                        description = "This query gets date value from the input stream, adds expr amount to the "
+                                + "year value of the date value, format resultant value as date format given in the "
+                                + "input stream and finally return the formatted value to the outputStream "
+                                + "as yearAdded with the symbol"
+                ),
+                @Example(
+                        syntax = "define stream inputStream (symbol string,dateValue string,dateFormat string," +
+                                "timestampInMilliseconds long,expr int);\n" +
+                                "from inputStream\n " +
+                                "time:dateAdd(timestampInMilliseconds,expr,'HOUR') as hourAddedMills\n " +
+                                "insert into outputStream;",
+                        description = "This query gets value of timestampInMilliseconds from the input stream,"
+                                + " adds expr amount of hours to it and return "
+                                + " resultant value in milliseconds as hourAddedMills into the outputStream "
+                                + " with the symbol"
                 )
         }
 )

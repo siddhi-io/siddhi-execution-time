@@ -67,7 +67,7 @@ import java.util.Map;
         namespace = "time",
         description = "This methods returns date attributes from a date expression.If the first argument passed is a " +
                       "STRING then the function will accept three arguments with last parameter as optional which is " +
-                      "date.format.Parameter order should be extract(unit,date.value,date.format).Else if the first " +
+                      "date.format.Parameter order should be extract(unit,date.value,date.format). Else if the first " +
                       "argument passed is a LONG then function accepts two parameters.Parameter order is extract" +
                       "(timestamp.in.milliseconds,unit).",
         parameters = {
@@ -90,12 +90,19 @@ import java.util.Map;
                         type = {DataType.LONG})
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returned type will be int.",
+                description = "Returned extracted Date value as an int value.",
                 type = {DataType.INT}),
         examples = {
                 @Example(
-                        syntax = "TBD",
-                        description = "TBD"
+                        syntax = "define stream inputStream (symbol string,dateValue string,dateFormat string,"
+                                + "timestampInMilliseconds long);\n"
+                                + "from inputStream \n"
+                                + "select symbol, time:extract('YEAR',dateValue,dateFormat) as YEAR,"
+                                + "time:extract(timestampInMilliseconds,'HOUR') as HOUR\n "
+                                + "insert into outputStream;",
+                        description = "This query extracts the year value from the dateValue which is in format"
+                                + "'dateFormat' as the YEAR, hours from timestampInMilliseconds "
+                                + "as HOUR and return symbol, YEAR and HOUR to the outputStream."
                 )
         }
 )

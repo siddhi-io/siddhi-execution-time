@@ -74,12 +74,17 @@ import java.util.Map;
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returned type will be string.",
+                description = "Returned the corresponding day of the week from the date value as a string value.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "TBD",
-                        description = "TBD"
+                        syntax =  "define stream inputStream (symbol string, dateValue string,dateFormat string);\n"
+                                + "from inputStream\n"
+                                + "select symbol,time:dayOfWeek(dateValue,dateFormat) as dayOfWeekExtracted\n"
+                                + "insert into outputStream;",
+                        description = "The Query extract the day of the week from the date given as dateValue which is"
+                                + "in the format 'dateFormat' and return symbol and extracted day as dayOfWeekExtracted"
+                                + "to the outputStream."
                 )
         }
 )

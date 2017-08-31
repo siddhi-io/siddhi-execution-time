@@ -87,12 +87,23 @@ import java.util.Map;
                         type = {DataType.LONG})
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returned type will be string.",
+                description = "Return formatted date. Returned type will be string.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "TBD",
-                        description = "TBD"
+                        syntax = "define stream inputStream (symbol string,"
+                                + "dateValue string,sourceFormat string,timestampInMilliseconds long,"
+                                + "targetFormat string);\n"
+                                + "from inputStream\n"
+                                + "select symbol"
+                                + "time:dateFormat(dateValue,targetFormat,sourceFormat) as formattedDate,"
+                                + "time:dateFormat(timestampInMilliseconds,targetFormat) as formattedUnixDate\n"
+                                + "insert into outputStream;",
+                        description = "This query formats the dateValue in the inputStream which is currently in "
+                                + "sourceFormat to the targetFormat as formattedData and formats"
+                                + " timestampInMilliseconds which is in millisecond to the targetFormat"
+                                + " as formattedUnixDate then return symbol formattedDate and formattedUnixDate to the"
+                                + " outputStream."
                 )
         }
 )

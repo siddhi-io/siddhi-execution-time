@@ -49,7 +49,7 @@
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <log4j.version>1.2.17.wso2v1</log4j.version>
         <testng.version>6.8</testng.version>
-        <jacoco.maven.version>0.7.8</jacoco.maven.version>
+        <jacoco.version>0.7.9</jacoco.version>
     </properties>
 
     <scm>
@@ -105,6 +105,12 @@
                 <artifactId>testng</artifactId>
                 <version>${testng.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.agent</artifactId>
+                <classifier>runtime</classifier>
+                <version>${jacoco.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -201,48 +207,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>2.4</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.19.1</version>
-                    <configuration>
-                        <includes>
-                            <include>**/*TestCase.java</include>
-                            <useFile>false</useFile>
-                        </includes>
-                        <reportFormat>brief</reportFormat>
-                        <forkMode>once</forkMode>
-                        <argLine>${surefireArgLine} -ea -Xmx512m</argLine>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco.maven.version}</version>
-                    <executions>
-                        <execution>
-                            <id>jacoco-initialize</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                            <configuration>
-                                <destFile>${basedir}/target/coverage-reports/jacoco.exec</destFile>
-                                <propertyName>surefireArgLine</propertyName>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>jacoco-site</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                            <configuration>
-                                <dataFile>${basedir}/target/coverage-reports/jacoco.exec</dataFile>
-                                <outputDirectory>${basedir}/target/coverage-reports/</outputDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

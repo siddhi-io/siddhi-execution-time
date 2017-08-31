@@ -48,12 +48,16 @@ import java.util.TimeZone;
         namespace = "time",
         description = "This methods returns System time in yyyy-MM-dd HH:mm:ss format",
         returnAttributes = @ReturnAttribute(
-                description = "Returned type will be string.",
+                description = "The system time is returns in yyyy-MM-dd HH:mm:ss format.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "TBD",
-                        description = "TBD"
+                        syntax =  "define stream inputStream (symbol string, price long, volume long);" +
+                                   "from inputStream " +
+                                   "select symbol , time:utcTimestamp() as utcTimestamp " +
+                                   "insert into outputStream;",
+                        description = "The query return symbol from the inputStream and system time stamp"
+                                + " in yyyy-MM-dd HH:mm:ss format as utcTimestamp to the outputStream."
                 )
         }
 )

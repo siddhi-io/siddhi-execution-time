@@ -51,8 +51,12 @@ import java.util.Map;
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "TBD",
-                        description = "TBD"
+                        syntax = "define stream inputStream (symbol string, price long, volume long);\n" +
+                                 "from inputStream select symbol , time:currentDate() as currentTime \n" +
+                                 "insert into outputStream;",
+                        description = "This query returns symbol from inputStream and"
+                                + "current date of the system in yyyy-MM-dd format as current"
+                                + " time to the outputStream"
                 )
         }
 )

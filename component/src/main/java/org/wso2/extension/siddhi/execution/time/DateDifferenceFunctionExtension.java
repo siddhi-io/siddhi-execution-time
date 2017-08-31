@@ -99,12 +99,23 @@ import java.util.concurrent.TimeUnit;
                         type = {DataType.LONG})
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returned type will be int.",
+                description = "Returns difference of given two dates. Returned type will be int.",
                 type = {DataType.INT}),
         examples = {
                 @Example(
-                        syntax = "TBD",
-                        description = "TBD"
+                        syntax = "define stream inputStream (symbol string,dateValue1 string,dateFormat1 string,"
+                                + "dateValue2 string,dateFormat2 string,);\n"
+                                + "from inputStream\n "
+                                + "time:dateDiff(timestampInMilliseconds1,timestampInMilliseconds2)"
+                                + "select symbol , time:dateDiff(dateValue1,dateValue2,dateFormat1,dateFormat2) "
+                                + "as dateDifference,\n"
+                                + " as dateDifferenceInMilliseconds "
+                                + "insert into outputStream;",
+                        description = "This query return difference between timestampInMilliseconds1 and "
+                                + "timestampInMilliseconds2 as dateDifferenceInMilliseconds and difference between "
+                                + "dataValue1 which is in the format 'dateFormat1' and dataValue2 which is"
+                                + "in the format 'dateFormat2' as dateDifference and return to the outputStream with"
+                                + " symbol value"
                 )
         }
 )
