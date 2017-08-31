@@ -64,7 +64,8 @@ import java.util.Map;
 @Extension(
         name = "dateFormat",
         namespace = "time",
-        description = "Returns a formatted date string.If the first argument is a STRING then function accepts three " +
+        description = "This function returns a formatted date string.If the first argument is a STRING then function" +
+                      " accepts three " +
                       "parameters with last parameter as a optional parameter.Parameter order should be dateFormat" +
                       "(dateValue,dateTargetFormat,dateSourceFormat). Else if first argument is a LONG then function " +
                       "accepts two parameters.Parameter order should be dateFormat(timestampInMilliseconds," +

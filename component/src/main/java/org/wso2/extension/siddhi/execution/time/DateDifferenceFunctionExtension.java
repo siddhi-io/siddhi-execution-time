@@ -67,7 +67,8 @@ import java.util.concurrent.TimeUnit;
 @Extension(
         name = "dateDiff",
         namespace = "time",
-        description = "Returns time(days) between two dates. If two STRING arguments are sent as first two parameters" +
+        description = " This function returns time(days) between two dates. If two STRING arguments" +
+                      " are sent as first two parameters" +
                       " then function should accept four parameters with last two as optional parameters. Parameter " +
                       "order should be dateDiff(date.value1,date.value2,date.format1,date.format2). Else if two LONG " +
                       "arguments are sent as first two parameters then parameter order should be dateDiff(timestamp" +

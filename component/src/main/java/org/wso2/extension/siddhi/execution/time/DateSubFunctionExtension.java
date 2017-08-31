@@ -69,9 +69,11 @@ import java.util.Map;
 @Extension(
         name = "dateSub",
         namespace = "time",
-        description = "This methods returns subtracted specified time interval to a date.If a STRING parameter passed" +
+        description = "This function returns subtracted specified time interval to a date. " +
+                      "If a STRING parameter passed" +
                       " as the first argument then function accepts four parameters with last as optional which is " +
-                      "the date.format. If a LONG parameter passed as the first argument, then function accepts three" +
+                      "the date.format. If a LONG parameter passed as the first argument," +
+                      " then function accepts three" +
                       " parameters which are timestamp.in.milliseconds,expr,unit in order.",
         parameters = {
                 @Parameter(name = "date.value",
