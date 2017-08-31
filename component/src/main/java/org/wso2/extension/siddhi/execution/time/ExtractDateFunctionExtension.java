@@ -68,12 +68,18 @@ import java.util.Map;
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returned type will be string.",
+                description = "Returned extracted Date value as a string value.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "TBD",
-                        description = "TBD"
+                        syntax =  "define stream inputStream (symbol string, dateValue string,dateFormat string);\n"
+                                  + "from inputStream\n "
+                                  + "select symbol,time:date(dateValue,dateFormat) as dateExtracted\n "
+                                  + "insert into outputStream;\n",
+
+                        description = "This query extracts the date value from the dateValue which is in format"
+                                + "'dateFormat' as the dateExtracted  and return symbol, "
+                                + "and dateExtracted to the outputStream."
                 )
         }
 )

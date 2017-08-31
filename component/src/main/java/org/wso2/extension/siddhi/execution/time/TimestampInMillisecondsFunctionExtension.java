@@ -75,8 +75,25 @@ import java.util.Map;
                 type = {DataType.LONG}),
         examples = {
                 @Example(
-                        syntax = "TBD",
-                        description = "TBD"
+                        syntax = "define stream inputStream (symbol string, price long, volume long);\n" +
+                                 "from inputStream\n" +
+                                 "select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19'," +
+                                 "'yyyy-MM-DD HH:MM:SS') as timestampInMilliseconds\n" +
+                                 "insert into outputStream;",
+                        description = "The query convert the 2007-11-30 10:30:19 which is in yyyy-MM-DD HH:MM:SS"
+                                + " format to the milliseconds as timestampInMilliseconds and return symbol and "
+                                + "timestampInMilliseconds to the output stream"
+                ),
+
+                @Example(
+                        syntax = "define stream inputStream (symbol string, price long, volume long);\n" +
+                                "from inputStream\n" +
+                                "select symbol , time:timestampInMilliseconds()" +
+                                "as timestampInMilliseconds\n" +
+                                "insert into outputStream;",
+                        description = "The query get the system time in milliseconds"
+                                + " as timestampInMilliseconds and return symbol and "
+                                + "timestampInMilliseconds to the output stream"
                 )
         }
 )
