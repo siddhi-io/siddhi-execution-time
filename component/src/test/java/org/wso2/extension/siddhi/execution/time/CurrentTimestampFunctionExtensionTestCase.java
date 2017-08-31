@@ -28,17 +28,22 @@ import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
+import org.wso2.siddhi.core.util.SiddhiTestHelper;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CurrentTimestampFunctionExtensionTestCase {
 
     private static final Logger log = Logger.getLogger(CurrentTimestampFunctionExtensionTestCase.class);
-    private volatile int count;
     private volatile boolean eventArrived;
+    private int waitTime = 50;
+    private int timeout = 30000;
+    private AtomicInteger eventCount;
 
     @BeforeMethod
     public void init() {
-        count = 0;
         eventArrived = false;
+        eventCount = new AtomicInteger(0);
     }
 
     @Test
@@ -62,8 +67,8 @@ public class CurrentTimestampFunctionExtensionTestCase {
 
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
-                    count++;
-                    log.info("Event : " + count + ",currentTimestamp : " + inEvent.getData(1));
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",currentTimestamp : " + inEvent.getData(1));
 
                 }
             }
@@ -74,8 +79,9 @@ public class CurrentTimestampFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"IBM", 700f, 100L});
         inputHandler.send(new Object[]{"WSO2", 60.5f, 200L});
         inputHandler.send(new Object[]{"XYZ", 60.5f, 200L});
-        Thread.sleep(100);
-        AssertJUnit.assertEquals(3, count);
+
+        SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
+        AssertJUnit.assertEquals(3, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }

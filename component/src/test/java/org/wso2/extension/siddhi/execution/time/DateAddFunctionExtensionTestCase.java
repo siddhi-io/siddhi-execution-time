@@ -39,11 +39,15 @@ public class DateAddFunctionExtensionTestCase {
     private static final Logger log = Logger.getLogger(DateAddFunctionExtensionTestCase.class);
     private AtomicInteger count = new AtomicInteger(0);
     private volatile boolean eventArrived;
+    private int waitTime = 50;
+    private int timeout = 30000;
+    private AtomicInteger eventCount;
 
     @BeforeMethod
     public void init() {
         count.set(0);
         eventArrived = false;
+        eventCount = new AtomicInteger(0);
     }
 
     @Test

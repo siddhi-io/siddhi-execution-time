@@ -28,17 +28,22 @@ import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
+import org.wso2.siddhi.core.util.SiddhiTestHelper;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DateDifferenceFunctionExtensionTestCase {
 
     private static final Logger log = Logger.getLogger(DateDifferenceFunctionExtensionTestCase.class);
-    private volatile int count;
     private volatile boolean eventArrived;
+    private int waitTime = 50;
+    private int timeout = 30000;
+    private AtomicInteger eventCount;
 
     @BeforeMethod
     public void init() {
-        count = 0;
         eventArrived = false;
+        eventCount = new AtomicInteger(0);
     }
 
     @Test
@@ -65,8 +70,8 @@ public class DateDifferenceFunctionExtensionTestCase {
 
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
-                    count++;
-                    log.info("Event : " + count + ",dateDifference : " + inEvent.getData(1) + "," +
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",dateDifference : " + inEvent.getData(1) + "," +
                             "dateDifferenceInMilliseconds : " + inEvent.getData(2));
 
                 }
@@ -81,8 +86,9 @@ public class DateDifferenceFunctionExtensionTestCase {
                 "2014-10-9 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 1412841224000L});
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss",
                 "2013-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 1384156424000L});
-        Thread.sleep(1000);
-        AssertJUnit.assertEquals(3, count);
+
+        SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
+        AssertJUnit.assertEquals(3, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }

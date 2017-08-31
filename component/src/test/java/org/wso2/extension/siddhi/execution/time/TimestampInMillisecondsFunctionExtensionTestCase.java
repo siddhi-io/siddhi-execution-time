@@ -29,16 +29,20 @@ import org.wso2.siddhi.core.query.output.callback.QueryCallback;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class TimestampInMillisecondsFunctionExtensionTestCase {
 
     private static final Logger log = Logger.getLogger(TimestampInMillisecondsFunctionExtensionTestCase.class);
-    private volatile int count;
     private volatile boolean eventArrived;
+    private int waitTime = 50;
+    private int timeout = 30000;
+    private AtomicInteger eventCount;
 
     @BeforeMethod
     public void init() {
-        count = 0;
         eventArrived = false;
+        eventCount = new AtomicInteger(0);
     }
 
     @Test
@@ -65,9 +69,10 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
-                    count++;
+                    eventCount.incrementAndGet();
                     log.info(
-                            "Event : " + count + " timestampInMillisecondsWithAllArguments : " + inEvent.getData(1));
+                            "Event : " + eventCount.get() + " timestampInMillisecondsWithAllArguments : "
+                                    + inEvent.getData(1));
                 }
             }
         });
@@ -76,7 +81,7 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         executionPlanRuntime.start();
         inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
-        AssertJUnit.assertEquals(1, count);
+        AssertJUnit.assertEquals(1, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
@@ -102,9 +107,9 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
                 for (int cnt = 0; cnt < inEvents.length; cnt++) {
-                    count++;
+                    eventCount.incrementAndGet();
                     log.info(
-                            "Event : " + count + " timestampInMillisecondsWithDateArgument : " +
+                            "Event : " + eventCount.get() + " timestampInMillisecondsWithDateArgument : " +
                             inEvents[cnt].getData(1));
                 }
             }
@@ -114,7 +119,7 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         executionPlanRuntime.start();
         inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
-        AssertJUnit.assertEquals(1, count);
+        AssertJUnit.assertEquals(1, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }
@@ -140,8 +145,8 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
-                    count++;
-                    log.info("Event : " + count + " timestampInMillisecondsWithoutArguments : " + inEvent
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + " timestampInMillisecondsWithoutArguments : " + inEvent
                             .getData(1));
                 }
             }
@@ -151,7 +156,7 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         executionPlanRuntime.start();
         inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
-        AssertJUnit.assertEquals(1, count);
+        AssertJUnit.assertEquals(1, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         executionPlanRuntime.shutdown();
     }

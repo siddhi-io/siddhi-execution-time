@@ -28,19 +28,23 @@ import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
+import org.wso2.siddhi.core.util.SiddhiTestHelper;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ExtractDayOfWeekFunctionExtensionTestCase {
 
     private static final Logger log = Logger.getLogger(ExtractDayOfWeekFunctionExtensionTestCase.class);
-    private volatile int count;
     private volatile boolean eventArrived;
+    private int waitTime = 50;
+    private int timeout = 30000;
+    private AtomicInteger eventCount;
 
     @BeforeMethod
     public void init() {
-        count = 0;
         eventArrived = false;
+        eventCount = new AtomicInteger(0);
     }
 
     @Test
@@ -66,10 +70,10 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
                 String day = "";
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
-                    count++;
+                    eventCount.incrementAndGet();
                     day = inEvent.getData(1).toString();
                     outputDays.add(day);
-                    log.info("Event : " + count + ",ExtractedDayOfWeek : " + day);
+                    log.info("Event : " + eventCount.get() + ",ExtractedDayOfWeek : " + day);
                 }
             }
         });
@@ -80,7 +84,7 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"IBM", "2014-12-11 13:23:44.657", "yyyy-MM-dd HH:mm:ss.SSS"});
         inputHandler.send(new Object[]{"WSO2", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss"});
         inputHandler.send(new Object[]{"XYZ", "2014-11-12", "yyyy-MM-dd"});
-        Thread.sleep(100);
+        SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
         AssertJUnit.assertEquals(inputDays[0], outputDays.get(0));
         AssertJUnit.assertEquals(inputDays[1], outputDays.get(1));
         AssertJUnit.assertEquals(inputDays[2], outputDays.get(2));
@@ -111,10 +115,10 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
                 String day = "";
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
-                    count++;
+                    eventCount.incrementAndGet();
                     day = inEvent.getData(1).toString();
                     outputDays.add(day);
-                    log.info("Event : " + count + ",ExtractedDayOfWeek : " + day);
+                    log.info("Event : " + eventCount.get() + ",ExtractedDayOfWeek : " + day);
                 }
             }
         });
@@ -125,7 +129,7 @@ public class ExtractDayOfWeekFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"IBM", "2014-11-11 13:23:44.657"});
         inputHandler.send(new Object[]{"WSO2", "2015-10-18 13:23:44"});
         inputHandler.send(new Object[]{"XYZ", "2014-9-22"});
-        Thread.sleep(100);
+        SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
         AssertJUnit.assertEquals(inputDays[0], outputDays.get(0));
         AssertJUnit.assertEquals(inputDays[1], outputDays.get(1));
         AssertJUnit.assertEquals(inputDays[2], outputDays.get(2));
