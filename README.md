@@ -27,7 +27,7 @@ Latest API Docs is <a target="_blank" href="https://wso2-extensions.github.io/si
 
 ```
      <dependency>
-        <groupId>org.wso2.extension.siddhi.execution.unique</groupId>
+        <groupId>org.wso2.extension.siddhi.execution.time</groupId>
         <artifactId>siddhi-execution-time</artifactId>
         <version>x.x.x</version>
      </dependency>
