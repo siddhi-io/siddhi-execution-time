@@ -87,16 +87,6 @@ public class UTCTimestampFunctionExtension extends FunctionExecutor {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
     public Attribute.Type getReturnType() {
         return returnType;
     }
