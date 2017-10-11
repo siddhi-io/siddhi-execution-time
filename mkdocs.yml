@@ -16,5 +16,6 @@ pages:
 - Welcome to WSO2 Siddhi Execution Time: index.md
 - API Docs:
   - 4.0.2-SNAPSHOT: api/4.0.2-SNAPSHOT.md
+  - 4.0.4-SNAPSHOT: api/4.0.4-SNAPSHOT.md
 - License: license.md
 theme: material
