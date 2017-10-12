@@ -31,6 +31,7 @@ import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
 import org.wso2.siddhi.core.util.SiddhiTestHelper;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ExtractAttributesFunctionExtensionTestCase {
@@ -40,6 +41,7 @@ public class ExtractAttributesFunctionExtensionTestCase {
     private int waitTime = 50;
     private int timeout = 30000;
     private AtomicInteger eventCount;
+    LocalDateTime currentTime = LocalDateTime.now();
 
     @BeforeMethod
     public void init() {
@@ -112,20 +114,22 @@ public class ExtractAttributesFunctionExtensionTestCase {
                     if (eventCount.intValue() == 1) {
                         AssertJUnit.assertEquals(null, event.getData(1));
                         AssertJUnit.assertEquals(null, event.getData(2));
-                        AssertJUnit.assertEquals("2", event.getData(3).toString());
+                        AssertJUnit.assertEquals(currentTime.getHour(), event.getData(3));
                     }
                     if (eventCount.intValue() == 2) {
                         AssertJUnit.assertEquals(null, event.getData(1));
                         AssertJUnit.assertEquals(null, event.getData(2));
-                        AssertJUnit.assertEquals("2", event.getData(3).toString());
+                        AssertJUnit.assertEquals(currentTime.getHour(), event.getData(3));
                     }
                 }
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", "2014:3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", 1394484824000L });
-        inputHandler.send(new Object[] { "IBM", "2015:3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", 1394484824000L });
+        inputHandler
+                .send(new Object[] { "IBM", "2014:3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis() });
+        inputHandler
+                .send(new Object[] { "IBM", "2015:3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis() });
         Thread.sleep(100);
         AssertJUnit.assertEquals(2, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
@@ -220,20 +224,20 @@ public class ExtractAttributesFunctionExtensionTestCase {
                     if (eventCount.intValue() == 1) {
                         AssertJUnit.assertEquals(null, event.getData(1));
                         AssertJUnit.assertEquals(null, event.getData(2));
-                        AssertJUnit.assertEquals("2", event.getData(3).toString());
+                        AssertJUnit.assertEquals(currentTime.getHour(), event.getData(3));
                     }
                     if (eventCount.intValue() == 2) {
                         AssertJUnit.assertEquals(null, event.getData(1));
                         AssertJUnit.assertEquals(null, event.getData(2));
-                        AssertJUnit.assertEquals("2", event.getData(3).toString());
+                        AssertJUnit.assertEquals(currentTime.getHour(), event.getData(3));
                     }
                 }
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", null, "yyyy-MM-dd hh:mm:ss", 1394484824000L });
-        inputHandler.send(new Object[] { "IBM", null, "ss", 1394484824000L });
+        inputHandler.send(new Object[] { "IBM", null, "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis() });
+        inputHandler.send(new Object[] { "IBM", null, "ss", System.currentTimeMillis() });
         Thread.sleep(100);
         AssertJUnit.assertEquals(2, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
@@ -265,20 +269,20 @@ public class ExtractAttributesFunctionExtensionTestCase {
                     if (eventCount.intValue() == 1) {
                         AssertJUnit.assertEquals(null, event.getData(1));
                         AssertJUnit.assertEquals(null, event.getData(2));
-                        AssertJUnit.assertEquals("2", event.getData(3).toString());
+                        AssertJUnit.assertEquals(currentTime.getHour(), event.getData(3));
                     }
                     if (eventCount.intValue() == 2) {
                         AssertJUnit.assertEquals(null, event.getData(1));
                         AssertJUnit.assertEquals(null, event.getData(2));
-                        AssertJUnit.assertEquals("2", event.getData(3).toString());
+                        AssertJUnit.assertEquals(currentTime.getHour(), event.getData(3));
                     }
                 }
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", "2014:3-11 02:23:44", null, 1394484824000L });
-        inputHandler.send(new Object[] { "IBM", "2012:3-11 02:23:44", null, 1394484824000L });
+        inputHandler.send(new Object[] { "IBM", "2014:3-11 02:23:44", null, System.currentTimeMillis() });
+        inputHandler.send(new Object[] { "IBM", "2012:3-11 02:23:44", null, System.currentTimeMillis() });
         Thread.sleep(100);
         AssertJUnit.assertEquals(2, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
@@ -363,23 +367,24 @@ public class ExtractAttributesFunctionExtensionTestCase {
                     if (eventCount.intValue() == 1) {
                         AssertJUnit.assertEquals(44, event.getData(1));
                         AssertJUnit.assertEquals(3, event.getData(2));
-                        AssertJUnit.assertEquals("2", event.getData(3).toString());
+                        AssertJUnit.assertEquals(currentTime.getHour(), event.getData(3));
                     }
                     if (eventCount.intValue() == 2) {
                         AssertJUnit.assertEquals(44, event.getData(1));
                         AssertJUnit.assertEquals(3, event.getData(2));
-                        AssertJUnit.assertEquals("2", event.getData(3).toString());
+                        AssertJUnit.assertEquals(currentTime.getHour(), event.getData(3));
                     }
                 }
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", 1394484824000L });
-        inputHandler.send(new Object[] { "IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", 1394484824000L });
-        inputHandler.send(new Object[] { "IBM", "2014-3-11 22:23:44", "yyyy-MM-dd hh:mm:ss", 1394556804000L });
+        inputHandler
+                .send(new Object[] { "IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis() });
+        inputHandler
+                .send(new Object[] { "IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis() });
         Thread.sleep(100);
-        AssertJUnit.assertEquals(3, eventCount.get());
+        AssertJUnit.assertEquals(2, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         siddhiAppRuntime.shutdown();
     }

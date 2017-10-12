@@ -30,6 +30,7 @@ import org.wso2.siddhi.core.query.output.callback.QueryCallback;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
 
+import java.sql.Timestamp;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TimestampInMillisecondsFunctionExtensionTestCase {
@@ -304,12 +305,14 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
     public void timestampInMillisecondsWithAllArgumentsFunctionExtension8() throws InterruptedException {
 
         log.info("TimestampInMillisecondsWithAllArgumentsFunctionExtensionFirstArgumentNullTestCase");
+        String dateTime = "2007-11-30 10:30:19.000";
+        final Timestamp timestamp = Timestamp.valueOf(dateTime);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" + "define stream inputStream (symbol string, price string, volume long);";
         String query = ("@info(name = 'query1') " + "from inputStream "
                 + "select symbol , time:timestampInMilliseconds(price,'yyyy-MM-DD HH:MM:SS') as "
-                + "timestampInMillisecondsWithArguments, time:timestampInMilliseconds('2007-11-30 10:30:19.000') as "
+                + "timestampInMillisecondsWithArguments, time:timestampInMilliseconds(('" + dateTime + "')) as "
                 + "withOnlyDate insert into outputStream;");
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
 
@@ -321,7 +324,7 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
                     eventCount.incrementAndGet();
                     if (eventCount.intValue() == 1) {
                         AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("1196398819000", event.getData(2).toString());
+                        AssertJUnit.assertEquals(timestamp.getTime(), event.getData(2));
                         eventArrived = true;
                     }
                 }
@@ -340,12 +343,14 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
     public void timestampInMillisecondsWithAllArgumentsFunctionExtension9() throws InterruptedException {
 
         log.info("TimestampInMillisecondsWithAllArgumentsFunctionExtensionSecondArgumentNullTestCase");
+        String dateTime = "2007-11-30 10:30:19.000";
+        final Timestamp timestamp = Timestamp.valueOf(dateTime);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" + "define stream inputStream (symbol string, price long, volume string);";
         String query = ("@info(name = 'query1') " + "from inputStream "
-                + "select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19',volume) as "
-                + "timestampInMillisecondsWithArguments, time:timestampInMilliseconds('2007-11-30 10:30:19.000') as "
+                + "select symbol , time:timestampInMilliseconds(('" + dateTime + "'),volume) as "
+                + "timestampInMillisecondsWithArguments, time:timestampInMilliseconds(('" + dateTime + "')) as "
                 + "withOnlyDate insert into outputStream;");
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
 
@@ -357,7 +362,7 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
                     eventCount.incrementAndGet();
                     if (eventCount.intValue() == 1) {
                         AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("1196398819000", event.getData(2).toString());
+                        AssertJUnit.assertEquals(timestamp.getTime(), event.getData(2));
                         eventArrived = true;
                     }
                 }
