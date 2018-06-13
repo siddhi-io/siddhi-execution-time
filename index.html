@@ -255,6 +255,18 @@
 
 
   <li class="md-nav__item">
+    <a href="api/4.0.11/" title="4.0.11" class="md-nav__link">
+      4.0.11
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="api/4.0.10/" title="4.0.10" class="md-nav__link">
       4.0.10
     </a>
@@ -443,7 +455,7 @@
 <li><a target="_blank" href="https://github.com/wso2-extensions/siddhi-execution-time/issues">Issue tracker</a></li>
 </ul>
 <h2 id="latest-api-docs">Latest API Docs</h2>
-<p>Latest API Docs is <a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10">4.0.10</a>.</p>
+<p>Latest API Docs is <a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11">4.0.11</a>.</p>
 <h2 id="how-to-use">How to use</h2>
 <p><strong>Using the extension in <a target="_blank" href="https://github.com/wso2/product-sp">WSO2 Stream Processor</a></strong></p>
 <ul>
@@ -484,18 +496,18 @@
 <hr />
 <h2 id="features">Features</h2>
 <ul>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#currentdate-function">currentDate</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns system time in yyyy-MM-dd format.</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#currenttime-function">currentTime</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns system time in in HH:mm:ss format.</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#currenttimestamp-function">currentTimestamp</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns system time in yyyy-MM-dd HH:mm:ss format.</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#date-function">date</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns date part from a date or date/time expression.</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#dateadd-function">dateAdd</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns added specified time interval to a date.If a STRING parameter passed as the first argument then function accepts four parameters with last as optional which is the date.format. If a LONG parameter passed as the first argument, then function accepts three parameters which are timestamp.in.milliseconds,expr,unit in order.</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#datediff-function">dateDiff</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p> This function returns time(days) between two dates. If two STRING arguments are sent as first two parameters then function should accept four parameters with last two as optional parameters. Parameter order should be dateDiff(date.value1,date.value2,date.format1,date.format2). Else if two LONG arguments are sent as first two parameters then parameter order should be dateDiff(timestamp.in.milliseconds1,timestamp.in.milliseconds2). </p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#dateformat-function">dateFormat</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns a formatted date string.If the first argument is a STRING then function accepts three parameters with last parameter as a optional parameter.Parameter order should be dateFormat(dateValue,dateTargetFormat,dateSourceFormat). Else if first argument is a LONG then function accepts two parameters.Parameter order should be dateFormat(timestampInMilliseconds,dateTargetFormat).</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#datesub-function">dateSub</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns subtracted specified time interval to a date. If a STRING parameter passed as the first argument then function accepts four parameters with last as optional which is the date.format. If a LONG parameter passed as the first argument, then function accepts three parameters which are timestamp.in.milliseconds,expr,unit in order.</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#dayofweek-function">dayOfWeek</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns the day on which a given date falls.</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#extract-function">extract</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns date attributes from a date expression. If the first argument passed is a STRING then the function will accept three arguments with last parameter as optional which is date.format.Parameter order should be extract(unit,date.value,date.format). Else if the first argument passed is a LONG then function accepts two parameters.Parameter order is extract(timestamp.in.milliseconds,unit).</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#timestampinmilliseconds-function">timestampInMilliseconds</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns system time or given time in milliseconds.If two STRING parameters are sent as the first argument, the parameter order should be timestampInMilliseconds(date.value,date.format) with last parameter as the optional parameter with is date.format.Else if no argument method invoked then system time will be returned in milliseconds.</p></div></li>
-<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.10/#utctimestamp-function">utcTimestamp</a> <em>(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a>)</em><br><div style="padding-left: 1em;"><p>This function returns System time in yyyy-MM-dd HH:mm:ss format</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#currentdate-function">currentDate</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns system time in yyyy-MM-dd format.</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#currenttime-function">currentTime</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns system time in in HH:mm:ss format.</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#currenttimestamp-function">currentTimestamp</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns system time in yyyy-MM-dd HH:mm:ss format.</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#date-function">date</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns date part from a date or date/time expression.</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#dateadd-function">dateAdd</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns added specified time interval to a date.If a STRING parameter passed as the first argument then function accepts four parameters with last as optional which is the date.format. If a LONG parameter passed as the first argument, then function accepts three parameters which are timestamp.in.milliseconds,expr,unit in order.</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#datediff-function">dateDiff</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p> This function returns time(days) between two dates. If two STRING arguments are sent as first two parameters then function should accept four parameters with last two as optional parameters. Parameter order should be dateDiff(date.value1,date.value2,date.format1,date.format2). Else if two LONG arguments are sent as first two parameters then parameter order should be dateDiff(timestamp.in.milliseconds1,timestamp.in.milliseconds2). </p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#dateformat-function">dateFormat</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns a formatted date string.If the first argument is a STRING then function accepts three parameters with last parameter as a optional parameter.Parameter order should be dateFormat(dateValue,dateTargetFormat,dateSourceFormat). Else if first argument is a LONG then function accepts two parameters.Parameter order should be dateFormat(timestampInMilliseconds,dateTargetFormat).</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#datesub-function">dateSub</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns subtracted specified time interval to a date. If a STRING parameter passed as the first argument then function accepts four parameters with last as optional which is the date.format. If a LONG parameter passed as the first argument, then function accepts three parameters which are timestamp.in.milliseconds,expr,unit in order.</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#dayofweek-function">dayOfWeek</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns the day on which a given date falls.</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#extract-function">extract</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns date attributes from a date expression. If the first argument passed is a STRING then the function will accept three arguments with last parameter as optional which is date.format.Parameter order should be extract(unit,date.value,date.format). Else if the first argument passed is a LONG then function accepts two parameters.Parameter order is extract(timestamp.in.milliseconds,unit).</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#timestampinmilliseconds-function">timestampInMilliseconds</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns system time or given time in milliseconds.If two STRING parameters are sent as the first argument, the parameter order should be timestampInMilliseconds(date.value,date.format) with last parameter as the optional parameter with is date.format.Else if no argument method invoked then system time will be returned in milliseconds.</p></div></li>
+<li><a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.11/#utctimestamp-function">utcTimestamp</a> <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><br><div style="padding-left: 1em;"><p>This function returns System time in yyyy-MM-dd HH:mm:ss format</p></div></li>
 </ul>
 <h2 id="how-to-contribute">How to Contribute</h2>
 <ul>
@@ -545,13 +557,13 @@
       <nav class="md-footer-nav__inner md-grid">
         
         
-          <a href="api/4.0.10/" title="4.0.10" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="api/4.0.11/" title="4.0.11" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                4.0.10
+                4.0.11
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
