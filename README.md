@@ -3,6 +3,8 @@ siddhi-execution-time
 
 The **siddhi-execution-time extension** is an extension to <a target="_blank" href="https://wso2.github.io/siddhi">Siddhi</a> that provides time related functionality to Siddhi such as getting current time, current date, manipulating/formatting dates and etc.
 
+**Note** : All date formats will follow [Fast Date Format](https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/time/FastDateFormat.html)
+
 Find some useful links below:
 
 * <a target="_blank" href="https://github.com/wso2-extensions/siddhi-execution-time">Source code</a>
