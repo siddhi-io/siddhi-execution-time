@@ -64,7 +64,7 @@ import java.util.Map;
         description = "This function returns the day on which a given date falls.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
+                        description = "the value of the date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
                                       "\"13:23:44.657\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
@@ -74,7 +74,7 @@ import java.util.Map;
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returned the corresponding day of the week from the date value as a string value.",
+                description = "This returns the corresponding day of the week from the date value as a string value.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
@@ -82,7 +82,7 @@ import java.util.Map;
                                 + "from inputStream\n"
                                 + "select symbol,time:dayOfWeek(dateValue,dateFormat) as dayOfWeekExtracted\n"
                                 + "insert into outputStream;",
-                        description = "The Query extract the day of the week from the date given as dateValue which is"
+                        description = "The Query extracts the day of the week from the date given as dateValue which is"
                                 + "in the format 'dateFormat' and return symbol and extracted day as dayOfWeekExtracted"
                                 + "to the outputStream."
                 )

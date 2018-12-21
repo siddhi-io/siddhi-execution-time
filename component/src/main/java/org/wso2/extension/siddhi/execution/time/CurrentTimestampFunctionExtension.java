@@ -47,16 +47,16 @@ import java.util.Map;
         namespace = "time",
         description = "This function returns system time in yyyy-MM-dd HH:mm:ss format.",
         returnAttributes = @ReturnAttribute(
-                description = "Returned type will be string.",
+                description = "The value returned is of the string type.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
                         syntax = "define stream inputStream (symbol string, price long, volume long);\n" +
                                  "from inputStream select symbol , time:currentTimestamp() as currentTimestamp\n" +
                                  "insert into outputStream;",
-                        description = "This query returns symbol from inputStream and"
-                                + "current time stamp of the system in yyyy-MM-dd HH:mm:ss format"
-                                + " as currentTimestamp to the outputStream"
+                        description = "This query returns 'symbol' from the inputStream, which" +
+                                " has the currentTimestamp of the system stored in it, to the outputStream. " +
+                                "It returns the currentTimestamp in yyyy-MM-dd HH:mm:ss format."
                 )
         }
 )

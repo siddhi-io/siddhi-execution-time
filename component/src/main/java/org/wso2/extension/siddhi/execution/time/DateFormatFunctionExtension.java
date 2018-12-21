@@ -64,19 +64,21 @@ import java.util.Map;
 @Extension(
         name = "dateFormat",
         namespace = "time",
-        description = "This function returns a formatted date string.If the first argument is a STRING then function" +
-                      " accepts three " +
-                      "parameters with last parameter as a optional parameter.Parameter order should be dateFormat" +
-                      "(dateValue,dateTargetFormat,dateSourceFormat). Else if first argument is a LONG then function " +
-                      "accepts two parameters.Parameter order should be dateFormat(timestampInMilliseconds," +
-                      "dateTargetFormat).",
+        description = "This function returns a formatted date string.If the first argument is a STRING then" +
+                    " the function accepts three " +
+                      "parameters with the last parameter as an optional parameter.The order of the parameters" +
+                    " should be dateFormat" +
+                      "(dateValue,dateTargetFormat,dateSourceFormat). Instead, if the first argument is a " +
+                      "LONG then it " +
+                      "accepts two parameters.In this case, the order of the parameter " +
+                    "should be dateFormat(timestampInMilliseconds, dateTargetFormat).",
         parameters = {
                 @Parameter(name = "date.value",
                         description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
                                       "\"13:23:44.657\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.target.format",
-                        description = "Date format which need to be converted to. eg: yyyy/MM/dd HH:mm:ss.",
+                        description = "The date format which needs to be converted. eg: yyyy/MM/dd HH:mm:ss.",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.source.format",
                         description = "Date format of the provided date.value1. eg: yyyy-MM-dd HH:mm:ss.SSS.",

@@ -68,35 +68,41 @@ import java.util.Map;
 @Extension(
         name = "dateAdd",
         namespace = "time",
-        description = "This function returns added specified time interval to a date.If a STRING parameter passed as " +
-                      "the first argument then function accepts four parameters with last as optional which is the " +
-                      "date.format. If a LONG parameter passed as the first argument, then function accepts three " +
-                      "parameters which are timestamp.in.milliseconds,expr,unit in order.",
+        description = "This function returns the specified time interval that is added to a date." +
+                "If a STRING parameter is passed as the first argument, then the function accepts four " +
+                "parameters with the last parameter, i.e., date.format., as an optional one." +
+                " If a LONG parameter is passed as the first argument, then the function accepts three " +
+                "parameters, i.e., timestamp.in.milliseconds, expr and unit in the given order.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
+                        description = "The value of the date. " +
+                                "For example, \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
                                       "\"13:23:44.657\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "expr",
-                        description = "In which amount, selected date format part should be incremented. eg: 2 ,5 ,10" +
-                                      " etc.",
+                        description = "This is the amount by which the selected part of the date format " +
+                                "is incremented." +
+                                "For example, 2 ,5 ,10, etc.",
                         type = {DataType.INT}),
                 @Parameter(name = "unit",
-                        description = "Which part of the date format you want to manipulate. eg: \"MINUTE\" , " +
+                        description = "This is the part of the date format that needs to be modified." +
+                                      "For example, \"MINUTE\" , " +
                                       "\"HOUR\" , \"MONTH\" , \"YEAR\" , \"QUARTER\" ,\n" +
                                       "\"WEEK\" , \"DAY\" , \"SECOND\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
-                        description = "Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS",
+                        description = "The date format of the provided date value. " +
+                                "For example, yyyy-MM-dd HH:mm:ss.SSS.",
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
                 @Parameter(name = "timestamp.in.milliseconds",
-                        description = "date value in milliseconds.(from the epoch) eg: 1415712224000L",
+                        description = "The date value in milliseconds from the epoch. " +
+                                "for example, 1415712224000L",
                         type = {DataType.LONG})
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returns date after adding specified time. Returned type will be string.",
+                description = "The date value returned after adding the specified time.The type returned is string.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
@@ -105,10 +111,11 @@ import java.util.Map;
                                 "from inputStream\n " +
                                 "select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearAdded\n" +
                                 "insert into outputStream;",
-                        description = "This query gets date value from the input stream, adds expr amount to the "
-                                + "year value of the date value, format resultant value as date format given in the "
-                                + "input stream and finally return the formatted value to the outputStream "
-                                + "as yearAdded with the symbol"
+                        description = "This query gets the date value from the input stream, adds expr amount to the "
+                                + "year value of the date value, formats the resultant value into the date format" +
+                                " given in the "
+                                + "input stream and finally returns the formatted value to the outputStream "
+                                + "as yearAdded with the symbol."
                 ),
                 @Example(
                         syntax = "define stream inputStream (symbol string,dateValue string,dateFormat string," +
@@ -116,10 +123,10 @@ import java.util.Map;
                                 "from inputStream\n " +
                                 "time:dateAdd(timestampInMilliseconds,expr,'HOUR') as hourAddedMills\n " +
                                 "insert into outputStream;",
-                        description = "This query gets value of timestampInMilliseconds from the input stream,"
-                                + " adds expr amount of hours to it and return "
-                                + " resultant value in milliseconds as hourAddedMills into the outputStream "
-                                + " with the symbol"
+                        description = "This query gets the value of the timestampInMilliseconds from the input stream,"
+                                + " adds expr amount of hours to it and returns the "
+                                + " resultant value in milliseconds as hourAddedMills, into the outputStream "
+                                + " with the symbol."
                 )
         }
 )

@@ -55,9 +55,10 @@ import java.util.Map;
 @Extension(
         name = "timestampInMilliseconds",
         namespace = "time",
-        description = "This function returns system time or given time in milliseconds.If two STRING parameters are " +
-                      "sent as the first argument, the parameter order should be timestampInMilliseconds(date.value," +
-                      "date.format) with last parameter as the optional parameter with is date.format.Else if no " +
+        description = "This function returns the system time or given time in milliseconds." +
+                "If two STRING parameters are sent as the first argument, " +
+                "the order of the parameter should be timestampInMilliseconds(date.value," +
+                      "date.format) with the last parameter as the optional parameter with is date.format.Else if no " +
                       "argument method invoked then system time will be returned in milliseconds.",
         parameters = {
                 @Parameter(name = "date.value",

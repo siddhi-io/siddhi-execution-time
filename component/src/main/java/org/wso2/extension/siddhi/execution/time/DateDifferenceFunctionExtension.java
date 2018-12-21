@@ -67,28 +67,34 @@ import java.util.concurrent.TimeUnit;
 @Extension(
         name = "dateDiff",
         namespace = "time",
-        description = " This function returns time(days) between two dates. If two STRING arguments" +
-                      " are sent as first two parameters" +
-                      " then function should accept four parameters with last two as optional parameters. Parameter " +
-                      "order should be dateDiff(date.value1,date.value2,date.format1,date.format2). Else if two LONG " +
-                      "arguments are sent as first two parameters then parameter order should be dateDiff(timestamp" +
-                      ".in.milliseconds1,timestamp.in.milliseconds2). ",
+        description = " This function returns the time in days between two dates. If two STRING arguments" +
+                      " are sent as the first two parameters," +
+                      " the function should accept all four parameters provided, specifying the last two " +
+                      "parameters as optional parameters. " +
+                      "The order of the parameters should be" +
+                " dateDiff(date.value1,date.value2,date.format1,date.format2). Instead, if two LONG " +
+                      "arguments are sent as the first two parameters, the order of the parameters should be " +
+                "dateDiff(timestamp.in.milliseconds1,timestamp.in.milliseconds2). ",
         parameters = {
                 @Parameter(name = "date.value1",
-                        description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
-                                      "\"13:23:44.657\".",
+                        description = "The date value of the first parameter. For example, " +
+                                "\"2014-11-11 13:23:44.657\", \"2014-11-11\", \"13:23:44.657\".",
+
                         type = {DataType.STRING}),
                 @Parameter(name = "date.value2",
-                        description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
-                                      "\"13:23:44.657\".",
+                        description = "The date value of the second parameter. For example," +
+                                " \"2014-11-11 13:23:44.657\", " +
+                                "\"2014-11-11\", \"13:23:44.657\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format1",
-                        description = "Date format of the provided date.value1. eg: yyyy-MM-dd HH:mm:ss.SSS.",
+                        description = "The format of the date provided for the first parameter, i.e.," +
+                                " yyyy-MM-dd HH:mm:ss.SSS.",
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
                 @Parameter(name = "date.format2",
-                        description = "Date format of the provided date.value2. eg: yyyy-MM-dd HH:mm:ss.SSS.",
+                        description = "The format of the date provided for the second parameter, i.e., " +
+                                "yyyy-MM-dd HH:mm:ss.SSS.",
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
@@ -100,7 +106,8 @@ import java.util.concurrent.TimeUnit;
                         type = {DataType.LONG})
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returns difference of given two dates. Returned type will be int.",
+                description = "This returns the difference of the two given dates. " +
+                        "The returned value is of the 'int' type.",
                 type = {DataType.INT}),
         examples = {
                 @Example(
@@ -112,10 +119,11 @@ import java.util.concurrent.TimeUnit;
                                 + "as dateDifference,\n"
                                 + " as dateDifferenceInMilliseconds "
                                 + "insert into outputStream;",
-                        description = "This query return difference between timestampInMilliseconds1 and "
-                                + "timestampInMilliseconds2 as dateDifferenceInMilliseconds and difference between "
-                                + "dataValue1 which is in the format 'dateFormat1' and dataValue2 which is"
-                                + "in the format 'dateFormat2' as dateDifference and return to the outputStream with"
+                        description = "This query returns the difference between timestampInMilliseconds1 and "
+                                + "timestampInMilliseconds2 as the dateDifferenceInMilliseconds and the " +
+                                "difference between dataValue1 which is in the format, 'dateFormat1' and " +
+                                "dataValue2 which is in the format, 'dateFormat2', as dateDifference. This function" +
+                                " then directs the result to the outputStream.return to the outputStream with"
                                 + " symbol value"
                 )
         }

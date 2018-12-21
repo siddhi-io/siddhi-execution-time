@@ -67,15 +67,16 @@ import java.util.Map;
         namespace = "time",
         description = "This function returns date attributes from a date expression. " +
                      "If the first argument passed is a " +
-                      "STRING then the function will accept three arguments with last parameter as optional which is " +
-                      "date.format.Parameter order should be extract(unit,date.value,date.format). Else if the first " +
-                      "argument passed is a LONG then function accepts two parameters.Parameter order is extract" +
-                      "(timestamp.in.milliseconds,unit).",
+                      "STRING then the function will accept three arguments with the last parameter, i.e.," +
+                      " date.format as an optional one. " +
+                      "The order of the parameter is extract(unit,date.value,date.format). Instead, " +
+                "if the first argument passed is a LONG, then the function accepts two parameters." +
+                "In this case, the parameter order is extract(timestamp.in.milliseconds,unit).",
         parameters = {
                 @Parameter(name = "unit",
-                        description = "Which part of the date format you want to manipulate. eg: \"MINUTE\" , " +
-                                      "\"HOUR\" , \"MONTH\" , \"YEAR\" , \"QUARTER\" ,\n" +
-                                      "\"WEEK\" , \"DAY\" , \"SECOND\".",
+                        description = "The part of the date format that needs to be manipulated. For example," +
+                                " \"MINUTE\", \"HOUR\", \"MONTH\", \"YEAR\", \"QUARTER\",\n" +
+                                      "\"WEEK\", \"DAY\", \"SECOND\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.value",
                         description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
@@ -101,9 +102,9 @@ import java.util.Map;
                                 + "select symbol, time:extract('YEAR',dateValue,dateFormat) as YEAR,"
                                 + "time:extract(timestampInMilliseconds,'HOUR') as HOUR\n "
                                 + "insert into outputStream;",
-                        description = "This query extracts the year value from the dateValue which is in format"
-                                + "'dateFormat' as the YEAR, hours from timestampInMilliseconds "
-                                + "as HOUR and return symbol, YEAR and HOUR to the outputStream."
+                        description = "This query extracts the year value from the dateValue as YEAR. The dateValue" +
+                                " is in the 'dateFormat'. It also extracts the hours from timestampInMilliseconds "
+                                + "as HOUR. The query then returns the symbols, YEAR and HOUR to the outputStream."
                 )
         }
 )

@@ -55,20 +55,21 @@ import java.util.Map;
 @Extension(
         name = "date",
         namespace = "time",
-        description = "This function returns date part from a date or date/time expression.",
+        description = "This function returns the date part, from a date or date/time expression.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
-                                      "\"13:23:44.657\".",
+                        description = "The value of the date. For example," +
+                                " \"2014-11-11 13:23:44.657\", \"2014-11-11\" , \"13:23:44.657\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
-                        description = "Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS",
+                        description = "The date format of the date value provided. For example," +
+                                " yyyy-MM-dd HH:mm:ss.SSS",
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returned extracted Date value as a string value.",
+                description = "This returns the extracted Date value as a string value.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
@@ -77,9 +78,9 @@ import java.util.Map;
                                   + "select symbol,time:date(dateValue,dateFormat) as dateExtracted\n "
                                   + "insert into outputStream;\n",
 
-                        description = "This query extracts the date value from the dateValue which is in format"
-                                + "'dateFormat' as the dateExtracted  and return symbol, "
-                                + "and dateExtracted to the outputStream."
+                        description = "This query extracts the date value from the dateValue as the dateExtracted," +
+                                " where the dateValue is in the 'dateFormat' format. The query then returns the " +
+                                "symbol and the dateExtracted to the outputStream."
                 )
         }
 )
