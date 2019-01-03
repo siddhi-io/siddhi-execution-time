@@ -69,60 +69,65 @@ import java.util.Map;
 @Extension(
         name = "dateSub",
         namespace = "time",
-        description = "This function returns subtracted specified time interval to a date. " +
-                      "If a STRING parameter passed" +
-                      " as the first argument then function accepts four parameters with last as optional which is " +
-                      "the date.format. If a LONG parameter passed as the first argument," +
-                      " then function accepts three" +
-                      " parameters which are timestamp.in.milliseconds,expr,unit in order.",
+        description = "This function returns the date after subtracting a specified time interval from it. " +
+                      "If a parameter of 'String' type is passed as the first argument, then the function accepts " +
+                "four parameters with the last parameter, i.e., 'date.format' as an optional one." +
+                "If a parameter of 'Long' type is passed as the first argument, then the function accepts three" +
+                      " parameters, i.e., 'timestamp.in.milliseconds', 'expr' and 'unit' in the given order.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
+                        description = "The value of date. For example, \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
                                       "\"13:23:44.657\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "expr",
-                        description = "In which amount, selected date format part should be incremented. eg: 2 ,5 ,10" +
+                        description = "The amount by which the selected part of the date should be incremented. " +
+                                "For example, 2 ,5 ,10," +
                                       " etc.",
                         type = {DataType.INT}),
                 @Parameter(name = "unit",
-                        description = "Which part of the date format you want to manipulate. eg: \"MINUTE\" , " +
-                                      "\"HOUR\" , \"MONTH\" , \"YEAR\" , \"QUARTER\" ,\n" +
+                        description = "The part of the date that is required to be modified. For example," +
+                                " \"MINUTE\" , \"HOUR\" , \"MONTH\" , \"YEAR\" , \"QUARTER\" ,\n" +
                                       "\"WEEK\" , \"DAY\" , \"SECOND\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
-                        description = "Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS",
+                        description = "The date format of the date value provided. For example," +
+                                " 'yyyy-MM-dd HH:mm:ss.SSS'",
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
                 @Parameter(name = "timestamp.in.milliseconds",
-                        description = "date value in milliseconds.(from the epoch) eg: 1415712224000L",
+                        description = "The date value in milliseconds from the epoch. For example, 1415712224000L",
                         type = {DataType.LONG})
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returns date after subtracting the specified time. Returned type will be string.",
+                description = "This returns the date after subtracting the specified time from " +
+                        "the given date format. " +
+                        "The type returned is String.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "define stream inputStream (symbol string,dateValue string,dateFormat string," +
+                        syntax = "define stream InputStream (symbol string,dateValue string,dateFormat string," +
                                 "expr int);\n" +
-                                "from inputStream\n " +
+                                "from InputStream\n " +
                                 "select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearSubtracted\n" +
-                                "insert into outputStream;",
-                        description = "This query gets date value from the input stream, subtract expr amount from the "
-                                + "year value of the date value, format resultant value as date format given in the "
-                                + "input stream and finally return the formatted value to the outputStream "
-                                + "as yearSubtracted with the symbol"
+                                "insert into OutputStream;",
+                        description = "This query gets the date value from the input stream, decrements the 'YEAR'" +
+                                "value of the 'dateValue' by the 'expr' value given, " +
+                                "formats the resultant value into the" +
+                                " 'dateFormat' format in the input stream and returns the formatted value to" +
+                                " the 'OutputStream' as 'yearSubtracted' with the symbol."
                 ),
                 @Example(
-                        syntax = "define stream inputStream (symbol string,dateValue string,dateFormat string," +
+                        syntax = "define stream InputStream (symbol string,dateValue string,dateFormat string," +
                                 "timestampInMilliseconds long,expr int);\n" +
-                                "from inputStream\n " +
+                                "from InputStream\n " +
                                 "time:dateSub(timestampInMilliseconds,expr,'HOUR') as hourSubtractedMills\n " +
-                                "insert into outputStream;",
-                        description = "This query gets value of timestampInMilliseconds from the input stream,"
-                                + " subtract expr amount of hours from it and return "
-                                + " resultant value in milliseconds as hourSubtractedMills into the outputStream "
-                                + " with the symbol"
+                                "insert into OutputStream;",
+                        description = "This query gets the value of the 'timestampInMilliseconds' " +
+                                "from the input stream,"
+                                + " subtracts the 'expr' number of hours from it and returns the "
+                                + " resultant value in milliseconds as 'hourSubtractedMills', to the 'OutputStream' "
+                                + "with the symbol."
                 )
         }
 )

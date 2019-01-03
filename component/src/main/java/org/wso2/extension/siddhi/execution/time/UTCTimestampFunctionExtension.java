@@ -46,18 +46,19 @@ import java.util.TimeZone;
 @Extension(
         name = "utcTimestamp",
         namespace = "time",
-        description = "This function returns System time in yyyy-MM-dd HH:mm:ss format",
+        description = "This function returns the system time in 'yyyy-MM-dd HH:mm:ss' format.",
         returnAttributes = @ReturnAttribute(
-                description = "The system time is returns in yyyy-MM-dd HH:mm:ss format.",
+                description = "The system time that is returned in 'yyyy-MM-dd HH:mm:ss' format.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax =  "define stream inputStream (symbol string, price long, volume long);" +
-                                   "from inputStream " +
+                        syntax =  "define stream InputStream (symbol string, price long, volume long);" +
+                                   "from InputStream " +
                                    "select symbol , time:utcTimestamp() as utcTimestamp " +
-                                   "insert into outputStream;",
-                        description = "The query return symbol from the inputStream and system time stamp"
-                                + " in yyyy-MM-dd HH:mm:ss format as utcTimestamp to the outputStream."
+                                   "insert into OutputStream;",
+                        description = "The query returns the symbol in the 'InputStream', and the system time stamp"
+                                + " in 'yyyy-MM-dd HH:mm:ss' format as 'utcTimestamp'," +
+                                " to the 'OutputStream'."
                 )
         }
 )
