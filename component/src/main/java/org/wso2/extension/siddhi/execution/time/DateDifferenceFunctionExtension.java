@@ -67,13 +67,14 @@ import java.util.concurrent.TimeUnit;
 @Extension(
         name = "dateDiff",
         namespace = "time",
-        description = " This function returns the time in days between two dates. If two STRING arguments" +
-                      " are sent as the first two parameters," +
-                      " the function should accept all four parameters provided, specifying the last two " +
-                      "parameters as optional parameters. " +
+        description = " This function returns the time in days, between two dates. Two arguments of 'String' type" +
+                      " are sent as the first two parameters." +
+                      " The function can accept four parameters,the last two " +
+                      "parameters corresponding to the date formats being optional ones. " +
                       "The order of the parameters should be" +
-                " dateDiff(date.value1,date.value2,date.format1,date.format2). Instead, if two LONG " +
-                      "arguments are sent as the first two parameters, the order of the parameters should be " +
+                " dateDiff(date.value1,date.value2,date.format1,date.format2). Instead, if two " +
+                      "arguments of 'Long' type are sent as the first two parameters, " +
+                "the order of the parameters should be " +
                 "dateDiff(timestamp.in.milliseconds1,timestamp.in.milliseconds2). ",
         parameters = {
                 @Parameter(name = "date.value1",
@@ -99,32 +100,31 @@ import java.util.concurrent.TimeUnit;
                         optional = true,
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
                 @Parameter(name = "timestamp.in.milliseconds1",
-                        description = "date value in milliseconds.(from the epoch) eg: 1415712224000L.",
+                        description = "The date value in milliseconds from the epoch. For example, 1415712224000L.",
                         type = {DataType.LONG}),
                 @Parameter(name = "timestamp.in.milliseconds2",
-                        description = "date value in milliseconds.(from the epoch) eg: 1415712224000L.",
+                        description = "The date value in milliseconds from the epoch. For example, 1415712224000L.",
                         type = {DataType.LONG})
         },
         returnAttributes = @ReturnAttribute(
                 description = "This returns the difference of the two given dates. " +
-                        "The returned value is of the 'int' type.",
+                        "The returned value is of 'int' type.",
                 type = {DataType.INT}),
         examples = {
                 @Example(
-                        syntax = "define stream inputStream (symbol string,dateValue1 string,dateFormat1 string,"
+                        syntax = "define stream InputStream (symbol string,dateValue1 string,dateFormat1 string,"
                                 + "dateValue2 string,dateFormat2 string,);\n"
-                                + "from inputStream\n "
+                                + "from InputStream\n "
                                 + "time:dateDiff(timestampInMilliseconds1,timestampInMilliseconds2)"
                                 + "select symbol , time:dateDiff(dateValue1,dateValue2,dateFormat1,dateFormat2) "
                                 + "as dateDifference,\n"
                                 + " as dateDifferenceInMilliseconds "
-                                + "insert into outputStream;",
-                        description = "This query returns the difference between timestampInMilliseconds1 and "
-                                + "timestampInMilliseconds2 as the dateDifferenceInMilliseconds and the " +
-                                "difference between dataValue1 which is in the format, 'dateFormat1' and " +
-                                "dataValue2 which is in the format, 'dateFormat2', as dateDifference. This function" +
-                                " then directs the result to the outputStream.return to the outputStream with"
-                                + " symbol value"
+                                + "insert into OutputStream;",
+                        description = "This query returns the difference between 'timestampInMilliseconds1' and "
+                                + "'timestampInMilliseconds2' as the 'dateDifferenceInMilliseconds' and the " +
+                                "difference between 'dataValue1' which is in the format, 'dateFormat1' and " +
+                                "'dataValue2' which is in the format, 'dateFormat2', as 'dateDifference'. " +
+                                "This function then redirects the results to the 'OutputStream'."
                 )
         }
 )

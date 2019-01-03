@@ -64,27 +64,30 @@ import java.util.Map;
         description = "This function returns the day on which a given date falls.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "the value of the date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
+                        description = "The value of the date. For example, \"2014-11-11 13:23:44.657\", " +
+                                "\"2014-11-11\" , " +
                                       "\"13:23:44.657\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
-                        description = "Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS",
+                        description = "The date format of the date value provided. For example," +
+                                " 'yyyy-MM-dd HH:mm:ss.SSS'.",
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
         },
         returnAttributes = @ReturnAttribute(
-                description = "This returns the corresponding day of the week from the date value as a string value.",
+                description = "This returns the day of the week, corresponding to the date value given, " +
+                        " as a string value.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax =  "define stream inputStream (symbol string, dateValue string,dateFormat string);\n"
-                                + "from inputStream\n"
+                        syntax =  "define stream InputStream (symbol string, dateValue string,dateFormat string);\n"
+                                + "from InputStream\n"
                                 + "select symbol,time:dayOfWeek(dateValue,dateFormat) as dayOfWeekExtracted\n"
-                                + "insert into outputStream;",
-                        description = "The Query extracts the day of the week from the date given as dateValue which is"
-                                + "in the format 'dateFormat' and return symbol and extracted day as dayOfWeekExtracted"
-                                + "to the outputStream."
+                                + "insert into OutputStream;",
+                        description = "The Query extracts the day on which the date given as 'dateValue' " +
+                                "in the 'dateFormat' format falls. It returns the symbol and the extracted day as " +
+                                "'dayOfWeekExtracted', to the 'OutputStream'."
                 )
         }
 )

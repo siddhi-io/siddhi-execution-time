@@ -56,45 +56,47 @@ import java.util.Map;
         name = "timestampInMilliseconds",
         namespace = "time",
         description = "This function returns the system time or given time in milliseconds." +
-                "If two STRING parameters are sent as the first argument, " +
-                "the order of the parameter should be timestampInMilliseconds(date.value," +
-                      "date.format) with the last parameter as the optional parameter with is date.format.Else if no " +
-                      "argument method invoked then system time will be returned in milliseconds.",
+                "If two parameters of 'String' type are sent as the first argument, " +
+                "the order of the parameters should be timestampInMilliseconds(date.value," +
+                      "date.format) with the last parameter, i.e., 'date.format', as the optional one" +
+                "Instead, if no " +
+                      "argument method is invoked, the system time is returned in milliseconds.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
-                                      "\"13:23:44.657\".",
+                        description = "The value of the date. For example, \"2014-11-11 13:23:44.657\", " +
+                                "\"2014-11-11\" , \"13:23:44.657\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
-                        description = "Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS",
+                        description = "The date format of the date value provided. For example," +
+                                " 'yyyy-MM-dd HH:mm:ss.SSS'.",
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returned type will be long.",
+                description = "The value of the parameter returned is of 'long' type.",
                 type = {DataType.LONG}),
         examples = {
                 @Example(
-                        syntax = "define stream inputStream (symbol string, price long, volume long);\n" +
-                                 "from inputStream\n" +
+                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
+                                 "from InputStream\n" +
                                  "select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19'," +
                                  "'yyyy-MM-DD HH:MM:SS') as timestampInMilliseconds\n" +
-                                 "insert into outputStream;",
-                        description = "The query convert the 2007-11-30 10:30:19 which is in yyyy-MM-DD HH:MM:SS"
-                                + " format to the milliseconds as timestampInMilliseconds and return symbol and "
-                                + "timestampInMilliseconds to the output stream"
+                                 "insert into OutputStream;",
+                        description = "The query converts 2007-11-30 10:30:19 which is in 'yyyy-MM-DD HH:MM:SS'"
+                                + " format to  milliseconds as 'timestampInMilliseconds' and returns the symbol and "
+                                + "'timestampInMilliseconds' to the 'OutputStream'."
                 ),
 
                 @Example(
-                        syntax = "define stream inputStream (symbol string, price long, volume long);\n" +
-                                "from inputStream\n" +
+                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
+                                "from InputStream\n" +
                                 "select symbol , time:timestampInMilliseconds()" +
                                 "as timestampInMilliseconds\n" +
-                                "insert into outputStream;",
-                        description = "The query get the system time in milliseconds"
-                                + " as timestampInMilliseconds and return symbol and "
-                                + "timestampInMilliseconds to the output stream"
+                                "insert into OutputStream;",
+                        description = "The query gets the system time in milliseconds"
+                                + " as 'timestampInMilliseconds' and returns the symbol from the 'InputStream' and "
+                                + "'timestampInMilliseconds' to the 'OutputStream'."
                 )
         }
 )

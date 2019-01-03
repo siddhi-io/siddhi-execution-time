@@ -64,49 +64,52 @@ import java.util.Map;
 @Extension(
         name = "dateFormat",
         namespace = "time",
-        description = "This function returns a formatted date string.If the first argument is a STRING then" +
+        description = "This function returns a formatted date string.If the first argument is of 'String' type, then" +
                     " the function accepts three " +
                       "parameters with the last parameter as an optional parameter.The order of the parameters" +
-                    " should be dateFormat" +
-                      "(dateValue,dateTargetFormat,dateSourceFormat). Instead, if the first argument is a " +
-                      "LONG then it " +
+                    " should be dateFormat(dateValue,dateTargetFormat,dateSourceFormat). " +
+                    "Instead, if the first argument is of 'Long' type, then it " +
                       "accepts two parameters.In this case, the order of the parameter " +
                     "should be dateFormat(timestampInMilliseconds, dateTargetFormat).",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "value of date. eg: \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
+                        description = "The value of the date. For example," +
+                                " \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
                                       "\"13:23:44.657\".",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.target.format",
-                        description = "The date format which needs to be converted. eg: yyyy/MM/dd HH:mm:ss.",
+                        description = "The format of the date into which the date value needs to be converted. " +
+                                "For example, 'yyyy/MM/dd HH:mm:ss'.",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.source.format",
-                        description = "Date format of the provided date.value1. eg: yyyy-MM-dd HH:mm:ss.SSS.",
+                        description = "The format in which the data value is present in the input stream." +
+                                "For example, 'yyyy-MM-dd HH:mm:ss.SSS'.",
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
                 @Parameter(name = "timestamp.in.milliseconds",
-                        description = "date value in milliseconds.(from the epoch) eg: 1415712224000L.",
+                        description = "The date value in milliseconds from the epoch. For example, 1415712224000L.",
                         type = {DataType.LONG})
         },
         returnAttributes = @ReturnAttribute(
-                description = "Return formatted date. Returned type will be string.",
+                description = "The formatted data that is returned. The returned value is of 'String' type.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "define stream inputStream (symbol string,"
+                        syntax = "define stream InputStream (symbol string,"
                                 + "dateValue string,sourceFormat string,timestampInMilliseconds long,"
                                 + "targetFormat string);\n"
-                                + "from inputStream\n"
+                                + "from InputStream\n"
                                 + "select symbol"
                                 + "time:dateFormat(dateValue,targetFormat,sourceFormat) as formattedDate,"
                                 + "time:dateFormat(timestampInMilliseconds,targetFormat) as formattedUnixDate\n"
-                                + "insert into outputStream;",
-                        description = "This query formats the dateValue in the inputStream which is currently in "
-                                + "sourceFormat to the targetFormat as formattedData and formats"
-                                + " timestampInMilliseconds which is in millisecond to the targetFormat"
-                                + " as formattedUnixDate then return symbol formattedDate and formattedUnixDate to the"
-                                + " outputStream."
+                                + "insert into OutputStream;",
+                        description = "This query formats the 'dateValue' in the 'InputStream' which is in "
+                                + "the 'sourceFormat' to the 'targetFormat' as 'formattedData'. It also formats"
+                                + " 'timestampInMilliseconds' which is in milliseconds to the 'targetFormat'"
+                                + " as 'formattedUnixDate'. The function then returns the symbol " +
+                                "'formattedDate' and 'formattedUnixDate' to the"
+                                + " 'OutputStream'."
                 )
         }
 )

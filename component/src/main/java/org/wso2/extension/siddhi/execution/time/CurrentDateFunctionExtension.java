@@ -45,18 +45,18 @@ import java.util.Map;
 @Extension(
         name = "currentDate",
         namespace = "time",
-        description = "This function returns the system time in yyyy-MM-dd format.",
+        description = "This function returns the system time in 'yyyy-MM-dd' format.",
         returnAttributes = @ReturnAttribute(
-                description = "The value returned is of the string type.",
+                description = "The value returned is of 'string' type.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "define stream inputStream (symbol string, price long, volume long);\n" +
-                                 "from inputStream select symbol , time:currentDate() as currentTime \n" +
-                                 "insert into outputStream;",
-                        description = "This query returns 'symbol' from the inputStream, that comprises of the " +
-                                "current date and the current time, to the outputStream.It returns the " +
-                                "current date in the yyyy-MM-dd format."
+                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
+                                 "from InputStream select symbol , time:currentDate() as currentTime \n" +
+                                 "insert into OutputStream;",
+                        description = "This query returns 'symbol' from the 'InputStream' and the " +
+                                "current date and time, to the 'OutputStream'.It returns the " +
+                                "current date in the 'yyyy-MM-dd' format."
                 )
         }
 )
