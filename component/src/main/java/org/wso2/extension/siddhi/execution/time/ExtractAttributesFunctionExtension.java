@@ -232,8 +232,8 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
                 Date userSpecifiedDate = userSpecificFormat.parse(source);
                 cal.setTime(userSpecifiedDate);
             } catch (ParseException e) {
-                String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + source + e
-                        .getMessage();
+                String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + source +
+                        ". " + e.getMessage();
                 throw new SiddhiAppRuntimeException(errorMsg, e);
             } catch (ClassCastException e) {
                 String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();

@@ -22,11 +22,13 @@ import org.apache.log4j.Logger;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.wso2.extension.siddhi.execution.time.util.UnitTestAppender;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.exception.SiddhiAppCreationException;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
+import org.wso2.siddhi.core.stream.StreamJunction;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
 import org.wso2.siddhi.core.util.SiddhiTestHelper;
@@ -35,7 +37,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DateDifferenceFunctionExtensionTestCase {
 
-    private static final Logger log = Logger.getLogger(DateDifferenceFunctionExtensionTestCase.class);
+    private static Logger log = Logger.getLogger(DateDifferenceFunctionExtensionTestCase.class);
     private volatile boolean eventArrived;
     private int waitTime = 50;
     private int timeout = 30000;
@@ -103,6 +105,9 @@ public class DateDifferenceFunctionExtensionTestCase {
     public void dateDifferenceFunctionExtensionTest2() throws InterruptedException {
 
         log.info("DateDifferenceFunctionExtensionFirstDateInvalidFormatTestCase");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -118,18 +123,6 @@ public class DateDifferenceFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                eventArrived = true;
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                    if (eventCount.intValue() == 2) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                }
             }
         });
 
@@ -143,9 +136,9 @@ public class DateDifferenceFunctionExtensionTestCase {
                 "IBM", "2015:11:11 13:23:44", "yyyy-MM-dd HH:mm:ss", "2014-11-9 13:23:44", "yyyy-MM-dd HH:mm:ss",
                 1415692424000L, 1415519624000L
         });
-        Thread.sleep(1000);
-        AssertJUnit.assertEquals(2, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        Thread.sleep(100);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-dd HH:mm:ss does not match "
+                                                                       + "with the timestamp"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -153,6 +146,9 @@ public class DateDifferenceFunctionExtensionTestCase {
     public void dateDifferenceFunctionExtensionTest3() throws InterruptedException {
 
         log.info("DateDifferenceFunctionExtensionSecondDateInvalidFormatTestCase");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -168,18 +164,6 @@ public class DateDifferenceFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                eventArrived = true;
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                    if (eventCount.intValue() == 2) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                }
             }
         });
 
@@ -193,9 +177,9 @@ public class DateDifferenceFunctionExtensionTestCase {
                 "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", "2015:11:9 13:23:44", "yyyy-MM-dd HH:mm:ss",
                 1415692424000L, 1415519624000L
         });
-        Thread.sleep(1000);
-        AssertJUnit.assertEquals(2, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        Thread.sleep(100);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-dd HH:mm:ss does not match "
+                                                                       + "with the timestamp"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -267,6 +251,9 @@ public class DateDifferenceFunctionExtensionTestCase {
     public void dateDifferenceFunctionExtension8() throws InterruptedException {
 
         log.info("DateDifferenceFunctionExtensionFirstArgumetNullTestCase");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -282,18 +269,6 @@ public class DateDifferenceFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                eventArrived = true;
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                    if (eventCount.intValue() == 2) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                }
             }
         });
 
@@ -307,9 +282,11 @@ public class DateDifferenceFunctionExtensionTestCase {
                 "IBM", null, "yyyy-MM-dd HH:mm:ss", "2016-11-9 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L,
                 1415519624000L
         });
-        Thread.sleep(1000);
-        AssertJUnit.assertEquals(2, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        Thread.sleep(100);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateDiff("
+                                                                       + "dateValue1,dateValue2,dateFormat1,"
+                                                                       + "dateFormat2) function. First argument "
+                                                                       + "cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -317,6 +294,9 @@ public class DateDifferenceFunctionExtensionTestCase {
     public void dateDifferenceFunctionExtension9() throws InterruptedException {
 
         log.info("DateDifferenceFunctionExtensionThirdArgumetNullTestCase");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -332,18 +312,6 @@ public class DateDifferenceFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                eventArrived = true;
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                    if (eventCount.intValue() == 2) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                }
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
@@ -356,9 +324,10 @@ public class DateDifferenceFunctionExtensionTestCase {
                 "IBM", "2015-11-11 13:23:44", null, "2012-11-9 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L,
                 1415519624000L
         });
-        Thread.sleep(1000);
-        AssertJUnit.assertEquals(2, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        Thread.sleep(100);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateDiff(dateValue1,"
+                                                                       + "dateValue2,dateFormat1,dateFormat2) "
+                                                                       + "function. Third argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -366,6 +335,9 @@ public class DateDifferenceFunctionExtensionTestCase {
     public void dateDifferenceFunctionExtension10() throws InterruptedException {
 
         log.info("DateDifferenceFunctionExtensionSecondArgumetNullTestCase");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -382,17 +354,6 @@ public class DateDifferenceFunctionExtensionTestCase {
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                    if (eventCount.intValue() == 2) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals("2", event.getData(2).toString());
-                    }
-                }
             }
         });
 
@@ -406,9 +367,11 @@ public class DateDifferenceFunctionExtensionTestCase {
                 "IBM", "2015-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", null, "yyyy-MM-dd HH:mm:ss", 1415692424000L,
                 1415519624000L
         });
-        Thread.sleep(1000);
-        AssertJUnit.assertEquals(2, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        Thread.sleep(100);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateDiff("
+                                                                       + "dateValue1,dateValue2,dateFormat1,"
+                                                                       + "dateFormat2) function. Second argument "
+                                                                       + "cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -448,6 +411,9 @@ public class DateDifferenceFunctionExtensionTestCase {
     public void dateDifferenceFunctionExtension13() throws InterruptedException {
 
         log.info("DateDifferenceFunctionExtensionTestCaseCastingDesiredFormat");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -462,13 +428,6 @@ public class DateDifferenceFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                eventArrived = true;
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                    }
-                }
             }
         });
 
@@ -478,9 +437,10 @@ public class DateDifferenceFunctionExtensionTestCase {
                 "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", "2014-11-9 13:23:44", "yyyy-MM-dd HH:mm:ss",
                 1415692424000L, 1415519624000L
         });
-        Thread.sleep(1000);
-        AssertJUnit.assertEquals(1, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        Thread.sleep(100);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Provided Data type cannot be cast to desired format. "
+                                                                       + "java.lang.Long cannot be cast to "
+                                                                       + "java.lang.String"));
         siddhiAppRuntime.shutdown();
     }
 

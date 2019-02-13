@@ -144,8 +144,8 @@ public class ExtractDateFunctionExtension extends FunctionExecutor {
             FastDateFormat dataFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_DATE_FORMAT);
             return dataFormat.format(userSpecifiedDate);
         } catch (ParseException e) {
-            String errorMsg = "Provided format " + userFormat + " does not match with the timestamp " + source + e
-                    .getMessage();
+            String errorMsg = "Provided format " + userFormat + " does not match with the timestamp " + source + ". "
+                    + e.getMessage();
             throw new SiddhiAppRuntimeException(errorMsg, e);
         } catch (ClassCastException e) {
             String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();

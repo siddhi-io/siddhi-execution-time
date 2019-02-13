@@ -267,8 +267,8 @@ public class DateAddFunctionExtension extends FunctionExecutor {
                 getProcessedCalenderInstance(unit, calInstance, expression);
                 return formattedDate.format(calInstance.getTime());
             } catch (ParseException e) {
-                String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + date + e
-                        .getMessage();
+                String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + date + ". "
+                        + e.getMessage();
                 throw new SiddhiAppRuntimeException(errorMsg, e);
             } catch (ClassCastException e) {
                 String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
