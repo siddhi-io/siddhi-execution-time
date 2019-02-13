@@ -22,11 +22,13 @@ import org.apache.log4j.Logger;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.wso2.extension.siddhi.execution.time.util.UnitTestAppender;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.exception.SiddhiAppCreationException;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
+import org.wso2.siddhi.core.stream.StreamJunction;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
 
@@ -35,7 +37,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TimestampInMillisecondsFunctionExtensionTestCase {
 
-    private static final Logger log = Logger.getLogger(TimestampInMillisecondsFunctionExtensionTestCase.class);
+    private static Logger log = Logger.getLogger(TimestampInMillisecondsFunctionExtensionTestCase.class);
     private volatile boolean eventArrived;
     private int waitTime = 50;
     private int timeout = 30000;
@@ -156,6 +158,9 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
     public void timestampInMillisecondsWithAllArgumentsFunctionExtension2() throws InterruptedException {
 
         log.info("TimestampInMillisecondsWithAllArgumentsFunctionExtensionInvalidFormatTypeTestCase");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" + "define stream inputStream (symbol string, price long, volume long);";
@@ -169,13 +174,6 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        eventArrived = true;
-                    }
-                }
             }
         });
 
@@ -183,8 +181,8 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", 700f, 100L });
         Thread.sleep(100);
-        AssertJUnit.assertEquals(1, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-DD HH:MM:SS does not match "
+                                                                       + "with the timestamp 2007:11:30 10:30:19"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -228,6 +226,9 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
     public void timestampInMillisecondsWithAllArgumentsFunctionExtension4() throws InterruptedException {
 
         log.info("TimestampInMillisecondsWithAllArgumentsFunctionExtensionTestCaseInvalidFormatLengthTwo");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" + "define stream inputStream (symbol string, price int, volume long);";
@@ -240,13 +241,6 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        eventArrived = true;
-                    }
-                }
             }
         });
 
@@ -254,8 +248,8 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", 700f, 100L });
         Thread.sleep(100);
-        AssertJUnit.assertEquals(1, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-dd HH:mm:ss.SSS does not match"
+                                                                       + " with the timestamp 2007"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -305,6 +299,9 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
     public void timestampInMillisecondsWithAllArgumentsFunctionExtension8() throws InterruptedException {
 
         log.info("TimestampInMillisecondsWithAllArgumentsFunctionExtensionFirstArgumentNullTestCase");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         String dateTime = "2007-11-30 10:30:19.000";
         final Timestamp timestamp = Timestamp.valueOf(dateTime);
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -320,22 +317,15 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals(timestamp.getTime(), event.getData(2));
-                        eventArrived = true;
-                    }
-                }
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", null, 100L });
         Thread.sleep(100);
-        AssertJUnit.assertEquals(1, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:timestampInMilliseconds("
+                                                                       + "dateValue,dateFormat) function. First "
+                                                                       + "argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -343,6 +333,9 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
     public void timestampInMillisecondsWithAllArgumentsFunctionExtension9() throws InterruptedException {
 
         log.info("TimestampInMillisecondsWithAllArgumentsFunctionExtensionSecondArgumentNullTestCase");
+        UnitTestAppender appender = new UnitTestAppender();
+        log = Logger.getLogger(StreamJunction.class);
+        log.addAppender(appender);
         String dateTime = "2007-11-30 10:30:19.000";
         final Timestamp timestamp = Timestamp.valueOf(dateTime);
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -358,22 +351,15 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                for (Event event : inEvents) {
-                    eventCount.incrementAndGet();
-                    if (eventCount.intValue() == 1) {
-                        AssertJUnit.assertEquals(null, event.getData(1));
-                        AssertJUnit.assertEquals(timestamp.getTime(), event.getData(2));
-                        eventArrived = true;
-                    }
-                }
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", 700f, null });
         Thread.sleep(100);
-        AssertJUnit.assertEquals(1, eventCount.get());
-        AssertJUnit.assertTrue(eventArrived);
+        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:timestampInMilliseconds("
+                                                                       + "dateValue,dateFormat) function. First "
+                                                                       + "argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 }

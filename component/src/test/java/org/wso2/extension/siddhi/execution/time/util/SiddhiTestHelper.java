@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package util;
+package org.wso2.extension.siddhi.execution.time.util;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

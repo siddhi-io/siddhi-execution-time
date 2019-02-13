@@ -178,8 +178,8 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor {
                 Date date = userSpecificFormat.parse(source);
                 returnValue = date.getTime();
             } catch (ParseException e) {
-                String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + source + e
-                        .getMessage();
+                String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + source +
+                        ". " + e.getMessage();
                 throw new SiddhiAppRuntimeException(errorMsg, e);
             }
             return returnValue;
