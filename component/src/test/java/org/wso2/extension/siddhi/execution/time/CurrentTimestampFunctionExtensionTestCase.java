@@ -47,7 +47,7 @@ public class CurrentTimestampFunctionExtensionTestCase {
     }
 
     @Test
-    public void currentTimestampFunctionExtension() throws InterruptedException {
+    public void testCurrentTimestampFunctionExtension1() throws InterruptedException {
 
         log.info("CurrentTimestampFunctionExtensionTestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -56,6 +56,87 @@ public class CurrentTimestampFunctionExtensionTestCase {
                 "define stream inputStream (symbol string, price long, volume long);";
         String query = ("@info(name = 'query1') " +
                 "from inputStream select symbol , time:currentTimestamp() as currentTimestamp " +
+                "insert into outputStream;");
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager
+                .createSiddhiAppRuntime(inStreamDefinition + query);
+
+        executionPlanRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+
+                eventArrived = true;
+                for (Event inEvent : inEvents) {
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",currentTimestamp : " + inEvent.getData(1));
+
+                }
+            }
+        });
+
+        InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
+        executionPlanRuntime.start();
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
+        inputHandler.send(new Object[]{"WSO2", 60.5f, 200L});
+        inputHandler.send(new Object[]{"XYZ", 60.5f, 200L});
+
+        SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
+        AssertJUnit.assertEquals(3, eventCount.get());
+        AssertJUnit.assertTrue(eventArrived);
+        executionPlanRuntime.shutdown();
+    }
+
+
+    @Test
+    public void tesCurrentTimestampFunctionExtension2() throws InterruptedException {
+
+        log.info("CurrentTimestampFunctionExtensionTestCase");
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        String inStreamDefinition = "" +
+                "define stream inputStream (symbol string, price long, volume long);";
+        String query = ("@info(name = 'query1') " +
+                "from inputStream select symbol , time:currentTimestamp(\"CST\") as currentTimestamp " +
+                "insert into outputStream;");
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager
+                .createSiddhiAppRuntime(inStreamDefinition + query);
+
+        executionPlanRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+
+                eventArrived = true;
+                for (Event inEvent : inEvents) {
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",currentTimestamp : " + inEvent.getData(1));
+
+                }
+            }
+        });
+
+        InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
+        executionPlanRuntime.start();
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
+        inputHandler.send(new Object[]{"WSO2", 60.5f, 200L});
+        inputHandler.send(new Object[]{"XYZ", 60.5f, 200L});
+
+        SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
+        AssertJUnit.assertEquals(3, eventCount.get());
+        AssertJUnit.assertTrue(eventArrived);
+        executionPlanRuntime.shutdown();
+    }
+
+    @Test
+    public void tesCurrentTimestampFunctionExtension3() throws InterruptedException {
+
+        log.info("CurrentTimestampFunctionExtensionTestCase");
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        String inStreamDefinition = "" +
+                "define stream inputStream (symbol string, price long, volume long);";
+        String query = ("@info(name = 'query1') " +
+                "from inputStream select symbol , time:currentTimestamp(\"Asia/Kolkata\") as currentTimestamp " +
                 "insert into outputStream;");
         SiddhiAppRuntime executionPlanRuntime = siddhiManager
                 .createSiddhiAppRuntime(inStreamDefinition + query);
