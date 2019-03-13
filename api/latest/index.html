@@ -106,7 +106,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#api-docs-v410" tabindex="1" class="md-skip">
+      <a href="#api-docs-v411" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -275,6 +275,18 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.1.1/" title="4.1.1" class="md-nav__link">
+      4.1.1
+    </a>
+  </li>
+
         
           
           
@@ -737,7 +749,7 @@
                   <a href="https://github.com/wso2-extensions/siddhi-execution-time/edit/master/docs/api/latest.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="api-docs-v410">API Docs - v4.1.0<a class="headerlink" href="#api-docs-v410" title="Permanent link">&para;</a></h1>
+                <h1 id="api-docs-v411">API Docs - v4.1.1<a class="headerlink" href="#api-docs-v411" title="Permanent link">&para;</a></h1>
 <h2 id="time">Time<a class="headerlink" href="#time" title="Permanent link">&para;</a></h2>
 <h3 id="currentdate-function">currentDate <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#currentdate-function" title="Permanent link">&para;</a></h3>
 <p style="word-wrap: break-word">This function returns the system time in 'yyyy-MM-dd' format.</p>
@@ -776,7 +788,7 @@ insert into OutputStream;
 <p style="word-wrap: break-word">This query returns, the symbol from the 'InputStream' andthe current time of the system in 'HH:mm:ss' format as current time,to the 'OutputStream'.</p>
 
 <h3 id="currenttimestamp-function">currentTimestamp <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#currenttimestamp-function" title="Permanent link">&para;</a></h3>
-<p style="word-wrap: break-word">This function returns the system time in 'yyyy-MM-dd HH:mm:ss' format.</p>
+<p style="word-wrap: break-word">If no argument is provided, this function will return the currentSystemTime and if the timezone is provided as an argument, it will convert the current systemtime to the given timezone and return. This function returns time in 'yyyy-MM-dd HH:mm:ss' format.<br>To check the available timezone ids, visit https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
 <div class="codehilite"><pre><span></span>&lt;STRING&gt; time:currentTimestamp()
@@ -792,6 +804,24 @@ insert into OutputStream;
 
 
 <p style="word-wrap: break-word">This query returns, symbol from the 'InputStream' and the current time stamp of the system in 'yyyy-MM-dd HH:mm:ss' format as 'currentTimestamp', to the 'OutputStream'.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<div class="codehilite"><pre><span></span>define stream InputStream (symbol string, price long, volume long);
+from InputStream select symbol , time:currentTimestamp(&quot;Asia/Kolkata&quot;) as currentTimestamp
+insert into OutputStream;
+</pre></div>
+
+
+<p style="word-wrap: break-word">This query returns, symbol from the 'InputStream' and the current time stamp of the system which is converted to Asia/Kolkata timezone, in 'yyyy-MM-dd HH:mm:ss' format as 'currentTimestamp', to the 'OutputStream'.</p>
+
+<p><span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span></p>
+<div class="codehilite"><pre><span></span>define stream InputStream (symbol string, price long, volume long);
+from InputStream select symbol , time:currentTimestamp(&quot;CST&quot;) as currentTimestamp
+insert into OutputStream;
+</pre></div>
+
+
+<p style="word-wrap: break-word">This query returns, symbol from the 'InputStream' and the current time stamp of the system which is converted to CST timezone, in 'yyyy-MM-dd HH:mm:ss' format as 'currentTimestamp', to the 'OutputStream'.</p>
 
 <h3 id="date-function">date <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#date-function" title="Permanent link">&para;</a></h3>
 <p style="word-wrap: break-word">This function returns the date part of a date or date/time expression.</p>
