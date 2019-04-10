@@ -18,21 +18,23 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
+import io.siddhi.annotation.Example;
+import io.siddhi.annotation.Extension;
+import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ReturnAttribute;
+import io.siddhi.annotation.util.DataType;
+import io.siddhi.core.config.SiddhiQueryContext;
+import io.siddhi.core.exception.SiddhiAppRuntimeException;
+import io.siddhi.core.executor.ExpressionExecutor;
+import io.siddhi.core.executor.function.FunctionExecutor;
+import io.siddhi.core.util.config.ConfigReader;
+import io.siddhi.core.util.snapshot.state.State;
+import io.siddhi.core.util.snapshot.state.StateFactory;
+import io.siddhi.query.api.definition.Attribute;
+import io.siddhi.query.api.exception.SiddhiAppValidationException;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Logger;
 import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
-import org.wso2.siddhi.annotation.Example;
-import org.wso2.siddhi.annotation.Extension;
-import org.wso2.siddhi.annotation.Parameter;
-import org.wso2.siddhi.annotation.ReturnAttribute;
-import org.wso2.siddhi.annotation.util.DataType;
-import org.wso2.siddhi.core.config.SiddhiAppContext;
-import org.wso2.siddhi.core.exception.SiddhiAppRuntimeException;
-import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import org.wso2.siddhi.core.executor.function.FunctionExecutor;
-import org.wso2.siddhi.core.util.config.ConfigReader;
-import org.wso2.siddhi.query.api.definition.Attribute;
-import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -84,50 +86,62 @@ import java.util.Map;
                 )
         }
 )
-public class ExtractDateFunctionExtension extends FunctionExecutor {
+public class ExtractDateFunctionExtension extends FunctionExecutor<ExtractDateFunctionExtension.ExtensionState> {
 
     private static final Logger log = Logger.getLogger(ExtractDateFunctionExtension.class);
     private Attribute.Type returnType = Attribute.Type.STRING;
 
     @Override
-    protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader,
-                        SiddhiAppContext siddhiAppContext) {
-
+    protected StateFactory<ExtensionState> init(ExpressionExecutor[] attributeExpressionExecutors,
+                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors.length > 2) {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:date(dateValue," +
-                                                   "dateFormat) function, " + "required 2, but found " +
-                                                   attributeExpressionExecutors.length);
+                    "dateFormat) function, " + "required 2, but found " +
+                    attributeExpressionExecutors.length);
         }
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
             throw new SiddhiAppValidationException("Invalid parameter type found for the first argument of " +
-                                                       "time:date(dateValue,dateFormat) function, " + "required " +
-                                                       Attribute.Type.STRING + " but found " +
-                                                       attributeExpressionExecutors[0].getReturnType().toString());
+                    "time:date(dateValue,dateFormat) function, " + "required " +
+                    Attribute.Type.STRING + " but found " +
+                    attributeExpressionExecutors[0].getReturnType().toString());
         }
         //User can omit sending the dateFormat thus using a default CEP Time format
         if (attributeExpressionExecutors.length > 0) {
             if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the second argument of " +
-                                                           "time:date(dateValue,dateFormat) function, " +
-                                                           "required " + Attribute.Type.STRING + " but found " +
-                                                           attributeExpressionExecutors[1].getReturnType().toString());
+                        "time:date(dateValue,dateFormat) function, " +
+                        "required " + Attribute.Type.STRING + " but found " +
+                        attributeExpressionExecutors[1].getReturnType().toString());
             }
         }
+        return () -> new ExtensionState();
 
     }
 
     @Override
     protected Object execute(Object[] data) {
+        return null;
+    }
+
+    @Override
+    protected Object execute(Object data) {
+        return null; //Since the EpochToDateFormat function takes in 2 parameters, this method does
+        // not get called. Hence, not implemented.
+
+    }
+
+    @Override
+    protected Object execute(Object[] data, ExtensionState state) {
         String userFormat;
         if (data[0] == null) {
             throw new SiddhiAppRuntimeException("Invalid input given to time:date(dateValue," +
-                                                "dateFormat) function" + ". First " + "argument cannot be null");
+                    "dateFormat) function" + ". First " + "argument cannot be null");
         }
         if (data.length > 0) {
             if (data[1] == null) {
                 throw new SiddhiAppRuntimeException(
                         "Invalid input given to time:date(dateValue,dateFormat) function" + ". Second " +
-                        "argument cannot be null");
+                                "argument cannot be null");
             }
             userFormat = (String) data[1];
         } else {
@@ -154,10 +168,8 @@ public class ExtractDateFunctionExtension extends FunctionExecutor {
     }
 
     @Override
-    protected Object execute(Object data) {
-        return null; //Since the EpochToDateFormat function takes in 2 parameters, this method does
-        // not get called. Hence, not implemented.
-
+    protected Object execute(Object data, ExtensionState state) {
+        return null;
     }
 
     @Override
@@ -165,13 +177,21 @@ public class ExtractDateFunctionExtension extends FunctionExecutor {
         return returnType;
     }
 
-    @Override
-    public Map<String, Object> currentState() { //No need to maintain a state.
-        return null;
-    }
+    static class ExtensionState extends State {
 
-    @Override
-    public void restoreState(Map<String, Object> state) {
-        //Since there's no need to maintain a state, nothing needs to be done here.
+        @Override
+        public boolean canDestroy() {
+            return false;
+        }
+
+        @Override
+        public Map<String, Object> snapshot() {
+            return null;
+        }
+
+        @Override
+        public void restore(Map<String, Object> state) {
+            // No state
+        }
     }
 }
