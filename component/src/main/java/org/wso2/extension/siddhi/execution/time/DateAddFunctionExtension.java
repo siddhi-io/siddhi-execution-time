@@ -18,28 +18,29 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
+import io.siddhi.annotation.Example;
+import io.siddhi.annotation.Extension;
+import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ReturnAttribute;
+import io.siddhi.annotation.util.DataType;
+import io.siddhi.core.config.SiddhiQueryContext;
+import io.siddhi.core.exception.OperationNotSupportedException;
+import io.siddhi.core.exception.SiddhiAppRuntimeException;
+import io.siddhi.core.executor.ConstantExpressionExecutor;
+import io.siddhi.core.executor.ExpressionExecutor;
+import io.siddhi.core.executor.function.FunctionExecutor;
+import io.siddhi.core.util.config.ConfigReader;
+import io.siddhi.core.util.snapshot.state.State;
+import io.siddhi.core.util.snapshot.state.StateFactory;
+import io.siddhi.query.api.definition.Attribute;
+import io.siddhi.query.api.exception.SiddhiAppValidationException;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
-import org.wso2.siddhi.annotation.Example;
-import org.wso2.siddhi.annotation.Extension;
-import org.wso2.siddhi.annotation.Parameter;
-import org.wso2.siddhi.annotation.ReturnAttribute;
-import org.wso2.siddhi.annotation.util.DataType;
-import org.wso2.siddhi.core.config.SiddhiAppContext;
-import org.wso2.siddhi.core.exception.OperationNotSupportedException;
-import org.wso2.siddhi.core.exception.SiddhiAppRuntimeException;
-import org.wso2.siddhi.core.executor.ConstantExpressionExecutor;
-import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import org.wso2.siddhi.core.executor.function.FunctionExecutor;
-import org.wso2.siddhi.core.util.config.ConfigReader;
-import org.wso2.siddhi.query.api.definition.Attribute;
-import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * dateAdd(dateValue,expr,unit,dateFormat)/dateAdd(dateValue,expr,unit)/dateAdd(timestampInMilliseconds,expr,unit)
@@ -140,89 +141,89 @@ public class DateAddFunctionExtension extends FunctionExecutor {
     private String unit = null;
 
     @Override
-    protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader,
-                        SiddhiAppContext siddhiAppContext) {
+    protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
+                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
-                                                                                              .length == 3) {
+                .length == 3) {
             useDefaultDateFormat = true;
             dateFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
         }
         if (attributeExpressionExecutors.length == 4) {
             if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the first argument of " +
-                                                       "time:dateAdd(dateValue,expr,unit,dateFormat) function, "
-                                                       + "required " + Attribute.Type.STRING + " but found " +
-                                                       attributeExpressionExecutors[0].getReturnType().toString());
+                        "time:dateAdd(dateValue,expr,unit,dateFormat) function, "
+                        + "required " + Attribute.Type.STRING + " but found " +
+                        attributeExpressionExecutors[0].getReturnType().toString());
             }
             if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the second argument of " +
-                                                       "time:dateAdd(dateValue,expr,unit,dateFormat) function, " +
-                                                       "required " + Attribute.Type.INT + " but found " +
-                                                       attributeExpressionExecutors[1].getReturnType().toString());
+                        "time:dateAdd(dateValue,expr,unit,dateFormat) function, " +
+                        "required " + Attribute.Type.INT + " but found " +
+                        attributeExpressionExecutors[1].getReturnType().toString());
             }
             if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the third argument of " +
-                                                       "time:dateAdd(dateValue,expr,unit,dateFormat) function, " +
-                                                       "required " + Attribute.Type.STRING + " but found " +
-                                                       attributeExpressionExecutors[2].getReturnType().toString());
+                        "time:dateAdd(dateValue,expr,unit,dateFormat) function, " +
+                        "required " + Attribute.Type.STRING + " but found " +
+                        attributeExpressionExecutors[2].getReturnType().toString());
             }
             if (attributeExpressionExecutors[3].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the fourth argument of " +
-                                                       "time:dateAdd(dateValue,expr,unit,dateFormat) function, " +
-                                                       "required " + Attribute.Type.STRING + " but found " +
-                                                       attributeExpressionExecutors[3].getReturnType().toString());
+                        "time:dateAdd(dateValue,expr,unit,dateFormat) function, " +
+                        "required " + Attribute.Type.STRING + " but found " +
+                        attributeExpressionExecutors[3].getReturnType().toString());
             }
         } else if (attributeExpressionExecutors.length == 3) {
             if (useDefaultDateFormat) {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for " +
-                                                           "the first argument of " + "time:dateAdd" +
-                                                           "(dateValue,expr,unit) function, required " +
-                                                           Attribute.Type.STRING + " but found " +
-                                                           attributeExpressionExecutors[0].getReturnType().toString());
+                            "the first argument of " + "time:dateAdd" +
+                            "(dateValue,expr,unit) function, required " +
+                            Attribute.Type.STRING + " but found " +
+                            attributeExpressionExecutors[0].getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the " +
-                                                           "second argument of " + "time:dateAdd(dateValue,expr,unit) "
-                                                           + "function, " + "required " + Attribute.Type.INT + " but " +
-                                                           "found " + attributeExpressionExecutors[1]
-                                                                   .getReturnType().toString());
+                            "second argument of " + "time:dateAdd(dateValue,expr,unit) "
+                            + "function, " + "required " + Attribute.Type.INT + " but " +
+                            "found " + attributeExpressionExecutors[1]
+                            .getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the " +
-                                                           "second argument of time:dateAdd(dateValue,expr,unit) " +
-                                                           "function, required " + Attribute.Type.STRING + " but found "
-                                                           + attributeExpressionExecutors[2]
-                                                                   .getReturnType().toString());
+                            "second argument of time:dateAdd(dateValue,expr,unit) " +
+                            "function, required " + Attribute.Type.STRING + " but found "
+                            + attributeExpressionExecutors[2]
+                            .getReturnType().toString());
                 }
             } else {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the " +
-                                                           "first argument of " + "time:dateAdd" +
-                                                           "(timestampInMilliseconds,expr,unit) " + "function, " +
-                                                           "required " + Attribute.Type.LONG + " but found " +
-                                                           attributeExpressionExecutors[0].getReturnType().toString());
+                            "first argument of " + "time:dateAdd" +
+                            "(timestampInMilliseconds,expr,unit) " + "function, " +
+                            "required " + Attribute.Type.LONG + " but found " +
+                            attributeExpressionExecutors[0].getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the " +
-                                                           "second argument of " + "time:dateAdd" +
-                                                           "(timestampInMilliseconds,expr,unit) " +
-                                                           "function, " + "required " + Attribute.Type.INT +
-                                                           " but found " + attributeExpressionExecutors[1]
-                                                                   .getReturnType().toString());
+                            "second argument of " + "time:dateAdd" +
+                            "(timestampInMilliseconds,expr,unit) " +
+                            "function, " + "required " + Attribute.Type.INT +
+                            " but found " + attributeExpressionExecutors[1]
+                            .getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the " +
-                                                           "second argument of " +
-                                                           "time:dateAdd(timestampInMilliseconds,expr,unit) function," +
-                                                           " required " + Attribute.Type.STRING + " but found " +
-                                                           attributeExpressionExecutors[2].getReturnType().toString());
+                            "second argument of " +
+                            "time:dateAdd(timestampInMilliseconds,expr,unit) function," +
+                            " required " + Attribute.Type.STRING + " but found " +
+                            attributeExpressionExecutors[2].getReturnType().toString());
                 }
             }
         } else {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:dateAdd() function, " +
-                                                   "required 3 or 4, but found " +
-                                                   attributeExpressionExecutors.length);
+                    "required 3 or 4, but found " +
+                    attributeExpressionExecutors.length);
         }
 
         if (attributeExpressionExecutors[2] instanceof ConstantExpressionExecutor) {
@@ -231,10 +232,42 @@ public class DateAddFunctionExtension extends FunctionExecutor {
         } else {
             throw new OperationNotSupportedException("unit value has to be a constant");
         }
+        return null;
+    }
+
+    public Calendar getProcessedCalenderInstance(String unit, Calendar calInstance, int expression) {
+
+
+        if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_YEAR)) {
+            calInstance.add(Calendar.YEAR, expression);
+
+        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_MONTH)) {
+            calInstance.add(Calendar.MONTH, expression);
+
+        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_SECOND)) {
+            calInstance.add(Calendar.SECOND, expression);
+
+        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_MINUTE)) {
+            calInstance.add(Calendar.MINUTE, expression);
+
+        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_HOUR)) {
+            calInstance.add(Calendar.HOUR, expression);
+
+        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_DAY)) {
+            calInstance.add(Calendar.DAY_OF_MONTH, expression);
+
+        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_WEEK)) {
+            calInstance.add(Calendar.WEEK_OF_YEAR, expression);
+
+        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_QUARTER)) {
+            calInstance.add(Calendar.MONTH, expression * 3);
+        }
+
+        return calInstance;
     }
 
     @Override
-    protected Object execute(Object[] data) {
+    protected Object execute(Object[] data, State state) {
 
         int expression;
         String date = null;
@@ -244,8 +277,8 @@ public class DateAddFunctionExtension extends FunctionExecutor {
             try {
                 if (data[0] == null) {
                     throw new SiddhiAppRuntimeException("Invalid input given to time:dateAdd(date,expr," +
-                                                        "unit,dateFormat) function" + ". First " +
-                                                        "argument cannot be null");
+                            "unit,dateFormat) function" + ". First " +
+                            "argument cannot be null");
                 }
                 if (data[1] == null) {
                     throw new SiddhiAppRuntimeException("Invalid input given to time:dateAdd(date,expr," +
@@ -307,42 +340,9 @@ public class DateAddFunctionExtension extends FunctionExecutor {
         }
     }
 
-    public Calendar getProcessedCalenderInstance(String unit, Calendar calInstance, int expression) {
-
-
-        if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_YEAR)) {
-            calInstance.add(Calendar.YEAR, expression);
-
-        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_MONTH)) {
-            calInstance.add(Calendar.MONTH, expression);
-
-        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_SECOND)) {
-            calInstance.add(Calendar.SECOND, expression);
-
-        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_MINUTE)) {
-            calInstance.add(Calendar.MINUTE, expression);
-
-        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_HOUR)) {
-            calInstance.add(Calendar.HOUR, expression);
-
-        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_DAY)) {
-            calInstance.add(Calendar.DAY_OF_MONTH, expression);
-
-        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_WEEK)) {
-            calInstance.add(Calendar.WEEK_OF_YEAR, expression);
-
-        } else if (unit.equals(TimeExtensionConstants.EXTENSION_TIME_UNIT_QUARTER)) {
-            calInstance.add(Calendar.MONTH, expression * 3);
-        }
-
-        return calInstance;
-    }
-
     @Override
-    protected Object execute(Object data) {
-        return null; //Since the EpochToDateFormat function takes in 2 parameters, this method does not get called.
-        // Hence, not implemented.
-
+    protected Object execute(Object data, State state) {
+        return null;
     }
 
     @Override
@@ -350,13 +350,4 @@ public class DateAddFunctionExtension extends FunctionExecutor {
         return returnType;
     }
 
-    @Override
-    public Map<String, Object> currentState() { //No need to maintain a state.
-        return null;
-    }
-
-    @Override
-    public void restoreState(Map<String, Object> state) {
-        //Since there's no need to maintain a state, nothing needs to be done here.
-    }
 }

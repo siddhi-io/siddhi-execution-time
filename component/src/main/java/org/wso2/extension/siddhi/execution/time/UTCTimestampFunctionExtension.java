@@ -18,20 +18,21 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
+import io.siddhi.annotation.Example;
+import io.siddhi.annotation.Extension;
+import io.siddhi.annotation.ReturnAttribute;
+import io.siddhi.annotation.util.DataType;
+import io.siddhi.core.config.SiddhiQueryContext;
+import io.siddhi.core.executor.ExpressionExecutor;
+import io.siddhi.core.executor.function.FunctionExecutor;
+import io.siddhi.core.util.config.ConfigReader;
+import io.siddhi.core.util.snapshot.state.State;
+import io.siddhi.core.util.snapshot.state.StateFactory;
+import io.siddhi.query.api.definition.Attribute;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
-import org.wso2.siddhi.annotation.Example;
-import org.wso2.siddhi.annotation.Extension;
-import org.wso2.siddhi.annotation.ReturnAttribute;
-import org.wso2.siddhi.annotation.util.DataType;
-import org.wso2.siddhi.core.config.SiddhiAppContext;
-import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import org.wso2.siddhi.core.executor.function.FunctionExecutor;
-import org.wso2.siddhi.core.util.config.ConfigReader;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -68,21 +69,20 @@ public class UTCTimestampFunctionExtension extends FunctionExecutor {
     private FastDateFormat dateFormat = null;
 
     @Override
-    protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader,
-                        SiddhiAppContext siddhiAppContext) {
-
+    protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
+                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         dateFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_UTC_TIMESTAMP_FORMAT,
                 TimeZone.getTimeZone(TimeExtensionConstants.EXTENSION_TIME_TIME_ZONE));
+        return null;
     }
 
     @Override
-    protected Object execute(Object[] data) {
-        return null; //Since the function takes in no parameters, this method does not get called.
-        // Hence, not implemented.
+    protected Object execute(Object[] data, State state) {
+        return null;
     }
 
     @Override
-    protected Object execute(Object data) {
+    protected Object execute(Object data, State state) {
         Date now = new Date();
         return dateFormat.format(now);
     }
@@ -92,13 +92,4 @@ public class UTCTimestampFunctionExtension extends FunctionExecutor {
         return returnType;
     }
 
-    @Override
-    public Map<String, Object> currentState() { //No need to maintain a state.
-        return null;
-    }
-
-    @Override
-    public void restoreState(Map<String, Object> state) {
-        //Since there's no need to maintain a state, nothing needs to be done here.
-    }
 }

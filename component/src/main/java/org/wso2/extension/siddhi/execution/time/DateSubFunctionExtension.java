@@ -18,29 +18,30 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
+import io.siddhi.annotation.Example;
+import io.siddhi.annotation.Extension;
+import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ReturnAttribute;
+import io.siddhi.annotation.util.DataType;
+import io.siddhi.core.config.SiddhiQueryContext;
+import io.siddhi.core.exception.OperationNotSupportedException;
+import io.siddhi.core.exception.SiddhiAppRuntimeException;
+import io.siddhi.core.executor.ConstantExpressionExecutor;
+import io.siddhi.core.executor.ExpressionExecutor;
+import io.siddhi.core.executor.function.FunctionExecutor;
+import io.siddhi.core.util.config.ConfigReader;
+import io.siddhi.core.util.snapshot.state.State;
+import io.siddhi.core.util.snapshot.state.StateFactory;
+import io.siddhi.query.api.definition.Attribute;
+import io.siddhi.query.api.exception.SiddhiAppValidationException;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Logger;
 import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
-import org.wso2.siddhi.annotation.Example;
-import org.wso2.siddhi.annotation.Extension;
-import org.wso2.siddhi.annotation.Parameter;
-import org.wso2.siddhi.annotation.ReturnAttribute;
-import org.wso2.siddhi.annotation.util.DataType;
-import org.wso2.siddhi.core.config.SiddhiAppContext;
-import org.wso2.siddhi.core.exception.OperationNotSupportedException;
-import org.wso2.siddhi.core.exception.SiddhiAppRuntimeException;
-import org.wso2.siddhi.core.executor.ConstantExpressionExecutor;
-import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import org.wso2.siddhi.core.executor.function.FunctionExecutor;
-import org.wso2.siddhi.core.util.config.ConfigReader;
-import org.wso2.siddhi.query.api.definition.Attribute;
-import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * dateSub(dateValue,expr,unit,dateFormat)/dateSub(dateValue,expr,unit)/dateSub(timestampInMilliseconds,expr,unit)
@@ -141,95 +142,95 @@ public class DateSubFunctionExtension extends FunctionExecutor {
     private String unit = null;
 
     @Override
-    protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader,
-                        SiddhiAppContext siddhiAppContext) {
+    protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
+                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
 
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
-                                                                                              .length == 3) {
+                .length == 3) {
             useDefaultDateFormat = true;
             dateFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
         }
         if (attributeExpressionExecutors.length == 4) {
             if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the first argument of " +
-                                                       "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
-                                                       "required " + Attribute.Type.STRING + " but found " +
-                                                       attributeExpressionExecutors[0].getReturnType().toString());
+                        "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
+                        "required " + Attribute.Type.STRING + " but found " +
+                        attributeExpressionExecutors[0].getReturnType().toString());
             }
             if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the second argument of " +
-                                                           "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
-                                                           "required " + Attribute.Type.INT + " but found " +
-                                                           attributeExpressionExecutors[1].getReturnType().toString());
+                        "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
+                        "required " + Attribute.Type.INT + " but found " +
+                        attributeExpressionExecutors[1].getReturnType().toString());
             }
             if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the third argument of " +
-                                                           "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
-                                                           "required " + Attribute.Type.STRING + " but found " +
-                                                           attributeExpressionExecutors[2].getReturnType().toString());
+                        "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
+                        "required " + Attribute.Type.STRING + " but found " +
+                        attributeExpressionExecutors[2].getReturnType().toString());
             }
             if (attributeExpressionExecutors[3].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the fourth argument of " +
-                                                           "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
-                                                           "required " + Attribute.Type.STRING + " but found " +
-                                                           attributeExpressionExecutors[3].getReturnType().toString());
+                        "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
+                        "required " + Attribute.Type.STRING + " but found " +
+                        attributeExpressionExecutors[3].getReturnType().toString());
             }
         } else if (attributeExpressionExecutors.length == 3) {
             if (useDefaultDateFormat) {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
-                                                               "for the first argument of " +
-                                                               "time:dateSub(dateValue,expr,unit) function, " +
-                                                               "required " + Attribute.Type.STRING + " but found " +
-                                                               attributeExpressionExecutors[0].
-                                                                       getReturnType().toString());
+                            "for the first argument of " +
+                            "time:dateSub(dateValue,expr,unit) function, " +
+                            "required " + Attribute.Type.STRING + " but found " +
+                            attributeExpressionExecutors[0].
+                                    getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
-                                                               "for the second argument of " +
-                                                               "time:dateSub(dateValue,expr,unit) function, " +
-                                                               "required " + Attribute.Type.INT + " but found " +
-                                                               attributeExpressionExecutors[1].
-                                                                       getReturnType().toString());
+                            "for the second argument of " +
+                            "time:dateSub(dateValue,expr,unit) function, " +
+                            "required " + Attribute.Type.INT + " but found " +
+                            attributeExpressionExecutors[1].
+                                    getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
-                                                               "for the second argument of " +
-                                                               "time:dateSub(dateValue,expr,unit) function, " +
-                                                               "required " + Attribute.Type.STRING + " but found " +
-                                                               attributeExpressionExecutors[2].
-                                                                       getReturnType().toString());
+                            "for the second argument of " +
+                            "time:dateSub(dateValue,expr,unit) function, " +
+                            "required " + Attribute.Type.STRING + " but found " +
+                            attributeExpressionExecutors[2].
+                                    getReturnType().toString());
                 }
             } else {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
-                                                               "for the first argument of " +
-                                                               "time:dateSub(timestampInMilliseconds,expr,unit) " +
-                                                               "function, " + "required " + Attribute.Type.LONG +
-                                                               " but found " + attributeExpressionExecutors[0]
-                                                                       .getReturnType().toString());
+                            "for the first argument of " +
+                            "time:dateSub(timestampInMilliseconds,expr,unit) " +
+                            "function, " + "required " + Attribute.Type.LONG +
+                            " but found " + attributeExpressionExecutors[0]
+                            .getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
-                                                               "for the second argument of " +
-                                                               "time:dateSub(timestampInMilliseconds,expr,unit) " +
-                                                               "function, " + "required " + Attribute.Type.INT +
-                                                               " but found " + attributeExpressionExecutors[1]
-                                                                       .getReturnType().toString());
+                            "for the second argument of " +
+                            "time:dateSub(timestampInMilliseconds,expr,unit) " +
+                            "function, " + "required " + Attribute.Type.INT +
+                            " but found " + attributeExpressionExecutors[1]
+                            .getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
-                                                               "for the second argument of " +
-                                                               "time:dateSub(timestampInMilliseconds,expr,unit) " +
-                                                               "function, " + "required " + Attribute.Type.STRING +
-                                                               " but found " + attributeExpressionExecutors[2]
-                                                                       .getReturnType().toString());
+                            "for the second argument of " +
+                            "time:dateSub(timestampInMilliseconds,expr,unit) " +
+                            "function, " + "required " + Attribute.Type.STRING +
+                            " but found " + attributeExpressionExecutors[2]
+                            .getReturnType().toString());
                 }
             }
         } else {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:dateSub() function, " +
-                                                       "required 3 or 4, but found " +
-                                                       attributeExpressionExecutors.length);
+                    "required 3 or 4, but found " +
+                    attributeExpressionExecutors.length);
         }
 
         if (attributeExpressionExecutors[2] instanceof ConstantExpressionExecutor) {
@@ -238,85 +239,7 @@ public class DateSubFunctionExtension extends FunctionExecutor {
         } else {
             throw new OperationNotSupportedException("unit value has to be a constant");
         }
-
-    }
-
-    @Override
-    protected Object execute(Object[] data) {
-
-        int expression;
-        String date = null;
-        FastDateFormat formattedDate;
-
-        if (data.length == 4 || useDefaultDateFormat) {
-            try {
-                if (data[0] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to str:dateSub(date,expr," +
-                                                            "unit,dateFormat) function" + ". First " +
-                                                            "argument cannot be null");
-                }
-                if (data[1] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to str:dateSub(date,expr," +
-                                                            "unit,dateFormat) function" + ". Second " +
-                                                            "argument cannot be null");
-                }
-                if (!useDefaultDateFormat) {
-                    if (data[3] == null) {
-                        throw new SiddhiAppRuntimeException("Invalid input given to str:dateSub(date,expr," +
-                                                            "unit,dateFormat) function" + ". Fourth " +
-                                                            "argument cannot be null");
-                    }
-                    dateFormat = (String) data[3];
-                }
-
-                date = (String) data[0];
-                expression = (Integer) data[1];
-                expression = -expression;
-                formattedDate = FastDateFormat.getInstance(dateFormat);
-                Date userSpecifiedDate = formattedDate.parse(date);
-                calInstance.setTime(userSpecifiedDate);
-                getProcessedCalenderInstance(unit, calInstance, expression);
-                return formattedDate.format(calInstance.getTime());
-            } catch (ParseException e) {
-                String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + date + ""
-                        + ". " + e.getMessage();
-                throw new SiddhiAppRuntimeException(errorMsg, e);
-            } catch (ClassCastException e) {
-                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
-                throw new SiddhiAppRuntimeException(errorMsg, e);
-            }
-
-        } else if (data.length == 3) {
-
-            if (data[0] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to time:dateSub(timestampInMilliseconds," +
-                                                        "expr,unit) function" + ". First " + "argument cannot be null");
-            }
-            if (data[1] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to time:dateSub(timestampInMilliseconds," +
-                                                        "expr,unit) function" + ". Second " +
-                                                        "argument cannot be null");
-            }
-            if (data[2] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to time:dateSub(timestampInMilliseconds," +
-                                                        "expr,unit) function" + ". Third " + "argument cannot be null");
-            }
-
-            try {
-                long dateInMills = (Long) data[0];
-                calInstance.setTimeInMillis(dateInMills);
-                expression = (Integer) data[1];
-                expression = -expression;
-                getProcessedCalenderInstance(unit, calInstance, expression);
-                return String.valueOf((calInstance.getTimeInMillis()));
-            } catch (ClassCastException e) {
-                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
-                throw new SiddhiAppRuntimeException(errorMsg, e);
-            }
-        } else {
-            throw new SiddhiAppRuntimeException("Invalid set of arguments given to time:dateSub() function." +
-                                                    "Arguments should be either 3 or 4. ");
-        }
+        return null;
     }
 
     private Calendar getProcessedCalenderInstance(String unit, Calendar calInstance, int expression) {
@@ -350,10 +273,85 @@ public class DateSubFunctionExtension extends FunctionExecutor {
     }
 
     @Override
-    protected Object execute(Object data) {
-        return null; //Since the EpochToDateFormat function takes in 2 parameters, this method does not get
-        // called. Hence, not implemented.
+    protected Object execute(Object[] data, State state) {
+        int expression;
+        String date = null;
+        FastDateFormat formattedDate;
 
+        if (data.length == 4 || useDefaultDateFormat) {
+            try {
+                if (data[0] == null) {
+                    throw new SiddhiAppRuntimeException("Invalid input given to str:dateSub(date,expr," +
+                            "unit,dateFormat) function" + ". First " +
+                            "argument cannot be null");
+                }
+                if (data[1] == null) {
+                    throw new SiddhiAppRuntimeException("Invalid input given to str:dateSub(date,expr," +
+                            "unit,dateFormat) function" + ". Second " +
+                            "argument cannot be null");
+                }
+                if (!useDefaultDateFormat) {
+                    if (data[3] == null) {
+                        throw new SiddhiAppRuntimeException("Invalid input given to str:dateSub(date,expr," +
+                                "unit,dateFormat) function" + ". Fourth " +
+                                "argument cannot be null");
+                    }
+                    dateFormat = (String) data[3];
+                }
+
+                date = (String) data[0];
+                expression = (Integer) data[1];
+                expression = -expression;
+                formattedDate = FastDateFormat.getInstance(dateFormat);
+                Date userSpecifiedDate = formattedDate.parse(date);
+                calInstance.setTime(userSpecifiedDate);
+                getProcessedCalenderInstance(unit, calInstance, expression);
+                return formattedDate.format(calInstance.getTime());
+            } catch (ParseException e) {
+                String errorMsg = "Provided format " + dateFormat + " does not match with the timestamp " + date + ""
+                        + ". " + e.getMessage();
+                throw new SiddhiAppRuntimeException(errorMsg, e);
+            } catch (ClassCastException e) {
+                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
+                throw new SiddhiAppRuntimeException(errorMsg, e);
+            }
+
+        } else if (data.length == 3) {
+
+            if (data[0] == null) {
+                throw new SiddhiAppRuntimeException("Invalid input given to time:dateSub(timestampInMilliseconds," +
+                        "expr,unit) function" + ". First " + "argument cannot be null");
+            }
+            if (data[1] == null) {
+                throw new SiddhiAppRuntimeException("Invalid input given to time:dateSub(timestampInMilliseconds," +
+                        "expr,unit) function" + ". Second " +
+                        "argument cannot be null");
+            }
+            if (data[2] == null) {
+                throw new SiddhiAppRuntimeException("Invalid input given to time:dateSub(timestampInMilliseconds," +
+                        "expr,unit) function" + ". Third " + "argument cannot be null");
+            }
+
+            try {
+                long dateInMills = (Long) data[0];
+                calInstance.setTimeInMillis(dateInMills);
+                expression = (Integer) data[1];
+                expression = -expression;
+                getProcessedCalenderInstance(unit, calInstance, expression);
+                return String.valueOf((calInstance.getTimeInMillis()));
+            } catch (ClassCastException e) {
+                String errorMsg = "Provided Data type cannot be cast to desired format. " + e.getMessage();
+                throw new SiddhiAppRuntimeException(errorMsg, e);
+            }
+        } else {
+            throw new SiddhiAppRuntimeException("Invalid set of arguments given to time:dateSub() function." +
+                    "Arguments should be either 3 or 4. ");
+        }
+    }
+
+    @Override
+    protected Object execute(Object data, State state) {
+        return null;
     }
 
     @Override
@@ -361,13 +359,4 @@ public class DateSubFunctionExtension extends FunctionExecutor {
         return returnType;
     }
 
-    @Override
-    public Map<String, Object> currentState() { //No need to maintain a state.
-        return null;
-    }
-
-    @Override
-    public void restoreState(Map<String, Object> state) {
-        //Since there's no need to maintain a state, nothing needs to be done here.
-    }
 }

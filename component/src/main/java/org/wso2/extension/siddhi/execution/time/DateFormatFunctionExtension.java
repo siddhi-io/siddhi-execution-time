@@ -18,26 +18,27 @@
 
 package org.wso2.extension.siddhi.execution.time;
 
+import io.siddhi.annotation.Example;
+import io.siddhi.annotation.Extension;
+import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ReturnAttribute;
+import io.siddhi.annotation.util.DataType;
+import io.siddhi.core.config.SiddhiQueryContext;
+import io.siddhi.core.exception.SiddhiAppRuntimeException;
+import io.siddhi.core.executor.ExpressionExecutor;
+import io.siddhi.core.executor.function.FunctionExecutor;
+import io.siddhi.core.util.config.ConfigReader;
+import io.siddhi.core.util.snapshot.state.State;
+import io.siddhi.core.util.snapshot.state.StateFactory;
+import io.siddhi.query.api.definition.Attribute;
+import io.siddhi.query.api.exception.SiddhiAppValidationException;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Logger;
 import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
-import org.wso2.siddhi.annotation.Example;
-import org.wso2.siddhi.annotation.Extension;
-import org.wso2.siddhi.annotation.Parameter;
-import org.wso2.siddhi.annotation.ReturnAttribute;
-import org.wso2.siddhi.annotation.util.DataType;
-import org.wso2.siddhi.core.config.SiddhiAppContext;
-import org.wso2.siddhi.core.exception.SiddhiAppRuntimeException;
-import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import org.wso2.siddhi.core.executor.function.FunctionExecutor;
-import org.wso2.siddhi.core.util.config.ConfigReader;
-import org.wso2.siddhi.query.api.definition.Attribute;
-import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * dateFormat(dateValue,dateTargetFormat,dateSourceFormat)/dateFormat(dateValue,dateTargetFormat)/
@@ -122,9 +123,8 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
     private Calendar calInstance = Calendar.getInstance();
 
     @Override
-    protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader,
-                        SiddhiAppContext siddhiAppContext) {
-
+    protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
+                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
                 .length == 2) {
             useDefaultDateFormat = true;
@@ -134,9 +134,9 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
         if (attributeExpressionExecutors.length == 3) {
             if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the first argument of " +
-                       "time:dateFormat(dateValue,dateTargetFormat,dateSourceFormat) function, " + "required "
-                       + Attribute.Type.STRING +
-                       " but found " + attributeExpressionExecutors[0].getReturnType().toString());
+                        "time:dateFormat(dateValue,dateTargetFormat,dateSourceFormat) function, " + "required "
+                        + Attribute.Type.STRING +
+                        " but found " + attributeExpressionExecutors[0].getReturnType().toString());
             }
             if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the second argument of " +
@@ -154,14 +154,14 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
             if (useDefaultDateFormat) {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
-                                                               "for the first argument of " +
+                            "for the first argument of " +
                             "time:dateFormat(dateValue,dateTargetFormat,dateSourceFormat) function, " + "required "
                             + Attribute.Type.STRING +
                             " but found " + attributeExpressionExecutors[0].getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
-                                                               "for the second argument of " +
+                            "for the second argument of " +
                             "time:dateFormat(dateValue,dateTargetFormat,dateSourceFormat) function, " + "required "
                             + Attribute.Type.STRING +
                             " but found " + attributeExpressionExecutors[1].getReturnType().toString());
@@ -169,14 +169,14 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
             } else {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG) {
                     throw new SiddhiAppValidationException("Invalid parameter type " +
-                                                               "found for the first argument of " +
+                            "found for the first argument of " +
                             "time:dateFormat(timestampInMilliseconds,dateTargetFormat) function, " +
                             "" + "required " + Attribute.Type.LONG +
                             " but found " + attributeExpressionExecutors[0].getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
-                                                               "for the second argument of " +
+                            "for the second argument of " +
                             "time:dateFormat(timestampInMilliseconds,dateTargetFormat) function, " +
                             "" + "required " + Attribute.Type.STRING +
                             " but found " + attributeExpressionExecutors[1].getReturnType().toString());
@@ -186,11 +186,11 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to dateFormat() function, " +
                     "required 2 or 3, but found " + attributeExpressionExecutors.length);
         }
-
+        return null;
     }
 
     @Override
-    protected Object execute(Object[] data) {
+    protected Object execute(Object[] data, State state) {
 
         Date userSpecifiedSourceDate;
 
@@ -268,10 +268,8 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
     }
 
     @Override
-    protected Object execute(Object data) {
-        return null; //Since the EpochToDateFormat function takes in 2 parameters, this method does not get
-        // called. Hence, not implemented.
-
+    protected Object execute(Object data, State state) {
+        return null;
     }
 
     @Override
@@ -279,13 +277,4 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
         return returnType;
     }
 
-    @Override
-    public Map<String, Object> currentState() { //No need to maintain a state.
-        return null;
-    }
-
-    @Override
-    public void restoreState(Map<String, Object> state) {
-        //Since there's no need to maintain a state, nothing needs to be done here.
-    }
 }
