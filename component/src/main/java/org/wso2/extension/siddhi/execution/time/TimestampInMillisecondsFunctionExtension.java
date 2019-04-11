@@ -109,7 +109,7 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor {
     private String dateFormat = null;
 
     @Override
-    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors.length > 0) {
             if (attributeExpressionExecutors.length == 2) {

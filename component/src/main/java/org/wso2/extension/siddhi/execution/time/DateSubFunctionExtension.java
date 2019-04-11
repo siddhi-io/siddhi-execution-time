@@ -142,7 +142,7 @@ public class DateSubFunctionExtension extends FunctionExecutor {
     private String unit = null;
 
     @Override
-    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
 
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors

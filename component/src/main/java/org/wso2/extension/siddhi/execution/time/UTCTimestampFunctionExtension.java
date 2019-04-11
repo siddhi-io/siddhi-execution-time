@@ -69,7 +69,7 @@ public class UTCTimestampFunctionExtension extends FunctionExecutor {
     private FastDateFormat dateFormat = null;
 
     @Override
-    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         dateFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_UTC_TIMESTAMP_FORMAT,
                 TimeZone.getTimeZone(TimeExtensionConstants.EXTENSION_TIME_TIME_ZONE));

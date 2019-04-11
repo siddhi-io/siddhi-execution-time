@@ -98,7 +98,7 @@ public class CurrentTimestampFunctionExtension extends FunctionExecutor {
             DateTimeFormatter.ofPattern(TimeExtensionConstants.EXTENSION_TIME_CURRENT_TIMESTAMP_FORMAT);
 
     @Override
-    protected StateFactory<State> init(ExpressionExecutor[] expressionExecutors,
+    protected StateFactory init(ExpressionExecutor[] expressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (expressionExecutors.length > 1) {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:currentTimestamp function," +

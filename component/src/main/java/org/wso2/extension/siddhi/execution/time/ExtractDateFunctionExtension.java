@@ -91,7 +91,7 @@ public class ExtractDateFunctionExtension extends FunctionExecutor {
     private Attribute.Type returnType = Attribute.Type.STRING;
 
     @Override
-    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors.length > 2) {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:date(dateValue," +

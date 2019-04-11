@@ -67,7 +67,7 @@ public class CurrentTimeFunctionExtension extends FunctionExecutor {
     private FastDateFormat dateFormat = null;
 
     @Override
-    protected StateFactory<State> init(ExpressionExecutor[] expressionExecutors,
+    protected StateFactory init(ExpressionExecutor[] expressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         dateFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_CURRENT_TIME_FORMAT);
         return null;
