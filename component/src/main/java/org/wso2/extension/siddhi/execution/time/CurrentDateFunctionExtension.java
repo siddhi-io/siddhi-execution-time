@@ -33,7 +33,6 @@ import org.apache.commons.lang3.time.FastDateFormat;
 import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
 
 import java.util.Date;
-import java.util.Map;
 
 /**
  * currentDate()
@@ -62,36 +61,25 @@ import java.util.Map;
                 )
         }
 )
-public class CurrentDateFunctionExtension extends FunctionExecutor<CurrentDateFunctionExtension.ExtensionState> {
+public class CurrentDateFunctionExtension extends FunctionExecutor {
 
     private Attribute.Type returnType = Attribute.Type.STRING;
     private FastDateFormat dateFormat = null;
 
     @Override
-    protected StateFactory<ExtensionState> init(ExpressionExecutor[] expressionExecutors,
+    protected StateFactory<State> init(ExpressionExecutor[] expressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         dateFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_DATE_FORMAT);
-        return () -> new ExtensionState();
-    }
-
-    @Override
-    protected Object execute(Object[] data) {
-        return null; //Since the e function takes in no parameters, this method does not get called. Hence,
-        // not implemented.
-    }
-
-    @Override
-    protected Object execute(Object data) {
         return null;
     }
 
     @Override
-    protected Object execute(Object[] data, ExtensionState extensionState) {
+    protected Object execute(Object[] data, State extensionState) {
         return null;
     }
 
     @Override
-    protected Object execute(Object data, ExtensionState extensionState) {
+    protected Object execute(Object data, State extensionState) {
         Date now = new Date();
         return dateFormat.format(now);
     }
@@ -101,21 +89,4 @@ public class CurrentDateFunctionExtension extends FunctionExecutor<CurrentDateFu
         return returnType;
     }
 
-    static class ExtensionState extends State {
-
-        @Override
-        public boolean canDestroy() {
-            return false;
-        }
-
-        @Override
-        public Map<String, Object> snapshot() {
-            return null;
-        }
-
-        @Override
-        public void restore(Map<String, Object> map) {
-            // No state
-        }
-    }
 }

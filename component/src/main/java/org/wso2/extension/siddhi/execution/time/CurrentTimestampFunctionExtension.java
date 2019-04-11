@@ -39,7 +39,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * currentTimestamp() or currentTimestamp(<time-zone>)
@@ -91,8 +90,7 @@ import java.util.Map;
                 )
         }
 )
-public class CurrentTimestampFunctionExtension extends FunctionExecutor
-        <CurrentTimestampFunctionExtension.ExtensionState> {
+public class CurrentTimestampFunctionExtension extends FunctionExecutor {
 
     private Attribute.Type returnType = Attribute.Type.STRING;
     private FastDateFormat dateFormat = null;
@@ -100,7 +98,7 @@ public class CurrentTimestampFunctionExtension extends FunctionExecutor
             DateTimeFormatter.ofPattern(TimeExtensionConstants.EXTENSION_TIME_CURRENT_TIMESTAMP_FORMAT);
 
     @Override
-    protected StateFactory<ExtensionState> init(ExpressionExecutor[] expressionExecutors,
+    protected StateFactory<State> init(ExpressionExecutor[] expressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (expressionExecutors.length > 1) {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:currentTimestamp function," +
@@ -113,26 +111,16 @@ public class CurrentTimestampFunctionExtension extends FunctionExecutor
                     attributeExpressionExecutors[0].getReturnType().toString());
         }
         dateFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_CURRENT_TIMESTAMP_FORMAT);
-        return () -> new ExtensionState();
-    }
-
-    @Override
-    protected Object execute(Object[] data) {
         return null;
     }
 
     @Override
-    protected Object execute(Object data) {
+    protected Object execute(Object[] data, State extensionState) {
         return null;
     }
 
     @Override
-    protected Object execute(Object[] data, ExtensionState extensionState) {
-        return null;
-    }
-
-    @Override
-    protected Object execute(Object data, ExtensionState extensionState) {
+    protected Object execute(Object data, State extensionState) {
         if (data == null) {
             return dateFormat.format(new Date());
         } else {
@@ -151,21 +139,4 @@ public class CurrentTimestampFunctionExtension extends FunctionExecutor
         return returnType;
     }
 
-    static class ExtensionState extends State {
-
-        @Override
-        public boolean canDestroy() {
-            return false;
-        }
-
-        @Override
-        public Map<String, Object> snapshot() {
-            return null;
-        }
-
-        @Override
-        public void restore(Map<String, Object> map) {
-            // No state
-        }
-    }
 }

@@ -40,7 +40,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * dayOfWeek(dateValue,dateFormat)
@@ -93,14 +92,13 @@ import java.util.Map;
                 )
         }
 )
-public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor
-        <ExtractDayOfWeekFunctionExtension.ExtensionState> {
+public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
 
     private static final Logger log = Logger.getLogger(ExtractDayOfWeekFunctionExtension.class);
     private Attribute.Type returnType = Attribute.Type.STRING;
 
     @Override
-    protected StateFactory<ExtensionState> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors.length > 2) {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:dayOfWeek(dateValue," +
@@ -125,24 +123,11 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor
                         .getReturnType().toString());
             }
         }
-        return () -> new ExtensionState();
-    }
-
-    // this method will be executed for two or more parameters
-    @Override
-    protected Object execute(Object[] data) {
         return null;
     }
 
-
-    // this method will be executed for a single parameter
     @Override
-    protected Object execute(Object data) {
-       return null;
-    }
-
-    @Override
-    protected Object execute(Object[] data, ExtensionState state) {
+    protected Object execute(Object[] data, State state) {
         String userFormat;
         if (data[0] == null) {
             throw new SiddhiAppRuntimeException("Invalid input given to time:dayOfWeek(dateValue," +
@@ -178,7 +163,7 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor
     }
 
     @Override
-    protected Object execute(Object data, ExtensionState state) {
+    protected Object execute(Object data, State state) {
         String userFormat;
         if (data == null) {
             throw new SiddhiAppRuntimeException("Invalid input given to time:dayOfWeek(dateValue," +
@@ -207,24 +192,6 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor
     @Override
     public Attribute.Type getReturnType() {
         return returnType;
-    }
-
-    static class ExtensionState extends State {
-
-        @Override
-        public boolean canDestroy() {
-            return false;
-        }
-
-        @Override
-        public Map<String, Object> snapshot() {
-            return null;
-        }
-
-        @Override
-        public void restore(Map<String, Object> state) {
-            // No state
-        }
     }
 
     //private methods

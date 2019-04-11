@@ -38,7 +38,6 @@ import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * timestampInMilliseconds() / timestampInMilliseconds(dateValue,dateFormat)/timestampInMilliseconds(dateValue)
@@ -102,8 +101,7 @@ import java.util.Map;
                 )
         }
 )
-public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor
-        <TimestampInMillisecondsFunctionExtension.ExtensionState> {
+public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor {
 
     private static final Logger log = Logger.getLogger(TimestampInMillisecondsFunctionExtension.class);
     private Attribute.Type returnType = Attribute.Type.LONG;
@@ -111,7 +109,7 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor
     private String dateFormat = null;
 
     @Override
-    protected StateFactory<ExtensionState> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors.length > 0) {
             if (attributeExpressionExecutors.length == 2) {
@@ -152,21 +150,11 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor
                         attributeExpressionExecutors.length);
             }
         }
-        return () -> new ExtensionState();
-    }
-
-    @Override
-    protected Object execute(Object[] data) {
         return null;
     }
 
     @Override
-    protected Object execute(Object data) {
-        return null;
-    }
-
-    @Override
-    protected Object execute(Object[] data, ExtensionState state) {
+    protected Object execute(Object[] data, State state) {
         long returnValue;
 
         if (data.length == 2) {
@@ -202,7 +190,7 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor
     }
 
     @Override
-    protected Object execute(Object data, ExtensionState state) {
+    protected Object execute(Object data, State state) {
         long returnValue;
         if (data == null) {
             return System.currentTimeMillis();
@@ -225,21 +213,4 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor
         return returnType;
     }
 
-    static class ExtensionState extends State {
-
-        @Override
-        public boolean canDestroy() {
-            return false;
-        }
-
-        @Override
-        public Map<String, Object> snapshot() {
-            return null;
-        }
-
-        @Override
-        public void restore(Map<String, Object> state) {
-            // No state
-        }
-    }
 }

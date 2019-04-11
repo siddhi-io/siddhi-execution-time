@@ -38,7 +38,6 @@ import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * date(dateValue,dateFormat)
@@ -86,13 +85,13 @@ import java.util.Map;
                 )
         }
 )
-public class ExtractDateFunctionExtension extends FunctionExecutor<ExtractDateFunctionExtension.ExtensionState> {
+public class ExtractDateFunctionExtension extends FunctionExecutor {
 
     private static final Logger log = Logger.getLogger(ExtractDateFunctionExtension.class);
     private Attribute.Type returnType = Attribute.Type.STRING;
 
     @Override
-    protected StateFactory<ExtensionState> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors.length > 2) {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:date(dateValue," +
@@ -114,24 +113,12 @@ public class ExtractDateFunctionExtension extends FunctionExecutor<ExtractDateFu
                         attributeExpressionExecutors[1].getReturnType().toString());
             }
         }
-        return () -> new ExtensionState();
-
-    }
-
-    @Override
-    protected Object execute(Object[] data) {
         return null;
-    }
-
-    @Override
-    protected Object execute(Object data) {
-        return null; //Since the EpochToDateFormat function takes in 2 parameters, this method does
-        // not get called. Hence, not implemented.
 
     }
 
     @Override
-    protected Object execute(Object[] data, ExtensionState state) {
+    protected Object execute(Object[] data, State state) {
         String userFormat;
         if (data[0] == null) {
             throw new SiddhiAppRuntimeException("Invalid input given to time:date(dateValue," +
@@ -168,7 +155,7 @@ public class ExtractDateFunctionExtension extends FunctionExecutor<ExtractDateFu
     }
 
     @Override
-    protected Object execute(Object data, ExtensionState state) {
+    protected Object execute(Object data, State state) {
         return null;
     }
 
@@ -177,21 +164,4 @@ public class ExtractDateFunctionExtension extends FunctionExecutor<ExtractDateFu
         return returnType;
     }
 
-    static class ExtensionState extends State {
-
-        @Override
-        public boolean canDestroy() {
-            return false;
-        }
-
-        @Override
-        public Map<String, Object> snapshot() {
-            return null;
-        }
-
-        @Override
-        public void restore(Map<String, Object> state) {
-            // No state
-        }
-    }
 }

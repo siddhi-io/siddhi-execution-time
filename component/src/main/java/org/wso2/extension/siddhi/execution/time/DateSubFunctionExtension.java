@@ -42,7 +42,6 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * dateSub(dateValue,expr,unit,dateFormat)/dateSub(dateValue,expr,unit)/dateSub(timestampInMilliseconds,expr,unit)
@@ -133,7 +132,7 @@ import java.util.Map;
                 )
         }
 )
-public class DateSubFunctionExtension extends FunctionExecutor<DateSubFunctionExtension.ExtensionState> {
+public class DateSubFunctionExtension extends FunctionExecutor {
 
     private Attribute.Type returnType = Attribute.Type.STRING;
     private static final Logger log = Logger.getLogger(DateSubFunctionExtension.class);
@@ -143,7 +142,7 @@ public class DateSubFunctionExtension extends FunctionExecutor<DateSubFunctionEx
     private String unit = null;
 
     @Override
-    protected StateFactory<ExtensionState> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
 
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
@@ -240,11 +239,6 @@ public class DateSubFunctionExtension extends FunctionExecutor<DateSubFunctionEx
         } else {
             throw new OperationNotSupportedException("unit value has to be a constant");
         }
-        return () -> new ExtensionState();
-    }
-
-    @Override
-    protected Object execute(Object[] data) {
         return null;
     }
 
@@ -279,14 +273,7 @@ public class DateSubFunctionExtension extends FunctionExecutor<DateSubFunctionEx
     }
 
     @Override
-    protected Object execute(Object data) {
-        return null; //Since the EpochToDateFormat function takes in 2 parameters, this method does not get
-        // called. Hence, not implemented.
-
-    }
-
-    @Override
-    protected Object execute(Object[] data, ExtensionState state) {
+    protected Object execute(Object[] data, State state) {
         int expression;
         String date = null;
         FastDateFormat formattedDate;
@@ -363,7 +350,7 @@ public class DateSubFunctionExtension extends FunctionExecutor<DateSubFunctionEx
     }
 
     @Override
-    protected Object execute(Object data, ExtensionState state) {
+    protected Object execute(Object data, State state) {
         return null;
     }
 
@@ -372,21 +359,4 @@ public class DateSubFunctionExtension extends FunctionExecutor<DateSubFunctionEx
         return returnType;
     }
 
-    static class ExtensionState extends State {
-
-        @Override
-        public boolean canDestroy() {
-            return false;
-        }
-
-        @Override
-        public Map<String, Object> snapshot() {
-            return null;
-        }
-
-        @Override
-        public void restore(Map<String, Object> state) {
-            // No state
-        }
-    }
 }

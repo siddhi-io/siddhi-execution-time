@@ -41,7 +41,6 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * extract(unit,dateValue,dateFormat)/extract(unit,dateValue)/extract(timestampInMilliseconds,unit)
@@ -114,8 +113,7 @@ import java.util.Map;
                 )
         }
 )
-public class ExtractAttributesFunctionExtension extends FunctionExecutor
-        <ExtractAttributesFunctionExtension.ExtensionState> {
+public class ExtractAttributesFunctionExtension extends FunctionExecutor {
 
     private Attribute.Type returnType = Attribute.Type.INT;
     private boolean useDefaultDateFormat = false;
@@ -124,7 +122,7 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor
     private String unit = null;
 
     @Override
-    protected StateFactory<ExtensionState> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
                 .length == 2) {
@@ -205,23 +203,11 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor
                     "required 2 or 3, but found " +
                     attributeExpressionExecutors.length);
         }
-        return () -> new ExtensionState();
-    }
-
-    @Override
-    protected Object execute(Object[] data) {
         return null;
     }
 
     @Override
-    protected Object execute(Object data) {
-        return null; //Since the EpochToDateFormat function takes in 2 parameters,
-        // this method does not get called. Hence, not implemented.
-
-    }
-
-    @Override
-    protected Object execute(Object[] data, ExtensionState state) {
+    protected Object execute(Object[] data, State state) {
         String source = null;
         if (data.length == 3 || useDefaultDateFormat) {
             try {
@@ -297,7 +283,7 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor
     }
 
     @Override
-    protected Object execute(Object data, ExtensionState state) {
+    protected Object execute(Object data, State state) {
         return null;
     }
 
@@ -306,21 +292,4 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor
         return returnType;
     }
 
-    static class ExtensionState extends State {
-
-        @Override
-        public boolean canDestroy() {
-            return false;
-        }
-
-        @Override
-        public Map<String, Object> snapshot() {
-            return null;
-        }
-
-        @Override
-        public void restore(Map<String, Object> state) {
-            //No state
-        }
-    }
 }

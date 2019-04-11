@@ -39,7 +39,6 @@ import org.wso2.extension.siddhi.execution.time.util.TimeExtensionConstants;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -130,7 +129,7 @@ import java.util.concurrent.TimeUnit;
                 )
         }
 )
-public class DateDifferenceFunctionExtension extends FunctionExecutor<DateDifferenceFunctionExtension.ExtensionState> {
+public class DateDifferenceFunctionExtension extends FunctionExecutor {
 
     private Attribute.Type returnType = Attribute.Type.LONG;
     private static final Logger log = Logger.getLogger(DateDifferenceFunctionExtension.class);
@@ -141,7 +140,7 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor<DateDiffer
     private Calendar secondCalInstance = Calendar.getInstance();
 
     @Override
-    protected StateFactory<ExtensionState> init(ExpressionExecutor[] attributeExpressionExecutors,
+    protected StateFactory<State> init(ExpressionExecutor[] attributeExpressionExecutors,
                                                 ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
                 .length == 3 || attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG &&
@@ -233,22 +232,11 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor<DateDiffer
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:dateDiff() function, " +
                     "required 2 or 4, but found " + attributeExpressionExecutors.length);
         }
-        return () -> new ExtensionState();
-    }
-
-    @Override
-    protected Object execute(Object[] data) {
         return null;
     }
 
     @Override
-    protected Object execute(Object data) {
-        return null; //Since the EpochToDateFormat function takes in 2 parameters, this method does not get called.
-        // Hence, not implemented.
-    }
-
-    @Override
-    protected Object execute(Object[] data, ExtensionState state) {
+    protected Object execute(Object[] data, State state) {
 
         String firstDate = null;
         String secondDate;
@@ -343,7 +331,7 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor<DateDiffer
     }
 
     @Override
-    protected Object execute(Object data, ExtensionState state) {
+    protected Object execute(Object data, State state) {
         return null;
     }
 
@@ -352,21 +340,4 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor<DateDiffer
         return returnType;
     }
 
-    static class ExtensionState extends State {
-
-        @Override
-        public boolean canDestroy() {
-            return false;
-        }
-
-        @Override
-        public Map<String, Object> snapshot() {
-            return null;
-        }
-
-        @Override
-        public void restore(Map<String, Object> state) {
-            // No state
-        }
-    }
 }
