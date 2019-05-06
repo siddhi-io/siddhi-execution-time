@@ -21,18 +21,18 @@
 <suite name="ExecutionTimeFunctionTestSuit" verbose="1">
     <test name="TimeFunctionTest" preserve-order="true" parallel="false">
         <classes>
-            <class name="org.wso2.extension.siddhi.execution.time.CurrentDateFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.CurrentTimeFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.CurrentTimestampFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.DateAddFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.DateDifferenceFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.DateFormatFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.DateSubFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.ExtractAttributesFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.ExtractDateFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.ExtractDayOfWeekFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.TimestampInMillisecondsFunctionExtensionTestCase" />
-            <class name="org.wso2.extension.siddhi.execution.time.UTCTimestampFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.CurrentDateFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.CurrentTimeFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.CurrentTimestampFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.DateAddFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.DateDifferenceFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.DateFormatFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.DateSubFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.ExtractAttributesFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.ExtractDateFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.ExtractDayOfWeekFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.TimestampInMillisecondsFunctionExtensionTestCase" />
+            <class name="io.siddhi.extension.execution.time.UTCTimestampFunctionExtensionTestCase" />
         </classes>
     </test>
 </suite>

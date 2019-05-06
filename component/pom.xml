@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wso2.extension.siddhi.execution.time</groupId>
+        <groupId>io.siddhi.extension.execution.time</groupId>
         <artifactId>siddhi-execution-time-parent</artifactId>
         <version>5.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -97,7 +97,7 @@
                         </Private-Package>
                         <Export-Package>
                             !org.apache.commons.lang3.*,
-                            org.wso2.extension.siddhi.execution.time.*
+                            io.siddhi.extension.execution.time.*
                         </Export-Package>
                         <Import-Package>
                             io.siddhi.core.*; version="${siddhi.version.range}",
