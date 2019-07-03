@@ -50,38 +50,42 @@ import java.util.Date;
  * Return Type(s): STRING
  */
 
+
 /**
  * Class representing the Time date implementation.
  */
 @Extension(
         name = "date",
         namespace = "time",
-        description = "This function returns the date part of a date or date/time expression.",
+        description = "Extracts the date part of a date or date-time and return it in `yyyy-MM-dd` format.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "The value of the date. For example," +
-                                " \"2014-11-11 13:23:44.657\", \"2014-11-11\" , \"13:23:44.657\".",
+                        description = "The value of the date. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, " +
+                                "`13:23:44.657`.",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
-                        description = "The date format of the date value provided. For example," +
-                                " 'yyyy-MM-dd HH:mm:ss.SSS'",
+                        description = "The format of the date value provided. " +
+                                "For example, `yyyy/MM/dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
+                        defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
         },
         returnAttributes = @ReturnAttribute(
-                description = "This returns the extracted date value as a string value.",
+                description = "Returns the extracted date value from a date or date-time in `yyyy-MM-dd` format.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax =  "define stream InputStream (symbol string, dateValue string,dateFormat string);\n"
-                                  + "from InputStream\n "
-                                  + "select symbol,time:date(dateValue,dateFormat) as dateExtracted\n "
-                                  + "insert into OutputStream;\n",
-
-                        description = "This query extracts the 'dateValue' in the 'dateFormat' format " +
-                                "as the 'dateExtracted'. The query then returns the " +
-                                "symbol and the 'dateExtracted' to the 'OutputStream'."
+                        syntax = "time:date('2014/11/11 13:23:44', 'yyyy/MM/dd HH:mm:ss')",
+                        description = "Extracts the date and returns `2014-11-11`."
+                ),
+                @Example(
+                        syntax = "time:date('2014-11-23 13:23:44.345')",
+                        description = "Extracts the date and returns `2014-11-13`."
+                ),
+                @Example(
+                        syntax = "time:date('13:23:44', 'HH:mm:ss')",
+                        description = "Extracts the date and returns `1970-01-01`."
                 )
         }
 )
@@ -92,7 +96,7 @@ public class ExtractDateFunctionExtension extends FunctionExecutor {
 
     @Override
     protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
-                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
+                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors.length > 2) {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:date(dateValue," +
                     "dateFormat) function, " + "required 2, but found " +
@@ -165,3 +169,4 @@ public class ExtractDateFunctionExtension extends FunctionExecutor {
     }
 
 }
+

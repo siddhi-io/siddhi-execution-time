@@ -70,65 +70,56 @@ import java.util.Locale;
 @Extension(
         name = "dateSub",
         namespace = "time",
-        description = "This function returns the date after subtracting a specified time interval from it. " +
-                      "If a parameter of 'String' type is passed as the first argument, then the function accepts " +
-                "four parameters with the last parameter, i.e., 'date.format' as an optional one." +
-                "If a parameter of 'Long' type is passed as the first argument, then the function accepts three" +
-                      " parameters, i.e., 'timestamp.in.milliseconds', 'expr' and 'unit' in the given order.",
+        description = "Subtracts the specified time interval from the given date.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "The value of date. For example, \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
-                                      "\"13:23:44.657\".",
-                        type = {DataType.STRING}),
-                @Parameter(name = "expr",
-                        description = "The amount by which the selected part of the date should be incremented. " +
-                                "For example, 2 ,5 ,10," +
-                                      " etc.",
-                        type = {DataType.INT}),
-                @Parameter(name = "unit",
-                        description = "The part of the date that is required to be modified. For example," +
-                                " \"MINUTE\" , \"HOUR\" , \"MONTH\" , \"YEAR\" , \"QUARTER\" ,\n" +
-                                      "\"WEEK\" , \"DAY\" , \"SECOND\".",
-                        type = {DataType.STRING}),
-                @Parameter(name = "date.format",
-                        description = "The date format of the date value provided. For example," +
-                                " 'yyyy-MM-dd HH:mm:ss.SSS'",
+                        description = "The value of the date. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, " +
+                                "`13:23:44.657`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
+                        defaultValue = "-"),
+                @Parameter(name = "expr",
+                        description = "The amount by which the selected part of the date " +
+                                "should be decremented. " +
+                                "For example `2` ,`5 `,`10`, etc.",
+                        type = {DataType.INT}),
+                @Parameter(name = "unit",
+                        description = "This is the part of the date that needs to be modified. " +
+                                "For example, `MINUTE`, `HOUR`, `MONTH`, `YEAR`, `QUARTER`," +
+                                " `WEEK`, `DAY`, `SECOND`.",
+                        type = {DataType.STRING}),
+                @Parameter(name = "date.format",
+                        description = "The format of the date value provided. " +
+                                "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
                 @Parameter(name = "timestamp.in.milliseconds",
-                        description = "The date value in milliseconds from the epoch. For example, 1415712224000L",
-                        type = {DataType.LONG})
+                        description = "The date value in milliseconds. " +
+                                "For example, `1415712224000L`.",
+                        type = {DataType.LONG},
+                        optional = true,
+                        defaultValue = "-")
         },
         returnAttributes = @ReturnAttribute(
-                description = "This returns the date after subtracting the specified time from " +
-                        "the given date format. " +
-                        "The type returned is String.",
+                description = "Returns data value as a `string` in the provided date.format, default date.format or " +
+                        "in milliseconds based on the arguments passed to the function.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "define stream InputStream (symbol string,dateValue string,dateFormat string," +
-                                "expr int);\n" +
-                                "from InputStream\n " +
-                                "select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearSubtracted\n" +
-                                "insert into OutputStream;",
-                        description = "This query gets the date value from the input stream, decrements the 'YEAR'" +
-                                "value of the 'dateValue' by the 'expr' value given, " +
-                                "formats the resultant value into the" +
-                                " 'dateFormat' format in the input stream and returns the formatted value to" +
-                                " the 'OutputStream' as 'yearSubtracted' with the symbol."
+                        syntax = "time:dateSub('2019-11-11 13:23:44.657', 5, 'YEAR', 'yyyy-MM-dd HH:mm:ss.SSS')",
+                        description = "Subtracts five years to the given date value and returns " +
+                                "`2014-11-11 13:23:44.657`."
                 ),
                 @Example(
-                        syntax = "define stream InputStream (symbol string,dateValue string,dateFormat string," +
-                                "timestampInMilliseconds long,expr int);\n" +
-                                "from InputStream\n " +
-                                "time:dateSub(timestampInMilliseconds,expr,'HOUR') as hourSubtractedMills\n " +
-                                "insert into OutputStream;",
-                        description = "This query gets the value of the 'timestampInMilliseconds' " +
-                                "from the input stream,"
-                                + " subtracts the 'expr' number of hours from it and returns the "
-                                + " resultant value in milliseconds as 'hourSubtractedMills', to the 'OutputStream' "
-                                + "with the symbol."
+                        syntax = "time:dateSub('2019-11-11 13:23:44.657', 5, 'YEAR')",
+                        description = "Subtracts five years to the given date value and returns " +
+                                "`2014-11-11 13:23:44.657` using the default date.format `yyyy-MM-dd HH:mm:ss.SSS`."
+                ),
+                @Example(
+                        syntax = "time:dateSub( 1415715824000L, 1, 'HOUR')",
+                        description = "Subtracts one hour and `1415712224000` as a `string`."
                 )
         }
 )
@@ -143,7 +134,7 @@ public class DateSubFunctionExtension extends FunctionExecutor {
 
     @Override
     protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
-                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
+                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
 
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
                 .length == 3) {
@@ -153,25 +144,25 @@ public class DateSubFunctionExtension extends FunctionExecutor {
         if (attributeExpressionExecutors.length == 4) {
             if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the first argument of " +
-                        "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
+                        "time:dateSub(dateValue, expr, unit, dateFormat) function, " +
                         "required " + Attribute.Type.STRING + " but found " +
                         attributeExpressionExecutors[0].getReturnType().toString());
             }
             if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the second argument of " +
-                        "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
+                        "time:dateSub(dateValue, expr, unit, dateFormat) function, " +
                         "required " + Attribute.Type.INT + " but found " +
                         attributeExpressionExecutors[1].getReturnType().toString());
             }
             if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the third argument of " +
-                        "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
+                        "time:dateSub(dateValue, expr, unit, dateFormat) function, " +
                         "required " + Attribute.Type.STRING + " but found " +
                         attributeExpressionExecutors[2].getReturnType().toString());
             }
             if (attributeExpressionExecutors[3].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the fourth argument of " +
-                        "time:dateSub(dateValue,expr,unit,dateFormat) function, " +
+                        "time:dateSub(dateValue, expr, unit, dateFormat) function, " +
                         "required " + Attribute.Type.STRING + " but found " +
                         attributeExpressionExecutors[3].getReturnType().toString());
             }
@@ -180,7 +171,7 @@ public class DateSubFunctionExtension extends FunctionExecutor {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
                             "for the first argument of " +
-                            "time:dateSub(dateValue,expr,unit) function, " +
+                            "time:dateSub(dateValue, expr, unit) function, " +
                             "required " + Attribute.Type.STRING + " but found " +
                             attributeExpressionExecutors[0].
                                     getReturnType().toString());
@@ -188,7 +179,7 @@ public class DateSubFunctionExtension extends FunctionExecutor {
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
                             "for the second argument of " +
-                            "time:dateSub(dateValue,expr,unit) function, " +
+                            "time:dateSub(dateValue, expr, unit) function, " +
                             "required " + Attribute.Type.INT + " but found " +
                             attributeExpressionExecutors[1].
                                     getReturnType().toString());
@@ -196,7 +187,7 @@ public class DateSubFunctionExtension extends FunctionExecutor {
                 if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
                             "for the second argument of " +
-                            "time:dateSub(dateValue,expr,unit) function, " +
+                            "time:dateSub(dateValue, expr, unit) function, " +
                             "required " + Attribute.Type.STRING + " but found " +
                             attributeExpressionExecutors[2].
                                     getReturnType().toString());
@@ -205,7 +196,7 @@ public class DateSubFunctionExtension extends FunctionExecutor {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
                             "for the first argument of " +
-                            "time:dateSub(timestampInMilliseconds,expr,unit) " +
+                            "time:dateSub(timestampInMilliseconds, expr, unit) " +
                             "function, " + "required " + Attribute.Type.LONG +
                             " but found " + attributeExpressionExecutors[0]
                             .getReturnType().toString());
@@ -213,7 +204,7 @@ public class DateSubFunctionExtension extends FunctionExecutor {
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.INT) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
                             "for the second argument of " +
-                            "time:dateSub(timestampInMilliseconds,expr,unit) " +
+                            "time:dateSub(timestampInMilliseconds, expr, unit) " +
                             "function, " + "required " + Attribute.Type.INT +
                             " but found " + attributeExpressionExecutors[1]
                             .getReturnType().toString());
@@ -221,7 +212,7 @@ public class DateSubFunctionExtension extends FunctionExecutor {
                 if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found " +
                             "for the second argument of " +
-                            "time:dateSub(timestampInMilliseconds,expr,unit) " +
+                            "time:dateSub(timestampInMilliseconds, expr, unit) " +
                             "function, " + "required " + Attribute.Type.STRING +
                             " but found " + attributeExpressionExecutors[2]
                             .getReturnType().toString());

@@ -62,34 +62,33 @@ import java.util.Date;
 @Extension(
         name = "dayOfWeek",
         namespace = "time",
-        description = "This function returns the day on which a given date falls.",
+        description = "Extracts the day on which a given date falls.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "The value of the date. For example, \"2014-11-11 13:23:44.657\", " +
-                                "\"2014-11-11\" , " +
-                                      "\"13:23:44.657\".",
+                        description = "The value of the date. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, `13:23:44.657`.",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
-                        description = "The date format of the date value provided. For example," +
-                                " 'yyyy-MM-dd HH:mm:ss.SSS'.",
+                        description = "The format of the date value provided. " +
+                                "For example, `yyyy/MM/dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
+                        defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
         },
         returnAttributes = @ReturnAttribute(
-                description = "This returns the day of the week, corresponding to the date value given, " +
-                        " as a string value.",
+                description = "Returns the day of the week corresponding to the date value given. " +
+                        "The values can be one of `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, " +
+                        "`Saturday`, or `Sunday`.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax =  "define stream InputStream (symbol string, dateValue string,dateFormat string);\n"
-                                + "from InputStream\n"
-                                + "select symbol,time:dayOfWeek(dateValue,dateFormat) as dayOfWeekExtracted\n"
-                                + "insert into OutputStream;",
-                        description = "The Query extracts the day on which the date given as 'dateValue' " +
-                                "in the 'dateFormat' format falls. It returns the symbol and the extracted day as " +
-                                "'dayOfWeekExtracted', to the 'OutputStream'."
-                )
+                        syntax = "time:date('2014/12/11 13:23:44', 'yyyy/MM/dd HH:mm:ss')",
+                        description = "Extracts the date and returns `Thursday`."
+                ),
+                @Example(
+                        syntax = "time:date('2014-11-11 13:23:44.345')",
+                        description = "Extracts the date and returns `Tuesday`."
+                ),
         }
 )
 public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {

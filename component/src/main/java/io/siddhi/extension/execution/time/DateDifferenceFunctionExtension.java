@@ -68,64 +68,62 @@ import java.util.concurrent.TimeUnit;
 @Extension(
         name = "dateDiff",
         namespace = "time",
-        description = " This function returns the time in days, between two dates. Two arguments of 'String' type" +
-                      " are sent as the first two parameters." +
-                      " The function can accept four parameters,the last two " +
-                      "parameters corresponding to the date formats being optional ones. " +
-                      "The order of the parameters should be" +
-                " dateDiff(date.value1,date.value2,date.format1,date.format2). Instead, if two " +
-                      "arguments of 'Long' type are sent as the first two parameters, " +
-                "the order of the parameters should be " +
-                "dateDiff(timestamp.in.milliseconds1,timestamp.in.milliseconds2). ",
+        description = "Returns difference between two dates in days.",
         parameters = {
                 @Parameter(name = "date.value1",
-                        description = "The date value of the first parameter. For example, " +
-                                "\"2014-11-11 13:23:44.657\", \"2014-11-11\", \"13:23:44.657\".",
-
-                        type = {DataType.STRING}),
+                        description =  "The value of the first date parameter. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, `13:23:44.657`.",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "-"),
                 @Parameter(name = "date.value2",
-                        description = "The date value of the second parameter. For example," +
-                                " \"2014-11-11 13:23:44.657\", " +
-                                "\"2014-11-11\", \"13:23:44.657\".",
-                        type = {DataType.STRING}),
+                        description =  "The value of the second date parameter. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11` , " +
+                                "`13:23:44.657`.",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "-"),
                 @Parameter(name = "date.format1",
-                        description = "The format of the date provided for the first parameter, i.e.," +
-                                " yyyy-MM-dd HH:mm:ss.SSS.",
+                        description = "The format of the first date value provided. " +
+                                "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
+                        defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
                 @Parameter(name = "date.format2",
-                        description = "The format of the date provided for the second parameter, i.e., " +
-                                "yyyy-MM-dd HH:mm:ss.SSS.",
+                        description = "The format of the second date value provided. " +
+                                "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
+                        defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
                 @Parameter(name = "timestamp.in.milliseconds1",
-                        description = "The date value in milliseconds from the epoch. For example, 1415712224000L.",
-                        type = {DataType.LONG}),
+                        description = "The first date value in milliseconds from the epoch." +
+                                " For example, `1415712224000L`.",
+                        type = {DataType.LONG},
+                        optional = true,
+                        defaultValue = "-"),
                 @Parameter(name = "timestamp.in.milliseconds2",
-                        description = "The date value in milliseconds from the epoch. For example, 1415712224000L.",
-                        type = {DataType.LONG})
+                        description = "The second date value in milliseconds from the epoch." +
+                                " For example, `1415712224000L`.",
+                        type = {DataType.LONG},
+                        optional = true,
+                        defaultValue = "-")
         },
         returnAttributes = @ReturnAttribute(
-                description = "This returns the difference of the two given dates. " +
-                        "The returned value is of 'int' type.",
+                description = "This returns the difference of the two given dates.",
                 type = {DataType.INT}),
         examples = {
                 @Example(
-                        syntax = "define stream InputStream (symbol string,dateValue1 string,dateFormat1 string,"
-                                + "dateValue2 string,dateFormat2 string,);\n"
-                                + "from InputStream\n "
-                                + "time:dateDiff(timestampInMilliseconds1,timestampInMilliseconds2)"
-                                + "select symbol , time:dateDiff(dateValue1,dateValue2,dateFormat1,dateFormat2) "
-                                + "as dateDifference,\n"
-                                + " as dateDifferenceInMilliseconds "
-                                + "insert into OutputStream;",
-                        description = "This query returns the difference between 'timestampInMilliseconds1' and "
-                                + "'timestampInMilliseconds2' as the 'dateDifferenceInMilliseconds' and the " +
-                                "difference between 'dataValue1' which is in the format, 'dateFormat1' and " +
-                                "'dataValue2' which is in the format, 'dateFormat2', as 'dateDifference'. " +
-                                "This function then redirects the results to the 'OutputStream'."
+                        syntax = "time:dateDiff('2014-11-11 13:23:44', 'yyyy-MM-dd HH:mm:ss', " +
+                                "'2014-11-9 13:23:44', 'yyyy-MM-dd HH:mm:ss')",
+                        description = "Returns the date difference between the two given dates as `2`."
+                ),
+                @Example(
+                        syntax = "time:dateDiff('2014-11-13 13:23:44', '2014-11-9 13:23:44')",
+                        description = "Returns the date difference between the two given dates as `4`."
+                ),
+                @Example(
+                        syntax = "time:dateDiff(1415692424000L, 1412841224000L)",
+                        description = "Returns the date difference between the two given dates as `33`."
                 )
         }
 )

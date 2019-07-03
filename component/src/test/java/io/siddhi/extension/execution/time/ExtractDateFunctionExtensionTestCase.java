@@ -76,8 +76,8 @@ public class ExtractDateFunctionExtensionTestCase {
 
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44.657", "yyyy-MM-dd HH:mm:ss.SSS" });
-        inputHandler.send(new Object[] { "WSO2", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss" });
+        inputHandler.send(new Object[] { "IBM", "13:23:44.657", "HH:mm:ss.SSS" });
+        inputHandler.send(new Object[] { "WSO2", "2014/11/11 13:23:44", "yyyy/MM/dd HH:mm:ss" });
         inputHandler.send(new Object[] { "XYZ", "2014-11-11", "yyyy-MM-dd" });
         SiddhiTestHelper.waitForEvents(waitTime, 1, count, timeout);
         siddhiAppRuntime.shutdown();

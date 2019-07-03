@@ -65,52 +65,48 @@ import java.util.Date;
 @Extension(
         name = "dateFormat",
         namespace = "time",
-        description = "This function returns a formatted date string.If the first argument is of 'String' type, then" +
-                    " the function accepts three " +
-                      "parameters with the last parameter as an optional parameter.The order of the parameters" +
-                    " should be dateFormat(dateValue,dateTargetFormat,dateSourceFormat). " +
-                    "Instead, if the first argument is of 'Long' type, then it " +
-                      "accepts two parameters.In this case, the order of the parameter " +
-                    "should be dateFormat(timestampInMilliseconds, dateTargetFormat).",
+        description = "Formats the data in string or milliseconds format to the given date format.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "The value of the date. For example," +
-                                " \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
-                                      "\"13:23:44.657\".",
-                        type = {DataType.STRING}),
-                @Parameter(name = "date.target.format",
-                        description = "The format of the date into which the date value needs to be converted. " +
-                                "For example, 'yyyy/MM/dd HH:mm:ss'.",
-                        type = {DataType.STRING}),
-                @Parameter(name = "date.source.format",
-                        description = "The format in which the data value is present in the input stream." +
-                                "For example, 'yyyy-MM-dd HH:mm:ss.SSS'.",
+                        description = "The value of the date. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, `13:23:44.657`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
+                        defaultValue = "-"),
+                @Parameter(name = "date.target.format",
+                        description = "The format of the date into which the date value needs to be converted. " +
+                                "For example, `yyyy/MM/dd HH:mm:ss`.",
+                        type = {DataType.STRING}),
+                @Parameter(name = "date.source.format",
+                        description = "The format input date.value." +
+                                "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
                 @Parameter(name = "timestamp.in.milliseconds",
-                        description = "The date value in milliseconds from the epoch. For example, 1415712224000L.",
-                        type = {DataType.LONG})
+                        description = "The date value in milliseconds from the epoch. For example, `1415712224000L`.",
+                        type = {DataType.LONG},
+                        optional = true,
+                        defaultValue = "-")
         },
         returnAttributes = @ReturnAttribute(
-                description = "The formatted data that is returned. The returned value is of 'String' type.",
+                description = "Returns the formatted date based on the date.target.format property.",
                 type = {DataType.STRING}),
         examples = {
+
                 @Example(
-                        syntax = "define stream InputStream (symbol string,"
-                                + "dateValue string,sourceFormat string,timestampInMilliseconds long,"
-                                + "targetFormat string);\n"
-                                + "from InputStream\n"
-                                + "select symbol"
-                                + "time:dateFormat(dateValue,targetFormat,sourceFormat) as formattedDate,"
-                                + "time:dateFormat(timestampInMilliseconds,targetFormat) as formattedUnixDate\n"
-                                + "insert into OutputStream;",
-                        description = "This query formats the 'dateValue' in the 'InputStream' which is in "
-                                + "the 'sourceFormat' to the 'targetFormat' as 'formattedData'. It also formats"
-                                + " 'timestampInMilliseconds' which is in milliseconds to the 'targetFormat'"
-                                + " as 'formattedUnixDate'. The function then returns the symbol " +
-                                "'formattedDate' and 'formattedUnixDate' to the"
-                                + " 'OutputStream'."
+                        syntax = "time:dateFormat('2014/11/11 13:23:44', 'mm:ss', 'yyyy/MM/dd HH:mm:ss') ",
+                        description = "Converts date based on the target date format `mm:ss` and returns `23:44`."
+                ),
+
+                @Example(
+                        syntax = "time:dateFormat('2014-11-11 13:23:44', 'HH:mm:ss') ",
+                        description = "Converts date based on the target date format `HH:mm:ss` and returns `13:23:44`."
+                ),
+                @Example(
+                        syntax = "time:dateFormat(1415692424000L, 'yyyy-MM-dd') ",
+                        description = "Converts date in millisecond based on the target date format `yyyy-MM-dd` " +
+                                "and returns `2014-11-11`."
                 )
         }
 )
@@ -124,7 +120,7 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
 
     @Override
     protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
-                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
+                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
                 .length == 2) {
             useDefaultDateFormat = true;

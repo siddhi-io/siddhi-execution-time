@@ -56,48 +56,38 @@ import java.util.Date;
 @Extension(
         name = "timestampInMilliseconds",
         namespace = "time",
-        description = "This function returns the system time or given time in milliseconds." +
-                "If two parameters of 'String' type are sent as the first argument, " +
-                "the order of the parameters should be timestampInMilliseconds(date.value," +
-                      "date.format) with the last parameter, i.e., 'date.format', as the optional one" +
-                "Instead, if no " +
-                      "argument method is invoked, the system time is returned in milliseconds.",
+        description = "Returns the system time or the given time in milliseconds.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "The value of the date. For example, \"2014-11-11 13:23:44.657\", " +
-                                "\"2014-11-11\" , \"13:23:44.657\".",
-                        type = {DataType.STRING}),
-                @Parameter(name = "date.format",
-                        description = "The date format of the date value provided. For example," +
-                                " 'yyyy-MM-dd HH:mm:ss.SSS'.",
+                        description = "The value of the date. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, `13:23:44.657`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS")
+                        defaultValue = "Current system time"),
+                @Parameter(name = "date.format",
+                        description = "The format of the date value provided. " +
+                                "For example, `yyyy/MM/dd HH:mm:ss.SSS`.",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
         },
         returnAttributes = @ReturnAttribute(
-                description = "The value of the parameter returned is of 'long' type.",
+                description = "The value in milliseconds from epoch.",
                 type = {DataType.LONG}),
         examples = {
                 @Example(
-                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
-                                 "from InputStream\n" +
-                                 "select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19'," +
-                                 "'yyyy-MM-DD HH:MM:SS') as timestampInMilliseconds\n" +
-                                 "insert into OutputStream;",
-                        description = "The query converts 2007-11-30 10:30:19 which is in 'yyyy-MM-DD HH:MM:SS'"
-                                + " format to  milliseconds as 'timestampInMilliseconds' and returns the symbol and "
-                                + "'timestampInMilliseconds' to the 'OutputStream'."
+                        syntax = "time:timestampInMilliseconds()",
+                        description = "Returns the system current time in milliseconds."
                 ),
-
                 @Example(
-                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
-                                "from InputStream\n" +
-                                "select symbol , time:timestampInMilliseconds()" +
-                                "as timestampInMilliseconds\n" +
-                                "insert into OutputStream;",
-                        description = "The query gets the system time in milliseconds"
-                                + " as 'timestampInMilliseconds' and returns the symbol from the 'InputStream' and "
-                                + "'timestampInMilliseconds' to the 'OutputStream'."
+                        syntax = "time:timestampInMilliseconds('2007-11-30 10:30:19', 'yyyy-MM-DD HH:MM:SS')",
+                        description = "Converts `2007-11-30 10:30:19` in `yyyy-MM-DD HH:MM:SS` format to " +
+                                " milliseconds as `1170131400019`."
+                ),
+                @Example(
+                        syntax = "time:timestampInMilliseconds('2007-11-30 10:30:19.000')",
+                        description = "Converts `2007-11-30 10:30:19` in `yyyy-MM-DD HH:MM:ss.SSS` format to " +
+                                " milliseconds as `1196398819000`."
                 )
         }
 )
@@ -110,14 +100,14 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor {
 
     @Override
     protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
-                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
+                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors.length > 0) {
             if (attributeExpressionExecutors.length == 2) {
 
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the first " +
                             "argument of " + "time:timestampInMilliseconds" +
-                            "(dateValue,dateFormat) function,required " +
+                            "(dateValue, dateFormat) function,required " +
                             Attribute.Type.STRING + " but found " +
                             attributeExpressionExecutors[0]
                                     .getReturnType().toString());
@@ -125,17 +115,16 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor {
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the " +
                             "second argument of " + "time:timestampInMilliseconds" +
-                            "(dateValue,dateFormat) function, " + "required " +
+                            "(dateValue, dateFormat) function, " + "required " +
                             Attribute.Type.STRING + " but found " +
                             attributeExpressionExecutors[1]
                                     .getReturnType().toString());
                 }
             } else if (attributeExpressionExecutors.length == 1) {
-
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the " +
                             "first argument of " + "time:timestampInMilliseconds" +
-                            "(dateValue,dateFormat) function, " + "required " +
+                            "(dateValue) function, " + "required " +
                             Attribute.Type.STRING + "but found " +
                             attributeExpressionExecutors[0]
                                     .getReturnType().toString());
@@ -144,9 +133,8 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor {
                 dateFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
             } else {
                 throw new SiddhiAppValidationException("Invalid no of arguments passed to " +
-                        "time:timestampInMilliseconds" +
-                        "(dateValue,dateFormat) function, " +
-                        "required 2, but found " +
+                        "time:timestampInMilliseconds() function, " +
+                        "required 1 or 2, but found " +
                         attributeExpressionExecutors.length);
             }
         }

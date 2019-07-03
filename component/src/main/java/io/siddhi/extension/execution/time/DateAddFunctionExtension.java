@@ -69,66 +69,54 @@ import java.util.Locale;
 @Extension(
         name = "dateAdd",
         namespace = "time",
-        description = "This function returns the specified time interval added to a date." +
-                "If a parameter of 'STRING' type is passed as the first argument, the function accepts four " +
-                "parameters with the last parameter, i.e., 'dateFormat', as an optional one." +
-                " If a parameter of 'LONG' type is passed as the first argument, the function accepts three " +
-                "parameters, i.e., 'timestampInMilliseconds', 'expr' and 'unit' in the given order.",
+        description = "Adds the specified time interval to a date.",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "The value of the date." +
-                                "For example, \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
-                                      "\"13:23:44.657\".",
-                        type = {DataType.STRING}),
+                        description = "The value of the date. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, `13:23:44.657`.",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "-"),
                 @Parameter(name = "expr",
-                        description = "This is the amount by which the selected part of the date " +
-                                "should be incremented." +
-                                "For example, 2 ,5 ,10, etc.",
+                        description = "The amount by which the selected part of the date " +
+                                "should be incremented. " +
+                                "For example `2` ,`5 `,`10`, etc.",
                         type = {DataType.INT}),
                 @Parameter(name = "unit",
-                        description = "This is the part of the date that needs to be modified." +
-                                      "For example, \"MINUTE\" , " +
-                                      "\"HOUR\" , \"MONTH\" , \"YEAR\" , \"QUARTER\" ,\n" +
-                                      "\"WEEK\" , \"DAY\" , \"SECOND\".",
+                        description = "This is the part of the date that needs to be modified. " +
+                                      "For example, `MINUTE`, `HOUR`, `MONTH`, `YEAR`, `QUARTER`," +
+                                " `WEEK`, `DAY`, `SECOND`.",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
                         description = "The format of the date value provided. " +
-                                "For example, 'yyyy-MM-dd HH:mm:ss.SSS'.",
+                                "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
+                        defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
                 @Parameter(name = "timestamp.in.milliseconds",
-                        description = "The date value in milliseconds from the epoch. " +
-                                "For example, 1415712224000L.",
-                        type = {DataType.LONG})
+                        description = "The date value in milliseconds. " +
+                                "For example, `1415712224000L`.",
+                        type = {DataType.LONG},
+                        optional = true,
+                        defaultValue = "-")
         },
         returnAttributes = @ReturnAttribute(
-                description = "The date value that is returned after incrementing the selected unit of the date " +
-                        "provided.The type returned is string.",
+                description = "Returns data value as a `string` in the provided date.format, default date.format or " +
+                        "in milliseconds based on the arguments passed to the function.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "define stream InputStream (symbol string,dateValue string,dateFormat string," +
-                                "expr int);\n" +
-                                "from InputStream\n " +
-                                "select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearAdded\n" +
-                                "insert into OutputStream;",
-                        description = "This query gets the date value from the 'InputStream, increments the"
-                                + " 'YEAR' value of it by the 'expr' value given, formats the resultant value " +
-                                "into the 'dateFormat' format" +
-                                " given in the input stream and returns the formatted value to the 'OutputStream' "
-                                + "as 'yearAdded', with the symbol."
+                        syntax = "time:dateAdd('2014-11-11 13:23:44.657', 5, 'YEAR', 'yyyy-MM-dd HH:mm:ss.SSS')",
+                        description = "Adds five years to the given date value and returns `2019-11-11 13:23:44.657`."
                 ),
                 @Example(
-                        syntax = "define stream InputStream (symbol string,dateValue string,dateFormat string," +
-                                "timestampInMilliseconds long,expr int);\n" +
-                                "from inputStream\n " +
-                                "time:dateAdd(timestampInMilliseconds,expr,'HOUR') as hourAddedMills\n " +
-                                "insert into outputStream;",
-                        description = "This query gets the value of the 'timestampInMilliseconds' attribute from the" +
-                                " input stream, adds the 'expr' number of hours to it and returns the "
-                                + " resultant value in milliseconds as 'hourAddedMills', into the 'OutputStream'"
-                                + " with the symbol."
+                        syntax = "time:dateAdd('2014-11-11 13:23:44.657', 5, 'YEAR')",
+                        description = "Adds five years to the given date value and returns `2019-11-11 13:23:44.657` " +
+                                "using the default date.format `yyyy-MM-dd HH:mm:ss.SSS`."
+                ),
+                @Example(
+                        syntax = "time:dateAdd( 1415712224000L, 1, 'HOUR')",
+                        description = "Adds one hour and `1415715824000` as a `string`."
                 )
         }
 )

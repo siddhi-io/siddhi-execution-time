@@ -20,6 +20,7 @@ package io.siddhi.extension.execution.time;
 
 import io.siddhi.annotation.Example;
 import io.siddhi.annotation.Extension;
+import io.siddhi.annotation.Parameter;
 import io.siddhi.annotation.ReturnAttribute;
 import io.siddhi.annotation.util.DataType;
 import io.siddhi.core.config.SiddhiQueryContext;
@@ -52,41 +53,41 @@ import java.util.Date;
 @Extension(
         name = "currentTimestamp",
         namespace = "time",
-        description = "If no argument is provided, this function will return the currentSystemTime and if the " +
-                "timezone is provided as an argument, it will convert the current systemtime to the given timezone " +
-                "and return. This function returns time in 'yyyy-MM-dd HH:mm:ss' format.\n" +
-                "To check the available timezone ids, visit " +
-                "https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html",
+        description = "When no argument is provided, function returns the system current timestamp in" +
+                " `yyyy-MM-dd HH:mm:ss` format, and when a timezone is provided as an argument, " +
+                "it converts and return the current system time to the given timezone format.",
+        parameters = {
+                @Parameter(name = "timezone",
+                        description = "The timezone to which the current time need to be converted. " +
+                                "For example, `Asia/Kolkata`, `PST`. " +
+                                "Get the supported timezone IDs from [here]" +
+                                "(https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html)",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "System timezone")
+        },
         returnAttributes = @ReturnAttribute(
                 description = "The value returned is of 'string' type.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
-                                "from InputStream " +
-                                "select symbol , time:currentTimestamp() as currentTimestamp\n" +
-                                "insert into OutputStream;",
-                        description = "This query returns, symbol from the 'InputStream' and "
-                                + "the current time stamp of the system in 'yyyy-MM-dd HH:mm:ss' format"
-                                + " as 'currentTimestamp', to the 'OutputStream'."
+                        syntax = "time:currentTimestamp()",
+                        description = "Returns current system time in `yyyy-MM-dd HH:mm:ss` format,"
+                                + " such as `2019-03-31 14:07:00`."
                 ),
                 @Example(
-                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
-                                "from InputStream " +
-                                "select symbol , time:currentTimestamp(\"Asia/Kolkata\") as currentTimestamp\n" +
-                                "insert into OutputStream;",
-                        description = "This query returns, symbol from the 'InputStream' and "
-                                + "the current time stamp of the system which is converted to Asia/Kolkata timezone, " +
-                                "in 'yyyy-MM-dd HH:mm:ss' format as 'currentTimestamp', to the 'OutputStream'."
+                        syntax = "time:currentTimestamp('Asia/Kolkata')",
+                        description = "Returns current system time converted to 'Asia/Kolkata' timezone " +
+                                "`yyyy-MM-dd HH:mm:ss` format, such as `2019-03-31 19:07:00`. " +
+                                "Get the supported timezone IDs from [here]" +
+                                "(https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html)"
                 ),
                 @Example(
-                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
-                                "from InputStream " +
-                                "select symbol , time:currentTimestamp(\"CST\") as currentTimestamp\n" +
-                                "insert into OutputStream;",
-                        description = "This query returns, symbol from the 'InputStream' and "
-                                + "the current time stamp of the system which is converted to CST timezone, in " +
-                                "'yyyy-MM-dd HH:mm:ss' format as 'currentTimestamp', to the 'OutputStream'."
+                        syntax = "time:currentTimestamp('CST')",
+                        description = "Returns current system time converted to 'CST' timezone " +
+                                "`yyyy-MM-dd HH:mm:ss` format, such as `2019-03-31 02:07:00`. " +
+                                "Get the supported timezone IDs from [here]" +
+                                "(https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html)"
                 )
         }
 )
