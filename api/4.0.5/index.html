@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -13,10 +13,6 @@
         <meta name="description" content="Siddhi Execution Time Extension">
       
       
-        <link rel="canonical" href="https://wso2-extensions.github.io/siddhi-execution-time/api/4.0.5/">
-      
-      
-        <meta name="author" content="WSO2">
       
       
         <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -38,7 +34,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-0.17.4, mkdocs-material-2.9.2">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
     
     
       
@@ -46,9 +42,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.ba0fd1a6.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.0284f74d.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.6079476c.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.01803549.css">
       
       
         
@@ -57,18 +53,47 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-103065-28", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
     
     
   </head>
@@ -81,24 +106,7 @@
       <defs>
         
         
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
-    viewBox="0 0 416 448" id="__github">
-  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
-        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
-        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
-        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
-        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
-        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
-        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
-        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
-        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
-        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
-        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
-        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
-        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
-        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
-        99.5z" />
-</svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
         
       </defs>
     </svg>
@@ -115,9 +123,9 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://wso2-extensions.github.io/siddhi-execution-time/" title="Siddhi Execution Time" class="md-header-nav__button md-logo">
+        <a href="../.." title="Siddhi Execution Time" class="md-header-nav__button md-logo">
           
-            <img src="../../images/siddhi-logo-w.svg" width="24" height="24">
+            <img src="../../images/siddhi-logo.svg" width="24" height="24">
           
         </a>
       </div>
@@ -127,22 +135,21 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
-            
-              <span class="md-header-nav__topic">
-                Siddhi Execution Time
-              </span>
-              <span class="md-header-nav__topic">
+            <span class="md-header-nav__topic">
+              Siddhi Execution Time
+            </span>
+            <span class="md-header-nav__topic">
+              
                 4.0.5
-              </span>
-            
+              
+            </span>
           
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
           
-            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
-            
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
@@ -165,7 +172,6 @@
     </div>
   </div>
 </div>
-          
         
       </div>
       
@@ -176,20 +182,18 @@
 
   
 
-
-  <a href="https://github.com/wso2-extensions/siddhi-execution-time/" title="Go to repository" class="md-source" data-md-source="github">
-    
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#__github" width="24" height="24"></use>
-        </svg>
-      </div>
-    
-    <div class="md-source__repository">
-      siddhi-execution-time
+<a href="https://github.com/siddhi-io/siddhi-execution-time/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
     </div>
-  </a>
-
+  
+  <div class="md-source__repository">
+    Siddhi Execution Time
+  </div>
+</a>
           </div>
         </div>
       
@@ -211,11 +215,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <span class="md-nav__button md-logo">
+    <a href="../.." title="Siddhi Execution Time" class="md-nav__button md-logo">
       
-        <img src="../../images/siddhi-logo-w.svg" width="48" height="48">
+        <img src="../../images/siddhi-logo.svg" width="48" height="48">
       
-    </span>
+    </a>
     Siddhi Execution Time
   </label>
   
@@ -225,20 +229,18 @@
 
   
 
-
-  <a href="https://github.com/wso2-extensions/siddhi-execution-time/" title="Go to repository" class="md-source" data-md-source="github">
-    
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#__github" width="24" height="24"></use>
-        </svg>
-      </div>
-    
-    <div class="md-source__repository">
-      siddhi-execution-time
+<a href="https://github.com/siddhi-io/siddhi-execution-time/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
     </div>
-  </a>
-
+  
+  <div class="md-source__repository">
+    Siddhi Execution Time
+  </div>
+</a>
     </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -249,8 +251,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../.." title="Welcome" class="md-nav__link">
-      Welcome
+    <a href="../.." title="Information" class="md-nav__link">
+      Information
     </a>
   </li>
 
@@ -275,6 +277,18 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../5.0.2/" title="5.0.2" class="md-nav__link">
+      5.0.2
+    </a>
+  </li>
+
         
           
           
@@ -770,54 +784,49 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/wso2-extensions/siddhi-execution-time/edit/master/docs/api/4.0.5.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/siddhi-io/siddhi-execution-time/blob/master/api/4.0.5.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="api-docs-v405">API Docs - v4.0.5<a class="headerlink" href="#api-docs-v405" title="Permanent link">&para;</a></h1>
-<h2 id="time">Time<a class="headerlink" href="#time" title="Permanent link">&para;</a></h2>
-<h3 id="currenttime-function">currentTime <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#currenttime-function" title="Permanent link">&para;</a></h3>
+                <h1 id="api-docs-v405">API Docs - v4.0.5</h1>
+<h2 id="time">Time</h2>
+<h3 id="currenttime-function">currentTime <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns system time in in HH:mm:ss format.</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;STRING&gt; time:currentTime()
-</pre></div>
-
+<pre><code>&lt;STRING&gt; time:currentTime()
+</code></pre>
 
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string, price long, volume long);
+<pre><code>define stream inputStream (symbol string, price long, volume long);
 from inputStream select symbol , time:currentTime() as currentTime
 insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query returns symbol from inputStream andcurrent time of the system in HH:mm:ss format as current time to the outputStream</p>
 
-<h3 id="currenttimestamp-function">currentTimestamp <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#currenttimestamp-function" title="Permanent link">&para;</a></h3>
+<h3 id="currenttimestamp-function">currentTimestamp <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns system time in yyyy-MM-dd HH:mm:ss format.</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;STRING&gt; time:currentTimestamp()
-</pre></div>
-
+<pre><code>&lt;STRING&gt; time:currentTimestamp()
+</code></pre>
 
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string, price long, volume long);
+<pre><code>define stream inputStream (symbol string, price long, volume long);
 from inputStream select symbol , time:currentTimestamp() as currentTimestamp
 insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query returns symbol from inputStream andcurrent time stamp of the system in yyyy-MM-dd HH:mm:ss format as currentTimestamp to the outputStream</p>
 
-<h3 id="dayofweek-function">dayOfWeek <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#dayofweek-function" title="Permanent link">&para;</a></h3>
+<h3 id="dayofweek-function">dayOfWeek <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns the day on which a given date falls.</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;STRING&gt; time:dayOfWeek(&lt;STRING&gt; date.value, &lt;STRING&gt; date.format)
-</pre></div>
-
+<pre><code>&lt;STRING&gt; time:dayOfWeek(&lt;STRING&gt; date.value, &lt;STRING&gt; date.format)
+</code></pre>
 
 <p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
 <table>
@@ -848,22 +857,20 @@ insert into outputStream;
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string, dateValue string,dateFormat string);
+<pre><code>define stream inputStream (symbol string, dateValue string,dateFormat string);
 from inputStream
 select symbol,time:dayOfWeek(dateValue,dateFormat) as dayOfWeekExtracted
 insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">The Query extract the day of the week from the date given as dateValue which isin the format 'dateFormat' and return symbol and extracted day as dayOfWeekExtractedto the outputStream.</p>
 
-<h3 id="dateadd-function">dateAdd <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#dateadd-function" title="Permanent link">&para;</a></h3>
+<h3 id="dateadd-function">dateAdd <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns added specified time interval to a date.If a STRING parameter passed as the first argument then function accepts four parameters with last as optional which is the date.format. If a LONG parameter passed as the first argument, then function accepts three parameters which are timestamp.in.milliseconds,expr,unit in order.</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;STRING&gt; time:dateAdd(&lt;STRING&gt; date.value, &lt;INT&gt; expr, &lt;STRING&gt; unit, &lt;STRING&gt; date.format, &lt;LONG&gt; timestamp.in.milliseconds)
-</pre></div>
-
+<pre><code>&lt;STRING&gt; time:dateAdd(&lt;STRING&gt; date.value, &lt;INT&gt; expr, &lt;STRING&gt; unit, &lt;STRING&gt; date.format, &lt;LONG&gt; timestamp.in.milliseconds)
+</code></pre>
 
 <p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
 <table>
@@ -918,32 +925,29 @@ insert into outputStream;
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string,dateValue string,dateFormat string,expr int);
+<pre><code>define stream inputStream (symbol string,dateValue string,dateFormat string,expr int);
 from inputStream
- select symbol , time:dateAdd(dateValue,expr,&#39;YEAR&#39;,dateFormat) as yearAdded
+ select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearAdded
 insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query gets date value from the input stream, adds expr amount to the year value of the date value, format resultant value as date format given in the input stream and finally return the formatted value to the outputStream as yearAdded with the symbol</p>
 
 <p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long,expr int);
+<pre><code>define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long,expr int);
 from inputStream
- time:dateAdd(timestampInMilliseconds,expr,&#39;HOUR&#39;) as hourAddedMills
+ time:dateAdd(timestampInMilliseconds,expr,'HOUR') as hourAddedMills
  insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query gets value of timestampInMilliseconds from the input stream, adds expr amount of hours to it and return  resultant value in milliseconds as hourAddedMills into the outputStream  with the symbol</p>
 
-<h3 id="datesub-function">dateSub <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#datesub-function" title="Permanent link">&para;</a></h3>
+<h3 id="datesub-function">dateSub <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns subtracted specified time interval to a date. If a STRING parameter passed as the first argument then function accepts four parameters with last as optional which is the date.format. If a LONG parameter passed as the first argument, then function accepts three parameters which are timestamp.in.milliseconds,expr,unit in order.</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;STRING&gt; time:dateSub(&lt;STRING&gt; date.value, &lt;INT&gt; expr, &lt;STRING&gt; unit, &lt;STRING&gt; date.format, &lt;LONG&gt; timestamp.in.milliseconds)
-</pre></div>
-
+<pre><code>&lt;STRING&gt; time:dateSub(&lt;STRING&gt; date.value, &lt;INT&gt; expr, &lt;STRING&gt; unit, &lt;STRING&gt; date.format, &lt;LONG&gt; timestamp.in.milliseconds)
+</code></pre>
 
 <p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
 <table>
@@ -998,50 +1002,45 @@ from inputStream
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string,dateValue string,dateFormat string,expr int);
+<pre><code>define stream inputStream (symbol string,dateValue string,dateFormat string,expr int);
 from inputStream
- select symbol , time:dateAdd(dateValue,expr,&#39;YEAR&#39;,dateFormat) as yearSubtracted
+ select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearSubtracted
 insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query gets date value from the input stream, subtract expr amount from the year value of the date value, format resultant value as date format given in the input stream and finally return the formatted value to the outputStream as yearSubtracted with the symbol</p>
 
 <p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long,expr int);
+<pre><code>define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long,expr int);
 from inputStream
- time:dateSub(timestampInMilliseconds,expr,&#39;HOUR&#39;) as hourSubtractedMills
+ time:dateSub(timestampInMilliseconds,expr,'HOUR') as hourSubtractedMills
  insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query gets value of timestampInMilliseconds from the input stream, subtract expr amount of hours from it and return  resultant value in milliseconds as hourSubtractedMills into the outputStream  with the symbol</p>
 
-<h3 id="currentdate-function">currentDate <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#currentdate-function" title="Permanent link">&para;</a></h3>
+<h3 id="currentdate-function">currentDate <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns system time in yyyy-MM-dd format.</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;STRING&gt; time:currentDate()
-</pre></div>
-
+<pre><code>&lt;STRING&gt; time:currentDate()
+</code></pre>
 
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string, price long, volume long);
+<pre><code>define stream inputStream (symbol string, price long, volume long);
 from inputStream select symbol , time:currentDate() as currentTime 
 insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query returns symbol from inputStream andcurrent date of the system in yyyy-MM-dd format as current time to the outputStream</p>
 
-<h3 id="date-function">date <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#date-function" title="Permanent link">&para;</a></h3>
+<h3 id="date-function">date <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns date part from a date or date/time expression.</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;STRING&gt; time:date(&lt;STRING&gt; date.value, &lt;STRING&gt; date.format)
-</pre></div>
-
+<pre><code>&lt;STRING&gt; time:date(&lt;STRING&gt; date.value, &lt;STRING&gt; date.format)
+</code></pre>
 
 <p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
 <table>
@@ -1072,22 +1071,21 @@ insert into outputStream;
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string, dateValue string,dateFormat string);
+<pre><code>define stream inputStream (symbol string, dateValue string,dateFormat string);
 from inputStream
  select symbol,time:date(dateValue,dateFormat) as dateExtracted
  insert into outputStream;
-</pre></div>
 
+</code></pre>
 
 <p style="word-wrap: break-word">This query extracts the date value from the dateValue which is in format'dateFormat' as the dateExtracted  and return symbol, and dateExtracted to the outputStream.</p>
 
-<h3 id="datediff-function">dateDiff <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#datediff-function" title="Permanent link">&para;</a></h3>
+<h3 id="datediff-function">dateDiff <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word"> This function returns time(days) between two dates. If two STRING arguments are sent as first two parameters then function should accept four parameters with last two as optional parameters. Parameter order should be dateDiff(date.value1,date.value2,date.format1,date.format2). Else if two LONG arguments are sent as first two parameters then parameter order should be dateDiff(timestamp.in.milliseconds1,timestamp.in.milliseconds2). </p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;INT&gt; time:dateDiff(&lt;STRING&gt; date.value1, &lt;STRING&gt; date.value2, &lt;STRING&gt; date.format1, &lt;STRING&gt; date.format2, &lt;LONG&gt; timestamp.in.milliseconds1, &lt;LONG&gt; timestamp.in.milliseconds2)
-</pre></div>
-
+<pre><code>&lt;INT&gt; time:dateDiff(&lt;STRING&gt; date.value1, &lt;STRING&gt; date.value2, &lt;STRING&gt; date.format1, &lt;STRING&gt; date.format2, &lt;LONG&gt; timestamp.in.milliseconds1, &lt;LONG&gt; timestamp.in.milliseconds2)
+</code></pre>
 
 <p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
 <table>
@@ -1150,22 +1148,20 @@ from inputStream
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string,dateValue1 string,dateFormat1 string,dateValue2 string,dateFormat2 string,);
+<pre><code>define stream inputStream (symbol string,dateValue1 string,dateFormat1 string,dateValue2 string,dateFormat2 string,);
 from inputStream
  time:dateDiff(timestampInMilliseconds1,timestampInMilliseconds2)select symbol , time:dateDiff(dateValue1,dateValue2,dateFormat1,dateFormat2) as dateDifference,
  as dateDifferenceInMilliseconds insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query return difference between timestampInMilliseconds1 and timestampInMilliseconds2 as dateDifferenceInMilliseconds and difference between dataValue1 which is in the format 'dateFormat1' and dataValue2 which isin the format 'dateFormat2' as dateDifference and return to the outputStream with symbol value</p>
 
-<h3 id="dateformat-function">dateFormat <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#dateformat-function" title="Permanent link">&para;</a></h3>
+<h3 id="dateformat-function">dateFormat <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns a formatted date string.If the first argument is a STRING then function accepts three parameters with last parameter as a optional parameter.Parameter order should be dateFormat(dateValue,dateTargetFormat,dateSourceFormat). Else if first argument is a LONG then function accepts two parameters.Parameter order should be dateFormat(timestampInMilliseconds,dateTargetFormat).</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;STRING&gt; time:dateFormat(&lt;STRING&gt; date.value, &lt;STRING&gt; date.target.format, &lt;STRING&gt; date.source.format, &lt;LONG&gt; timestamp.in.milliseconds)
-</pre></div>
-
+<pre><code>&lt;STRING&gt; time:dateFormat(&lt;STRING&gt; date.value, &lt;STRING&gt; date.target.format, &lt;STRING&gt; date.source.format, &lt;LONG&gt; timestamp.in.milliseconds)
+</code></pre>
 
 <p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
 <table>
@@ -1212,22 +1208,20 @@ from inputStream
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string,dateValue string,sourceFormat string,timestampInMilliseconds long,targetFormat string);
+<pre><code>define stream inputStream (symbol string,dateValue string,sourceFormat string,timestampInMilliseconds long,targetFormat string);
 from inputStream
 select symboltime:dateFormat(dateValue,targetFormat,sourceFormat) as formattedDate,time:dateFormat(timestampInMilliseconds,targetFormat) as formattedUnixDate
 insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query formats the dateValue in the inputStream which is currently in sourceFormat to the targetFormat as formattedData and formats timestampInMilliseconds which is in millisecond to the targetFormat as formattedUnixDate then return symbol formattedDate and formattedUnixDate to the outputStream.</p>
 
-<h3 id="extract-function">extract <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#extract-function" title="Permanent link">&para;</a></h3>
+<h3 id="extract-function">extract <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns date attributes from a date expression. If the first argument passed is a STRING then the function will accept three arguments with last parameter as optional which is date.format.Parameter order should be extract(unit,date.value,date.format). Else if the first argument passed is a LONG then function accepts two parameters.Parameter order is extract(timestamp.in.milliseconds,unit).</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;INT&gt; time:extract(&lt;STRING&gt; unit, &lt;STRING&gt; date.value, &lt;STRING&gt; date.format, &lt;LONG&gt; timestamp.in.milliseconds)
-</pre></div>
-
+<pre><code>&lt;INT&gt; time:extract(&lt;STRING&gt; unit, &lt;STRING&gt; date.value, &lt;STRING&gt; date.format, &lt;LONG&gt; timestamp.in.milliseconds)
+</code></pre>
 
 <p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
 <table>
@@ -1274,22 +1268,20 @@ insert into outputStream;
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long);
+<pre><code>define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long);
 from inputStream 
-select symbol, time:extract(&#39;YEAR&#39;,dateValue,dateFormat) as YEAR,time:extract(timestampInMilliseconds,&#39;HOUR&#39;) as HOUR
+select symbol, time:extract('YEAR',dateValue,dateFormat) as YEAR,time:extract(timestampInMilliseconds,'HOUR') as HOUR
  insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">This query extracts the year value from the dateValue which is in format'dateFormat' as the YEAR, hours from timestampInMilliseconds as HOUR and return symbol, YEAR and HOUR to the outputStream.</p>
 
-<h3 id="timestampinmilliseconds-function">timestampInMilliseconds <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#timestampinmilliseconds-function" title="Permanent link">&para;</a></h3>
+<h3 id="timestampinmilliseconds-function">timestampInMilliseconds <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns system time or given time in milliseconds.If two STRING parameters are sent as the first argument, the parameter order should be timestampInMilliseconds(date.value,date.format) with last parameter as the optional parameter with is date.format.Else if no argument method invoked then system time will be returned in milliseconds.</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;LONG&gt; time:timestampInMilliseconds(&lt;STRING&gt; date.value, &lt;STRING&gt; date.format)
-</pre></div>
-
+<pre><code>&lt;LONG&gt; time:timestampInMilliseconds(&lt;STRING&gt; date.value, &lt;STRING&gt; date.format)
+</code></pre>
 
 <p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
 <table>
@@ -1320,38 +1312,34 @@ select symbol, time:extract(&#39;YEAR&#39;,dateValue,dateFormat) as YEAR,time:ex
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string, price long, volume long);
+<pre><code>define stream inputStream (symbol string, price long, volume long);
 from inputStream
-select symbol , time:timestampInMilliseconds(&#39;2007-11-30 10:30:19&#39;,&#39;yyyy-MM-DD HH:MM:SS&#39;) as timestampInMilliseconds
+select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19','yyyy-MM-DD HH:MM:SS') as timestampInMilliseconds
 insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">The query convert the 2007-11-30 10:30:19 which is in yyyy-MM-DD HH:MM:SS format to the milliseconds as timestampInMilliseconds and return symbol and timestampInMilliseconds to the output stream</p>
 
 <p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string, price long, volume long);
+<pre><code>define stream inputStream (symbol string, price long, volume long);
 from inputStream
 select symbol , time:timestampInMilliseconds()as timestampInMilliseconds
 insert into outputStream;
-</pre></div>
-
+</code></pre>
 
 <p style="word-wrap: break-word">The query get the system time in milliseconds as timestampInMilliseconds and return symbol and timestampInMilliseconds to the output stream</p>
 
-<h3 id="utctimestamp-function">utcTimestamp <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#function">(Function)</a></em><a class="headerlink" href="#utctimestamp-function" title="Permanent link">&para;</a></h3>
+<h3 id="utctimestamp-function">utcTimestamp <em><a target="_blank" href="https://siddhi.io/en/v4.x/docs/query-guide/#function">(Function)</a></em></h3>
 <p style="word-wrap: break-word">This function returns System time in yyyy-MM-dd HH:mm:ss format</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<div class="codehilite"><pre><span></span>&lt;STRING&gt; time:utcTimestamp()
-</pre></div>
-
+<pre><code>&lt;STRING&gt; time:utcTimestamp()
+</code></pre>
 
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>define stream inputStream (symbol string, price long, volume long);from inputStream select symbol , time:utcTimestamp() as utcTimestamp insert into outputStream;
-</pre></div>
-
+<pre><code>define stream inputStream (symbol string, price long, volume long);from inputStream select symbol , time:utcTimestamp() as utcTimestamp insert into outputStream;
+</code></pre>
 
 <p style="word-wrap: break-word">The query return symbol from the inputStream and system time stamp in yyyy-MM-dd HH:mm:ss format as utcTimestamp to the outputStream.</p>
                 
@@ -1411,7 +1399,7 @@ insert into outputStream;
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2011 - 2018 WSO2
+            Siddhi - Documentation
           </div>
         
         powered by
@@ -1421,33 +1409,30 @@ insert into outputStream;
           Material for MkDocs</a>
       </div>
       
-        
   <div class="md-footer-social">
     <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
     
-      <a href="https://github.com/wso2/siddhi" class="md-footer-social__link fa fa-github"></a>
+      <a href="https://github.com/siddhi-io/siddhi" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://medium.com/siddhi-io" class="md-footer-social__link fa fa-medium"></a>
+    
+      <a href="https://twitter.com/siddhi_io" class="md-footer-social__link fa fa-twitter"></a>
     
       <a href="https://www.linkedin.com/groups/13553064" class="md-footer-social__link fa fa-linkedin"></a>
     
   </div>
 
-      
     </div>
   </div>
 </footer>
       
     </div>
     
-      <script src="../../assets/javascripts/application.a59e2a89.js"></script>
+      <script src="../../assets/javascripts/application.245445c6.js"></script>
       
-      <script>app.initialize({version:"0.17.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
-        <script src="../../javascripts/extra.js"></script>
-      
-    
-    
-      
-        <script>!function(e,a,t,n,o,c,i){e.GoogleAnalyticsObject=o,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),i=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-103065-28","auto"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");if(Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var a=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",a,e.href)})}),document.forms.search){var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}</script>
+        <script src="../../assets/javascripts/extra.js"></script>
       
     
   </body>

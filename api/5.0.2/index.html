@@ -1,0 +1,1494 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Siddhi Execution Time Extension">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>5.0.2 - Siddhi Execution Time</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-103065-28", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#api-docs-v502" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Siddhi Execution Time" class="md-header-nav__button md-logo">
+          
+            <img src="../../images/siddhi-logo.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Siddhi Execution Time
+            </span>
+            <span class="md-header-nav__topic">
+              
+                5.0.2
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/siddhi-io/siddhi-execution-time/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Siddhi Execution Time
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Siddhi Execution Time" class="md-nav__button md-logo">
+      
+        <img src="../../images/siddhi-logo.svg" width="48" height="48">
+      
+    </a>
+    Siddhi Execution Time
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/siddhi-io/siddhi-execution-time/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Siddhi Execution Time
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Information" class="md-nav__link">
+      Information
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      API Docs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        API Docs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        5.0.2
+      </label>
+    
+    <a href="./" title="5.0.2" class="md-nav__link md-nav__link--active">
+      5.0.2
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#time" title="Time" class="md-nav__link">
+    Time
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#currentdate-function" title="currentDate (Function)" class="md-nav__link">
+    currentDate (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#currenttime-function" title="currentTime (Function)" class="md-nav__link">
+    currentTime (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#currenttimestamp-function" title="currentTimestamp (Function)" class="md-nav__link">
+    currentTimestamp (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#date-function" title="date (Function)" class="md-nav__link">
+    date (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dateadd-function" title="dateAdd (Function)" class="md-nav__link">
+    dateAdd (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datediff-function" title="dateDiff (Function)" class="md-nav__link">
+    dateDiff (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dateformat-function" title="dateFormat (Function)" class="md-nav__link">
+    dateFormat (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datesub-function" title="dateSub (Function)" class="md-nav__link">
+    dateSub (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dayofweek-function" title="dayOfWeek (Function)" class="md-nav__link">
+    dayOfWeek (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-function" title="extract (Function)" class="md-nav__link">
+    extract (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timestampinmilliseconds-function" title="timestampInMilliseconds (Function)" class="md-nav__link">
+    timestampInMilliseconds (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utctimestamp-function" title="utcTimestamp (Function)" class="md-nav__link">
+    utcTimestamp (Function)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../5.0.1/" title="5.0.1" class="md-nav__link">
+      5.0.1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../5.0.0/" title="5.0.0" class="md-nav__link">
+      5.0.0
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.1.1/" title="4.1.1" class="md-nav__link">
+      4.1.1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.1.0/" title="4.1.0" class="md-nav__link">
+      4.1.0
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.17/" title="4.0.17" class="md-nav__link">
+      4.0.17
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.16/" title="4.0.16" class="md-nav__link">
+      4.0.16
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.15/" title="4.0.15" class="md-nav__link">
+      4.0.15
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.14/" title="4.0.14" class="md-nav__link">
+      4.0.14
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.13/" title="4.0.13" class="md-nav__link">
+      4.0.13
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.12/" title="4.0.12" class="md-nav__link">
+      4.0.12
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.11/" title="4.0.11" class="md-nav__link">
+      4.0.11
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.10/" title="4.0.10" class="md-nav__link">
+      4.0.10
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.9/" title="4.0.9" class="md-nav__link">
+      4.0.9
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.8/" title="4.0.8" class="md-nav__link">
+      4.0.8
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.7/" title="4.0.7" class="md-nav__link">
+      4.0.7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.6/" title="4.0.6" class="md-nav__link">
+      4.0.6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.0.5/" title="4.0.5" class="md-nav__link">
+      4.0.5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../latest/" title="latest" class="md-nav__link">
+      latest
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#time" title="Time" class="md-nav__link">
+    Time
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#currentdate-function" title="currentDate (Function)" class="md-nav__link">
+    currentDate (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#currenttime-function" title="currentTime (Function)" class="md-nav__link">
+    currentTime (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#currenttimestamp-function" title="currentTimestamp (Function)" class="md-nav__link">
+    currentTimestamp (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#date-function" title="date (Function)" class="md-nav__link">
+    date (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dateadd-function" title="dateAdd (Function)" class="md-nav__link">
+    dateAdd (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datediff-function" title="dateDiff (Function)" class="md-nav__link">
+    dateDiff (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dateformat-function" title="dateFormat (Function)" class="md-nav__link">
+    dateFormat (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datesub-function" title="dateSub (Function)" class="md-nav__link">
+    dateSub (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dayofweek-function" title="dayOfWeek (Function)" class="md-nav__link">
+    dayOfWeek (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-function" title="extract (Function)" class="md-nav__link">
+    extract (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timestampinmilliseconds-function" title="timestampInMilliseconds (Function)" class="md-nav__link">
+    timestampInMilliseconds (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utctimestamp-function" title="utcTimestamp (Function)" class="md-nav__link">
+    utcTimestamp (Function)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/siddhi-io/siddhi-execution-time/blob/master/api/5.0.2.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="api-docs-v502">API Docs - v5.0.2</h1>
+<div class="admonition info">
+<p class="admonition-title">Tested Siddhi Core version: <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/">5.0.0</a></em></p>
+<p>It could also support other Siddhi Core minor versions.</p>
+</div>
+<h2 id="time">Time</h2>
+<h3 id="currentdate-function">currentDate <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Function returns the system time in <code>yyyy-MM-dd</code> format.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:currentDate()
+</code></pre>
+
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:currentDate()
+</code></pre>
+
+<p style="word-wrap: break-word">Returns the current date in the <code>yyyy-MM-dd</code> format, such as <code>2019-06-21</code>.</p>
+
+<h3 id="currenttime-function">currentTime <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Function returns system time in the <code>HH:mm:ss</code> format.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:currentTime()
+</code></pre>
+
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:currentTime()
+</code></pre>
+
+<p style="word-wrap: break-word">Returns the current date in the <code>HH:mm:ss</code> format, such as <code>15:23:24</code>.</p>
+
+<h3 id="currenttimestamp-function">currentTimestamp <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">When no argument is provided, function returns the system current timestamp in <code>yyyy-MM-dd HH:mm:ss</code> format, and when a timezone is provided as an argument, it converts and return the current system time to the given timezone format.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:currentTimestamp(&lt;STRING&gt; timezone)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">timezone</td>
+        <td style="vertical-align: top; word-wrap: break-word">The timezone to which the current time need to be converted. For example, <code>Asia/Kolkata</code>, <code>PST</code>. Get the supported timezone IDs from <a href="https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html">here</a></td>
+        <td style="vertical-align: top">System timezone</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:currentTimestamp()
+</code></pre>
+
+<p style="word-wrap: break-word">Returns current system time in <code>yyyy-MM-dd HH:mm:ss</code> format, such as <code>2019-03-31 14:07:00</code>.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:currentTimestamp('Asia/Kolkata')
+</code></pre>
+
+<p style="word-wrap: break-word">Returns current system time converted to 'Asia/Kolkata' timezone <code>yyyy-MM-dd HH:mm:ss</code> format, such as <code>2019-03-31 19:07:00</code>. Get the supported timezone IDs from [here](https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html)</p>
+
+<p><span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span></p>
+<pre><code>time:currentTimestamp('CST')
+</code></pre>
+
+<p style="word-wrap: break-word">Returns current system time converted to 'CST' timezone <code>yyyy-MM-dd HH:mm:ss</code> format, such as <code>2019-03-31 02:07:00</code>. Get the supported timezone IDs from [here](https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html)</p>
+
+<h3 id="date-function">date <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Extracts the date part of a date or date-time and return it in <code>yyyy-MM-dd</code> format.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:date(&lt;STRING&gt; date.value, &lt;STRING&gt; date.format)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.format</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy/MM/dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss.SSS</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:date('2014/11/11 13:23:44', 'yyyy/MM/dd HH:mm:ss')
+</code></pre>
+
+<p style="word-wrap: break-word">Extracts the date and returns <code>2014-11-11</code>.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:date('2014-11-23 13:23:44.345')
+</code></pre>
+
+<p style="word-wrap: break-word">Extracts the date and returns <code>2014-11-13</code>.</p>
+
+<p><span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span></p>
+<pre><code>time:date('13:23:44', 'HH:mm:ss')
+</code></pre>
+
+<p style="word-wrap: break-word">Extracts the date and returns <code>1970-01-01</code>.</p>
+
+<h3 id="dateadd-function">dateAdd <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Adds the specified time interval to a date.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:dateAdd(&lt;STRING&gt; date.value, &lt;INT&gt; expr, &lt;STRING&gt; unit, &lt;STRING&gt; date.format, &lt;LONG&gt; timestamp.in.milliseconds)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">expr</td>
+        <td style="vertical-align: top; word-wrap: break-word">The amount by which the selected part of the date should be incremented. For example <code>2</code> ,<code>5 </code>,<code>10</code>, etc.</td>
+        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top">INT</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">unit</td>
+        <td style="vertical-align: top; word-wrap: break-word">This is the part of the date that needs to be modified. For example, <code>MINUTE</code>, <code>HOUR</code>, <code>MONTH</code>, <code>YEAR</code>, <code>QUARTER</code>, <code>WEEK</code>, <code>DAY</code>, <code>SECOND</code>.</td>
+        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.format</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss.SSS</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">timestamp.in.milliseconds</td>
+        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">LONG</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:dateAdd('2014-11-11 13:23:44.657', 5, 'YEAR', 'yyyy-MM-dd HH:mm:ss.SSS')
+</code></pre>
+
+<p style="word-wrap: break-word">Adds five years to the given date value and returns <code>2019-11-11 13:23:44.657</code>.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:dateAdd('2014-11-11 13:23:44.657', 5, 'YEAR')
+</code></pre>
+
+<p style="word-wrap: break-word">Adds five years to the given date value and returns <code>2019-11-11 13:23:44.657</code> using the default date.format <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</p>
+
+<p><span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span></p>
+<pre><code>time:dateAdd( 1415712224000L, 1, 'HOUR')
+</code></pre>
+
+<p style="word-wrap: break-word">Adds one hour and <code>1415715824000</code> as a <code>string</code>.</p>
+
+<h3 id="datediff-function">dateDiff <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Returns difference between two dates in days.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;INT&gt; time:dateDiff(&lt;STRING&gt; date.value1, &lt;STRING&gt; date.value2, &lt;STRING&gt; date.format1, &lt;STRING&gt; date.format2, &lt;LONG&gt; timestamp.in.milliseconds1, &lt;LONG&gt; timestamp.in.milliseconds2)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value1</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the first date parameter. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value2</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the second date parameter. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code> , <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.format1</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the first date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss.SSS</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.format2</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the second date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss.SSS</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">timestamp.in.milliseconds1</td>
+        <td style="vertical-align: top; word-wrap: break-word">The first date value in milliseconds from the epoch. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">LONG</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">timestamp.in.milliseconds2</td>
+        <td style="vertical-align: top; word-wrap: break-word">The second date value in milliseconds from the epoch. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">LONG</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:dateDiff('2014-11-11 13:23:44', 'yyyy-MM-dd HH:mm:ss', '2014-11-9 13:23:44', 'yyyy-MM-dd HH:mm:ss')
+</code></pre>
+
+<p style="word-wrap: break-word">Returns the date difference between the two given dates as <code>2</code>.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:dateDiff('2014-11-13 13:23:44', '2014-11-9 13:23:44')
+</code></pre>
+
+<p style="word-wrap: break-word">Returns the date difference between the two given dates as <code>4</code>.</p>
+
+<p><span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span></p>
+<pre><code>time:dateDiff(1415692424000L, 1412841224000L)
+</code></pre>
+
+<p style="word-wrap: break-word">Returns the date difference between the two given dates as <code>33</code>.</p>
+
+<h3 id="dateformat-function">dateFormat <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Formats the data in string or milliseconds format to the given date format.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:dateFormat(&lt;STRING&gt; date.value, &lt;STRING&gt; date.target.format, &lt;STRING&gt; date.source.format, &lt;LONG&gt; timestamp.in.milliseconds)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.target.format</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date into which the date value needs to be converted. For example, <code>yyyy/MM/dd HH:mm:ss</code>.</td>
+        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.source.format</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format input date.value.For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss.SSS</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">timestamp.in.milliseconds</td>
+        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds from the epoch. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">LONG</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:dateFormat('2014/11/11 13:23:44', 'mm:ss', 'yyyy/MM/dd HH:mm:ss') 
+</code></pre>
+
+<p style="word-wrap: break-word">Converts date based on the target date format <code>mm:ss</code> and returns <code>23:44</code>.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:dateFormat('2014-11-11 13:23:44', 'HH:mm:ss') 
+</code></pre>
+
+<p style="word-wrap: break-word">Converts date based on the target date format <code>HH:mm:ss</code> and returns <code>13:23:44</code>.</p>
+
+<p><span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span></p>
+<pre><code>time:dateFormat(1415692424000L, 'yyyy-MM-dd') 
+</code></pre>
+
+<p style="word-wrap: break-word">Converts date in millisecond based on the target date format <code>yyyy-MM-dd</code> and returns <code>2014-11-11</code>.</p>
+
+<h3 id="datesub-function">dateSub <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Subtracts the specified time interval from the given date.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:dateSub(&lt;STRING&gt; date.value, &lt;INT&gt; expr, &lt;STRING&gt; unit, &lt;STRING&gt; date.format, &lt;LONG&gt; timestamp.in.milliseconds)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">expr</td>
+        <td style="vertical-align: top; word-wrap: break-word">The amount by which the selected part of the date should be decremented. For example <code>2</code> ,<code>5 </code>,<code>10</code>, etc.</td>
+        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top">INT</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">unit</td>
+        <td style="vertical-align: top; word-wrap: break-word">This is the part of the date that needs to be modified. For example, <code>MINUTE</code>, <code>HOUR</code>, <code>MONTH</code>, <code>YEAR</code>, <code>QUARTER</code>, <code>WEEK</code>, <code>DAY</code>, <code>SECOND</code>.</td>
+        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.format</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss.SSS</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">timestamp.in.milliseconds</td>
+        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">LONG</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:dateSub('2019-11-11 13:23:44.657', 5, 'YEAR', 'yyyy-MM-dd HH:mm:ss.SSS')
+</code></pre>
+
+<p style="word-wrap: break-word">Subtracts five years to the given date value and returns <code>2014-11-11 13:23:44.657</code>.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:dateSub('2019-11-11 13:23:44.657', 5, 'YEAR')
+</code></pre>
+
+<p style="word-wrap: break-word">Subtracts five years to the given date value and returns <code>2014-11-11 13:23:44.657</code> using the default date.format <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</p>
+
+<p><span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span></p>
+<pre><code>time:dateSub( 1415715824000L, 1, 'HOUR')
+</code></pre>
+
+<p style="word-wrap: break-word">Subtracts one hour and <code>1415712224000</code> as a <code>string</code>.</p>
+
+<h3 id="dayofweek-function">dayOfWeek <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Extracts the day on which a given date falls.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:dayOfWeek(&lt;STRING&gt; date.value, &lt;STRING&gt; date.format)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.format</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy/MM/dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss.SSS</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:date('2014/12/11 13:23:44', 'yyyy/MM/dd HH:mm:ss')
+</code></pre>
+
+<p style="word-wrap: break-word">Extracts the date and returns <code>Thursday</code>.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:date('2014-11-11 13:23:44.345')
+</code></pre>
+
+<p style="word-wrap: break-word">Extracts the date and returns <code>Tuesday</code>.</p>
+
+<h3 id="extract-function">extract <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Function extracts a date unit from the date.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;INT&gt; time:extract(&lt;STRING&gt; unit, &lt;STRING&gt; date.value, &lt;STRING&gt; date.format, &lt;LONG&gt; timestamp.in.milliseconds)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">unit</td>
+        <td style="vertical-align: top; word-wrap: break-word">This is the part of the date that needs to be modified. For example, <code>MINUTE</code>, <code>HOUR</code>, <code>MONTH</code>, <code>YEAR</code>, <code>QUARTER</code>, <code>WEEK</code>, <code>DAY</code>, <code>SECOND</code>.</td>
+        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.format</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss.SSS</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">timestamp.in.milliseconds</td>
+        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">LONG</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:extract('YEAR', '2019/11/11 13:23:44.657', 'yyyy/MM/dd HH:mm:ss.SSS')
+</code></pre>
+
+<p style="word-wrap: break-word">Extracts the year amount and returns <code>2019</code>.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:extract('DAY', '2019-11-12 13:23:44.657')
+</code></pre>
+
+<p style="word-wrap: break-word">Extracts the day amount and returns <code>12</code>.</p>
+
+<p><span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span></p>
+<pre><code>time:extract(1394556804000L, 'HOUR')
+</code></pre>
+
+<p style="word-wrap: break-word">Extracts the hour amount and returns <code>22</code>.</p>
+
+<h3 id="timestampinmilliseconds-function">timestampInMilliseconds <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Returns the system time or the given time in milliseconds.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;LONG&gt; time:timestampInMilliseconds(&lt;STRING&gt; date.value, &lt;STRING&gt; date.format)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">Current system time</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.format</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy/MM/dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss.SSS</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:timestampInMilliseconds()
+</code></pre>
+
+<p style="word-wrap: break-word">Returns the system current time in milliseconds.</p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:timestampInMilliseconds('2007-11-30 10:30:19', 'yyyy-MM-DD HH:MM:SS')
+</code></pre>
+
+<p style="word-wrap: break-word">Converts <code>2007-11-30 10:30:19</code> in <code>yyyy-MM-DD HH:MM:SS</code> format to  milliseconds as <code>1170131400019</code>.</p>
+
+<p><span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span></p>
+<pre><code>time:timestampInMilliseconds('2007-11-30 10:30:19.000')
+</code></pre>
+
+<p style="word-wrap: break-word">Converts <code>2007-11-30 10:30:19</code> in <code>yyyy-MM-DD HH:MM:ss.SSS</code> format to  milliseconds as <code>1196398819000</code>.</p>
+
+<h3 id="utctimestamp-function">utcTimestamp <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p style="word-wrap: break-word">Function returns the system current time in UTC timezone with <code>yyyy-MM-dd HH:mm:ss</code> format.</p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:utcTimestamp()
+</code></pre>
+
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:utcTimestamp()
+</code></pre>
+
+<p style="word-wrap: break-word">Returns the system current time in UTC timezone with <code>yyyy-MM-dd HH:mm:ss</code> format, and a sample output will be like <code>2019-07-03 09:58:34</code>.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../.." title="Information" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Information
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../5.0.1/" title="5.0.1" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                5.0.1
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Siddhi - Documentation
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/siddhi-io/siddhi" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://medium.com/siddhi-io" class="md-footer-social__link fa fa-medium"></a>
+    
+      <a href="https://twitter.com/siddhi_io" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/groups/13553064" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.245445c6.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
