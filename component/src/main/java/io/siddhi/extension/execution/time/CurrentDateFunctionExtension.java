@@ -46,18 +46,14 @@ import java.util.Date;
 @Extension(
         name = "currentDate",
         namespace = "time",
-        description = "This function returns the system time in 'yyyy-MM-dd' format.",
+        description = "Function returns the system time in `yyyy-MM-dd` format.",
         returnAttributes = @ReturnAttribute(
-                description = "The value returned is of 'string' type.",
+                description = "Returns the system time in `yyyy-MM-dd` format.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
-                                 "from InputStream select symbol , time:currentDate() as currentTime \n" +
-                                 "insert into OutputStream;",
-                        description = "This query returns 'symbol' from the 'InputStream' and the " +
-                                "current date and time, to the 'OutputStream'.It returns the " +
-                                "current date in the 'yyyy-MM-dd' format."
+                        syntax = "time:currentDate()",
+                        description = "Returns the current date in the `yyyy-MM-dd` format, such as `2019-06-21`."
                 )
         }
 )

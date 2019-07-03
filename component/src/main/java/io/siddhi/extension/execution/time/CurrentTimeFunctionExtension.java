@@ -46,18 +46,14 @@ import java.util.Date;
 @Extension(
         name = "currentTime",
         namespace = "time",
-        description = "This function returns system time in the 'HH:mm:ss' format.",
+        description = "Function returns system time in the `HH:mm:ss` format.",
         returnAttributes = @ReturnAttribute(
-                description = "The parameter returned is of 'string' type.",
+                description = "Returns system time in the `HH:mm:ss` format.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax = "define stream InputStream (symbol string, price long, volume long);\n" +
-                                 "from InputStream select symbol , time:currentTime() as currentTime\n" +
-                                 "insert into OutputStream;",
-                        description = "This query returns, the symbol from the 'InputStream' and"
-                                + "the current time of the system in 'HH:mm:ss' format as current time," +
-                                "to the 'OutputStream'."
+                        syntax = "time:currentTime()",
+                        description = "Returns the current date in the `HH:mm:ss` format, such as `15:23:24`."
                 )
         }
 )
@@ -68,7 +64,7 @@ public class CurrentTimeFunctionExtension extends FunctionExecutor {
 
     @Override
     protected StateFactory init(ExpressionExecutor[] expressionExecutors,
-                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
+                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         dateFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_CURRENT_TIME_FORMAT);
         return null;
 

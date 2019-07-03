@@ -66,50 +66,47 @@ import java.util.Locale;
 @Extension(
         name = "extract",
         namespace = "time",
-        description = "This function returns date attributes from a date expression. " +
-                     "If the first argument passed is of " +
-                      "'String' type then the function accepts three arguments with the last parameter, i.e.," +
-                      " 'date.format' as an optional one. " +
-                      "The order of the parameter is extract(unit,date.value,date.format). Instead, " +
-                "if the first argument passed is of 'Long' type, then the function accepts two parameters." +
-                "In this case, the parameter order is extract(timestamp.in.milliseconds,unit).",
+        description = "Function extracts a date unit from the date.",
         parameters = {
                 @Parameter(name = "unit",
-                        description = "The part of the date that needs to be manipulated. For example," +
-                                " \"MINUTE\", \"HOUR\", \"MONTH\", \"YEAR\", \"QUARTER\",\n" +
-                                      "\"WEEK\", \"DAY\", \"SECOND\".",
+                        description = "This is the part of the date that needs to be modified. " +
+                                "For example, `MINUTE`, `HOUR`, `MONTH`, `YEAR`, `QUARTER`," +
+                                " `WEEK`, `DAY`, `SECOND`.",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.value",
-                        description = "The value of date. For example, \"2014-11-11 13:23:44.657\", \"2014-11-11\" , " +
-                                      "\"13:23:44.657\".",
-                        type = {DataType.STRING}),
-                @Parameter(name = "date.format",
-                        description = "The date format of the date value provided. For example," +
-                                " 'yyyy-MM-dd HH:mm:ss.SSS'.",
+                        description = "The value of the date. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, " +
+                                "`13:23:44.657`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "yyyy-MM-dd HH:mm:ss.SSS"),
+                        defaultValue = "-"),
+                @Parameter(name = "date.format",
+                        description = "The format of the date value provided. " +
+                                "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
                 @Parameter(name = "timestamp.in.milliseconds",
-                        description = "The date value in milliseconds from the epoch. For example, 1415712224000L.",
-                        type = {DataType.LONG})
+                        description = "The date value in milliseconds. For example, `1415712224000L`.",
+                        type = {DataType.LONG},
+                        optional = true,
+                        defaultValue = "-")
         },
         returnAttributes = @ReturnAttribute(
-                description = "The extracted date value that is returned as an int value.",
+                description = "Returns the extracted data unit value.",
                 type = {DataType.INT}),
         examples = {
                 @Example(
-                        syntax = "define stream InputStream (symbol string,dateValue string,dateFormat string,"
-                                + "timestampInMilliseconds long);\n"
-                                + "from InputStream \n"
-                                + "select symbol, time:extract('YEAR',dateValue,dateFormat) as YEAR,"
-                                + "time:extract(timestampInMilliseconds,'HOUR') as HOUR\n "
-                                + "insert into OutputStream;",
-                        description = "This query extracts the year value from the 'dateValue' as 'YEAR'. " +
-                                "The 'dateValue'" +
-                                " is in the 'dateFormat' format. It also extracts the hours from " +
-                                "'timestampInMilliseconds' "
-                                + "as 'HOUR'. The query then returns the symbols, 'YEAR' and 'HOUR' to the " +
-                                "'OutputStream'."
+                        syntax = "time:extract('YEAR', '2019/11/11 13:23:44.657', 'yyyy/MM/dd HH:mm:ss.SSS')",
+                        description = "Extracts the year amount and returns `2019`."
+                ),
+                @Example(
+                        syntax = "time:extract('DAY', '2019-11-12 13:23:44.657')",
+                        description = "Extracts the day amount and returns `12`."
+                ),
+                @Example(
+                        syntax = "time:extract(1394556804000L, 'HOUR')",
+                        description = "Extracts the hour amount and returns `22`."
                 )
         }
 )
@@ -123,7 +120,7 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
 
     @Override
     protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
-                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
+                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
                 .length == 2) {
             useDefaultDateFormat = true;
@@ -132,19 +129,19 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
         if (attributeExpressionExecutors.length == 3) {
             if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the first argument of " +
-                        "time:extract(unit,dateValue,dateFormat) function, " +
+                        "time:extract(unit, dateValue, dateFormat) function, " +
                         "required " + Attribute.Type.STRING + " but found " +
                         attributeExpressionExecutors[0].getReturnType().toString());
             }
             if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the second argument of " +
-                        "time:extract(unit,dateValue,dateFormat) function, " +
+                        "time:extract(unit, dateValue, dateFormat) function, " +
                         "required " + Attribute.Type.STRING + " but found " +
                         attributeExpressionExecutors[1].getReturnType().toString());
             }
             if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
                 throw new SiddhiAppValidationException("Invalid parameter type found for the third argument of " +
-                        "time:extract(unit,dateValue,dateFormat) function, " +
+                        "time:extract(unit, dateValue, dateFormat) function, " +
                         "required " + Attribute.Type.STRING + " but found " +
                         attributeExpressionExecutors[2].getReturnType().toString());
             }
@@ -160,14 +157,14 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
             if (useDefaultDateFormat) {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the first " +
-                            "argument of " + "time:extract(unit,dateValue)" +
+                            "argument of " + "time:extract(unit, dateValue)" +
                             " function," + "required " + Attribute.Type.STRING +
                             " but found " + attributeExpressionExecutors[0]
                             .getReturnType().toString());
                 }
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the second " +
-                            "argument of " + "time:extract(unit,dateValue) " +
+                            "argument of " + "time:extract(unit, dateValue) " +
                             "function," + "required " + Attribute.Type.STRING +
                             " but found " + attributeExpressionExecutors[1]
                             .getReturnType().toString());
@@ -176,7 +173,7 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
                 if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the first" +
                             " argument of " + "time:extract" +
-                            "(timestampInMilliseconds,unit) function, " + "required "
+                            "(timestampInMilliseconds, unit) function, " + "required "
                             + Attribute.Type.LONG + " but found " +
                             attributeExpressionExecutors[0]
                                     .getReturnType().toString());
@@ -184,7 +181,7 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
                 if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
                     throw new SiddhiAppValidationException("Invalid parameter type found for the second" +
                             " argument of " + "time:extract" +
-                            "(timestampInMilliseconds,unit) function, " + "required "
+                            "(timestampInMilliseconds, unit) function, " + "required "
                             + Attribute.Type.STRING +
                             " but found " + attributeExpressionExecutors[1]
                             .getReturnType().toString());

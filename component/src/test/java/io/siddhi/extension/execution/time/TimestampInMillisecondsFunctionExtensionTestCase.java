@@ -77,7 +77,7 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
 
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", 700f, 100L });
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
         AssertJUnit.assertEquals(1, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
@@ -112,7 +112,7 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
 
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", 700f, 100L });
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
         AssertJUnit.assertEquals(1, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
@@ -147,7 +147,7 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
 
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", 700f, 100L });
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
         AssertJUnit.assertEquals(1, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
@@ -179,10 +179,10 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
 
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", 700f, 100L });
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
         AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-DD HH:MM:SS does not match "
-                                                                       + "with the timestamp 2007:11:30 10:30:19"));
+                + "with the timestamp 2007:11:30 10:30:19"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -215,7 +215,7 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
 
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", 700f, 100L });
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
         AssertJUnit.assertEquals(1, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
@@ -246,10 +246,10 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
 
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", 700f, 100L });
+        inputHandler.send(new Object[]{"IBM", 700f, 100L});
         Thread.sleep(100);
         AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-dd HH:mm:ss.SSS does not match"
-                                                                       + " with the timestamp 2007"));
+                + " with the timestamp 2007"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -321,11 +321,11 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", null, 100L });
+        inputHandler.send(new Object[]{"IBM", null, 100L});
         Thread.sleep(100);
         AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:timestampInMilliseconds("
-                                                                       + "dateValue,dateFormat) function. First "
-                                                                       + "argument cannot be null"));
+                + "dateValue,dateFormat) function. First "
+                + "argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -355,11 +355,11 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", 700f, null });
+        inputHandler.send(new Object[]{"IBM", 700f, null});
         Thread.sleep(100);
         AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:timestampInMilliseconds("
-                                                                       + "dateValue,dateFormat) function. First "
-                                                                       + "argument cannot be null"));
+                + "dateValue,dateFormat) function. First "
+                + "argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 }

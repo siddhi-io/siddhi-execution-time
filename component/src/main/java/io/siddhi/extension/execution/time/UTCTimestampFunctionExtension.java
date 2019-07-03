@@ -47,19 +47,15 @@ import java.util.TimeZone;
 @Extension(
         name = "utcTimestamp",
         namespace = "time",
-        description = "This function returns the system time in 'yyyy-MM-dd HH:mm:ss' format.",
+        description = "Function returns the system current time in UTC timezone with `yyyy-MM-dd HH:mm:ss` format.",
         returnAttributes = @ReturnAttribute(
-                description = "The system time that is returned in 'yyyy-MM-dd HH:mm:ss' format.",
+                description = "Returns the system current time in UTC timezone with `yyyy-MM-dd HH:mm:ss` format.",
                 type = {DataType.STRING}),
         examples = {
                 @Example(
-                        syntax =  "define stream InputStream (symbol string, price long, volume long);" +
-                                   "from InputStream " +
-                                   "select symbol , time:utcTimestamp() as utcTimestamp " +
-                                   "insert into OutputStream;",
-                        description = "The query returns the symbol in the 'InputStream', and the system time stamp"
-                                + " in 'yyyy-MM-dd HH:mm:ss' format as 'utcTimestamp'," +
-                                " to the 'OutputStream'."
+                        syntax =  "time:utcTimestamp()",
+                        description = "Returns the system current time in UTC timezone with `yyyy-MM-dd HH:mm:ss` " +
+                                "format, and a sample output will be like `2019-07-03 09:58:34`."
                 )
         }
 )
