@@ -1,12 +1,14 @@
 # API Docs - v5.0.2
 
+!!! Info "Tested Siddhi Core version: *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/">5.0.0</a>*"
+    It could also support other Siddhi Core minor versions.
+
 ## Time
 
-### currentDate *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
-
-<p style="word-wrap: break-word">This function returns the system time in 'yyyy-MM-dd' format.</p>
-
+### currentDate *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Function returns the system time in <code>yyyy-MM-dd</code> format.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <STRING> time:currentDate()
 ```
@@ -14,17 +16,14 @@
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string, price long, volume long);
-from InputStream select symbol , time:currentDate() as currentTime 
-insert into OutputStream;
+time:currentDate()
 ```
-<p style="word-wrap: break-word">This query returns 'symbol' from the 'InputStream' and the current date and time, to the 'OutputStream'.It returns the current date in the 'yyyy-MM-dd' format.</p>
+<p style="word-wrap: break-word">Returns the current date in the <code>yyyy-MM-dd</code> format, such as <code>2019-06-21</code>.</p>
 
-### currentTime *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
-
-<p style="word-wrap: break-word">This function returns system time in the 'HH:mm:ss' format.</p>
-
+### currentTime *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Function returns system time in the <code>HH:mm:ss</code> format.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <STRING> time:currentTime()
 ```
@@ -32,51 +31,61 @@ insert into OutputStream;
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string, price long, volume long);
-from InputStream select symbol , time:currentTime() as currentTime
-insert into OutputStream;
+time:currentTime()
 ```
-<p style="word-wrap: break-word">This query returns, the symbol from the 'InputStream' andthe current time of the system in 'HH:mm:ss' format as current time,to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Returns the current date in the <code>HH:mm:ss</code> format, such as <code>15:23:24</code>.</p>
 
-### currentTimestamp *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
-
-<p style="word-wrap: break-word">If no argument is provided, this function will return the currentSystemTime and if the timezone is provided as an argument, it will convert the current systemtime to the given timezone and return. This function returns time in 'yyyy-MM-dd HH:mm:ss' format.<br>To check the available timezone ids, visit https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html</p>
-
+### currentTimestamp *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">When no argument is provided, function returns the system current timestamp in <code>yyyy-MM-dd HH:mm:ss</code> format, and when a timezone is provided as an argument, it converts and return the current system time to the given timezone format.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
-<STRING> time:currentTimestamp()
+<STRING> time:currentTimestamp(<STRING> timezone)
 ```
+
+<span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">timezone</td>
+        <td style="vertical-align: top; word-wrap: break-word">The timezone to which the current time need to be converted. For example, <code>Asia/Kolkata</code>, <code>PST</code>. Get the supported timezone IDs from [here](https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html)</td>
+        <td style="vertical-align: top">System timezone</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">No</td>
+    </tr>
+</table>
 
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string, price long, volume long);
-from InputStream select symbol , time:currentTimestamp() as currentTimestamp
-insert into OutputStream;
+time:currentTimestamp()
 ```
-<p style="word-wrap: break-word">This query returns, symbol from the 'InputStream' and the current time stamp of the system in 'yyyy-MM-dd HH:mm:ss' format as 'currentTimestamp', to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Returns current system time in <code>yyyy-MM-dd HH:mm:ss</code> format, such as <code>2019-03-31 14:07:00</code>.</p>
 
 <span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span>
 ```
-define stream InputStream (symbol string, price long, volume long);
-from InputStream select symbol , time:currentTimestamp("Asia/Kolkata") as currentTimestamp
-insert into OutputStream;
+time:currentTimestamp('Asia/Kolkata')
 ```
-<p style="word-wrap: break-word">This query returns, symbol from the 'InputStream' and the current time stamp of the system which is converted to Asia/Kolkata timezone, in 'yyyy-MM-dd HH:mm:ss' format as 'currentTimestamp', to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Returns current system time converted to 'Asia/Kolkata' timezone <code>yyyy-MM-dd HH:mm:ss</code> format, such as <code>2019-03-31 19:07:00</code>. Get the supported timezone IDs from [here](https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html)</p>
 
 <span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span>
 ```
-define stream InputStream (symbol string, price long, volume long);
-from InputStream select symbol , time:currentTimestamp("CST") as currentTimestamp
-insert into OutputStream;
+time:currentTimestamp('CST')
 ```
-<p style="word-wrap: break-word">This query returns, symbol from the 'InputStream' and the current time stamp of the system which is converted to CST timezone, in 'yyyy-MM-dd HH:mm:ss' format as 'currentTimestamp', to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Returns current system time converted to 'CST' timezone <code>yyyy-MM-dd HH:mm:ss</code> format, such as <code>2019-03-31 02:07:00</code>. Get the supported timezone IDs from [here](https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html)</p>
 
-### date *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
-
-<p style="word-wrap: break-word">This function returns the date part of a date or date/time expression.</p>
-
+### date *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Extracts the date part of a date or date-time and return it in <code>yyyy-MM-dd</code> format.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <STRING> time:date(<STRING> date.value, <STRING> date.format)
 ```
@@ -93,7 +102,7 @@ insert into OutputStream;
     </tr>
     <tr>
         <td style="vertical-align: top">date.value</td>
-        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657".</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">No</td>
@@ -101,8 +110,8 @@ insert into OutputStream;
     </tr>
     <tr>
         <td style="vertical-align: top">date.format</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date format of the date value provided. For example, 'yyyy-MM-dd HH:mm:ss.SSS'</td>
-        <td style="vertical-align: top">yyyy-MM-dd HH:mm:ss.SSS</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy/MM/dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top">`yyyy-MM-dd HH:mm:ss.SSS`</td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
@@ -112,19 +121,26 @@ insert into OutputStream;
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string, dateValue string,dateFormat string);
-from InputStream
- select symbol,time:date(dateValue,dateFormat) as dateExtracted
- insert into OutputStream;
-
+time:date('2014/11/11 13:23:44', 'yyyy/MM/dd HH:mm:ss')
 ```
-<p style="word-wrap: break-word">This query extracts the 'dateValue' in the 'dateFormat' format as the 'dateExtracted'. The query then returns the symbol and the 'dateExtracted' to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Extracts the date and returns <code>2014-11-11</code>.</p>
 
-### dateAdd *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span>
+```
+time:date('2014-11-23 13:23:44.345')
+```
+<p style="word-wrap: break-word">Extracts the date and returns <code>2014-11-13</code>.</p>
 
-<p style="word-wrap: break-word">This function returns the specified time interval added to a date.If a parameter of 'STRING' type is passed as the first argument, the function accepts four parameters with the last parameter, i.e., 'dateFormat', as an optional one. If a parameter of 'LONG' type is passed as the first argument, the function accepts three parameters, i.e., 'timestampInMilliseconds', 'expr' and 'unit' in the given order.</p>
+<span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span>
+```
+time:date('13:23:44', 'HH:mm:ss')
+```
+<p style="word-wrap: break-word">Extracts the date and returns <code>1970-01-01</code>.</p>
 
+### dateAdd *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Adds the specified time interval to a date.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <STRING> time:dateAdd(<STRING> date.value, <INT> expr, <STRING> unit, <STRING> date.format, <LONG> timestamp.in.milliseconds)
 ```
@@ -141,15 +157,15 @@ from InputStream
     </tr>
     <tr>
         <td style="vertical-align: top">date.value</td>
-        <td style="vertical-align: top; word-wrap: break-word">The value of the date.For example, "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657".</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">STRING</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">expr</td>
-        <td style="vertical-align: top; word-wrap: break-word">This is the amount by which the selected part of the date should be incremented.For example, 2 ,5 ,10, etc.</td>
+        <td style="vertical-align: top; word-wrap: break-word">The amount by which the selected part of the date should be incremented. For example <code>2</code> ,<code>5 </code>,<code>10</code>, etc.</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">INT</td>
         <td style="vertical-align: top">No</td>
@@ -157,7 +173,7 @@ from InputStream
     </tr>
     <tr>
         <td style="vertical-align: top">unit</td>
-        <td style="vertical-align: top; word-wrap: break-word">This is the part of the date that needs to be modified.For example, "MINUTE" , "HOUR" , "MONTH" , "YEAR" , "QUARTER" ,<br>"WEEK" , "DAY" , "SECOND".</td>
+        <td style="vertical-align: top; word-wrap: break-word">This is the part of the date that needs to be modified. For example, <code>MINUTE</code>, <code>HOUR</code>, <code>MONTH</code>, <code>YEAR</code>, <code>QUARTER</code>, <code>WEEK</code>, <code>DAY</code>, <code>SECOND</code>.</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">No</td>
@@ -165,18 +181,18 @@ from InputStream
     </tr>
     <tr>
         <td style="vertical-align: top">date.format</td>
-        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, 'yyyy-MM-dd HH:mm:ss.SSS'.</td>
-        <td style="vertical-align: top">yyyy-MM-dd HH:mm:ss.SSS</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top">`yyyy-MM-dd HH:mm:ss.SSS`</td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">timestamp.in.milliseconds</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds from the epoch. For example, 1415712224000L.</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">LONG</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
 </table>
@@ -184,27 +200,26 @@ from InputStream
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string,dateValue string,dateFormat string,expr int);
-from InputStream
- select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearAdded
-insert into OutputStream;
+time:dateAdd('2014-11-11 13:23:44.657', 5, 'YEAR', 'yyyy-MM-dd HH:mm:ss.SSS')
 ```
-<p style="word-wrap: break-word">This query gets the date value from the 'InputStream, increments the 'YEAR' value of it by the 'expr' value given, formats the resultant value into the 'dateFormat' format given in the input stream and returns the formatted value to the 'OutputStream' as 'yearAdded', with the symbol.</p>
+<p style="word-wrap: break-word">Adds five years to the given date value and returns <code>2019-11-11 13:23:44.657</code>.</p>
 
 <span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span>
 ```
-define stream InputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long,expr int);
-from inputStream
- time:dateAdd(timestampInMilliseconds,expr,'HOUR') as hourAddedMills
- insert into outputStream;
+time:dateAdd('2014-11-11 13:23:44.657', 5, 'YEAR')
 ```
-<p style="word-wrap: break-word">This query gets the value of the 'timestampInMilliseconds' attribute from the input stream, adds the 'expr' number of hours to it and returns the  resultant value in milliseconds as 'hourAddedMills', into the 'OutputStream' with the symbol.</p>
+<p style="word-wrap: break-word">Adds five years to the given date value and returns <code>2019-11-11 13:23:44.657</code> using the default date.format <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</p>
 
-### dateDiff *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span>
+```
+time:dateAdd( 1415712224000L, 1, 'HOUR')
+```
+<p style="word-wrap: break-word">Adds one hour and <code>1415715824000</code> as a <code>string</code>.</p>
 
-<p style="word-wrap: break-word"> This function returns the time in days, between two dates. Two arguments of 'String' type are sent as the first two parameters. The function can accept four parameters,the last two parameters corresponding to the date formats being optional ones. The order of the parameters should be dateDiff(date.value1,date.value2,date.format1,date.format2). Instead, if two arguments of 'Long' type are sent as the first two parameters, the order of the parameters should be dateDiff(timestamp.in.milliseconds1,timestamp.in.milliseconds2). </p>
-
+### dateDiff *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Returns difference between two dates in days.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <INT> time:dateDiff(<STRING> date.value1, <STRING> date.value2, <STRING> date.format1, <STRING> date.format2, <LONG> timestamp.in.milliseconds1, <LONG> timestamp.in.milliseconds2)
 ```
@@ -221,50 +236,50 @@ from inputStream
     </tr>
     <tr>
         <td style="vertical-align: top">date.value1</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date value of the first parameter. For example, "2014-11-11 13:23:44.657", "2014-11-11", "13:23:44.657".</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the first date parameter. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">STRING</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">date.value2</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date value of the second parameter. For example, "2014-11-11 13:23:44.657", "2014-11-11", "13:23:44.657".</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the second date parameter. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code> , <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">STRING</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">date.format1</td>
-        <td style="vertical-align: top; word-wrap: break-word">The format of the date provided for the first parameter, i.e., yyyy-MM-dd HH:mm:ss.SSS.</td>
-        <td style="vertical-align: top">yyyy-MM-dd HH:mm:ss.SSS</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the first date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top">`yyyy-MM-dd HH:mm:ss.SSS`</td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">date.format2</td>
-        <td style="vertical-align: top; word-wrap: break-word">The format of the date provided for the second parameter, i.e., yyyy-MM-dd HH:mm:ss.SSS.</td>
-        <td style="vertical-align: top">yyyy-MM-dd HH:mm:ss.SSS</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the second date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top">`yyyy-MM-dd HH:mm:ss.SSS`</td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">timestamp.in.milliseconds1</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds from the epoch. For example, 1415712224000L.</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The first date value in milliseconds from the epoch. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">LONG</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">timestamp.in.milliseconds2</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds from the epoch. For example, 1415712224000L.</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The second date value in milliseconds from the epoch. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">LONG</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
 </table>
@@ -272,18 +287,26 @@ from inputStream
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string,dateValue1 string,dateFormat1 string,dateValue2 string,dateFormat2 string,);
-from InputStream
- time:dateDiff(timestampInMilliseconds1,timestampInMilliseconds2)select symbol , time:dateDiff(dateValue1,dateValue2,dateFormat1,dateFormat2) as dateDifference,
- as dateDifferenceInMilliseconds insert into OutputStream;
+time:dateDiff('2014-11-11 13:23:44', 'yyyy-MM-dd HH:mm:ss', '2014-11-9 13:23:44', 'yyyy-MM-dd HH:mm:ss')
 ```
-<p style="word-wrap: break-word">This query returns the difference between 'timestampInMilliseconds1' and 'timestampInMilliseconds2' as the 'dateDifferenceInMilliseconds' and the difference between 'dataValue1' which is in the format, 'dateFormat1' and 'dataValue2' which is in the format, 'dateFormat2', as 'dateDifference'. This function then redirects the results to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Returns the date difference between the two given dates as <code>2</code>.</p>
 
-### dateFormat *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span>
+```
+time:dateDiff('2014-11-13 13:23:44', '2014-11-9 13:23:44')
+```
+<p style="word-wrap: break-word">Returns the date difference between the two given dates as <code>4</code>.</p>
 
-<p style="word-wrap: break-word">This function returns a formatted date string.If the first argument is of 'String' type, then the function accepts three parameters with the last parameter as an optional parameter.The order of the parameters should be dateFormat(dateValue,dateTargetFormat,dateSourceFormat). Instead, if the first argument is of 'Long' type, then it accepts two parameters.In this case, the order of the parameter should be dateFormat(timestampInMilliseconds, dateTargetFormat).</p>
+<span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span>
+```
+time:dateDiff(1415692424000L, 1412841224000L)
+```
+<p style="word-wrap: break-word">Returns the date difference between the two given dates as <code>33</code>.</p>
 
+### dateFormat *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Formats the data in string or milliseconds format to the given date format.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <STRING> time:dateFormat(<STRING> date.value, <STRING> date.target.format, <STRING> date.source.format, <LONG> timestamp.in.milliseconds)
 ```
@@ -300,15 +323,15 @@ from InputStream
     </tr>
     <tr>
         <td style="vertical-align: top">date.value</td>
-        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657".</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">STRING</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">date.target.format</td>
-        <td style="vertical-align: top; word-wrap: break-word">The format of the date into which the date value needs to be converted. For example, 'yyyy/MM/dd HH:mm:ss'.</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date into which the date value needs to be converted. For example, <code>yyyy/MM/dd HH:mm:ss</code>.</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">No</td>
@@ -316,18 +339,18 @@ from InputStream
     </tr>
     <tr>
         <td style="vertical-align: top">date.source.format</td>
-        <td style="vertical-align: top; word-wrap: break-word">The format in which the data value is present in the input stream.For example, 'yyyy-MM-dd HH:mm:ss.SSS'.</td>
-        <td style="vertical-align: top">yyyy-MM-dd HH:mm:ss.SSS</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format input date.value.For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top">`yyyy-MM-dd HH:mm:ss.SSS`</td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">timestamp.in.milliseconds</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds from the epoch. For example, 1415712224000L.</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds from the epoch. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">LONG</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
 </table>
@@ -335,18 +358,26 @@ from InputStream
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string,dateValue string,sourceFormat string,timestampInMilliseconds long,targetFormat string);
-from InputStream
-select symboltime:dateFormat(dateValue,targetFormat,sourceFormat) as formattedDate,time:dateFormat(timestampInMilliseconds,targetFormat) as formattedUnixDate
-insert into OutputStream;
+time:dateFormat('2014/11/11 13:23:44', 'mm:ss', 'yyyy/MM/dd HH:mm:ss') 
 ```
-<p style="word-wrap: break-word">This query formats the 'dateValue' in the 'InputStream' which is in the 'sourceFormat' to the 'targetFormat' as 'formattedData'. It also formats 'timestampInMilliseconds' which is in milliseconds to the 'targetFormat' as 'formattedUnixDate'. The function then returns the symbol 'formattedDate' and 'formattedUnixDate' to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Converts date based on the target date format <code>mm:ss</code> and returns <code>23:44</code>.</p>
 
-### dateSub *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span>
+```
+time:dateFormat('2014-11-11 13:23:44', 'HH:mm:ss') 
+```
+<p style="word-wrap: break-word">Converts date based on the target date format <code>HH:mm:ss</code> and returns <code>13:23:44</code>.</p>
 
-<p style="word-wrap: break-word">This function returns the date after subtracting a specified time interval from it. If a parameter of 'String' type is passed as the first argument, then the function accepts four parameters with the last parameter, i.e., 'date.format' as an optional one.If a parameter of 'Long' type is passed as the first argument, then the function accepts three parameters, i.e., 'timestamp.in.milliseconds', 'expr' and 'unit' in the given order.</p>
+<span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span>
+```
+time:dateFormat(1415692424000L, 'yyyy-MM-dd') 
+```
+<p style="word-wrap: break-word">Converts date in millisecond based on the target date format <code>yyyy-MM-dd</code> and returns <code>2014-11-11</code>.</p>
 
+### dateSub *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Subtracts the specified time interval from the given date.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <STRING> time:dateSub(<STRING> date.value, <INT> expr, <STRING> unit, <STRING> date.format, <LONG> timestamp.in.milliseconds)
 ```
@@ -363,15 +394,15 @@ insert into OutputStream;
     </tr>
     <tr>
         <td style="vertical-align: top">date.value</td>
-        <td style="vertical-align: top; word-wrap: break-word">The value of date. For example, "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657".</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">STRING</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">expr</td>
-        <td style="vertical-align: top; word-wrap: break-word">The amount by which the selected part of the date should be incremented. For example, 2 ,5 ,10, etc.</td>
+        <td style="vertical-align: top; word-wrap: break-word">The amount by which the selected part of the date should be decremented. For example <code>2</code> ,<code>5 </code>,<code>10</code>, etc.</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">INT</td>
         <td style="vertical-align: top">No</td>
@@ -379,7 +410,7 @@ insert into OutputStream;
     </tr>
     <tr>
         <td style="vertical-align: top">unit</td>
-        <td style="vertical-align: top; word-wrap: break-word">The part of the date that is required to be modified. For example, "MINUTE" , "HOUR" , "MONTH" , "YEAR" , "QUARTER" ,<br>"WEEK" , "DAY" , "SECOND".</td>
+        <td style="vertical-align: top; word-wrap: break-word">This is the part of the date that needs to be modified. For example, <code>MINUTE</code>, <code>HOUR</code>, <code>MONTH</code>, <code>YEAR</code>, <code>QUARTER</code>, <code>WEEK</code>, <code>DAY</code>, <code>SECOND</code>.</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">No</td>
@@ -387,18 +418,18 @@ insert into OutputStream;
     </tr>
     <tr>
         <td style="vertical-align: top">date.format</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date format of the date value provided. For example, 'yyyy-MM-dd HH:mm:ss.SSS'</td>
-        <td style="vertical-align: top">yyyy-MM-dd HH:mm:ss.SSS</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top">`yyyy-MM-dd HH:mm:ss.SSS`</td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">timestamp.in.milliseconds</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds from the epoch. For example, 1415712224000L</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">LONG</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
 </table>
@@ -406,27 +437,26 @@ insert into OutputStream;
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string,dateValue string,dateFormat string,expr int);
-from InputStream
- select symbol , time:dateAdd(dateValue,expr,'YEAR',dateFormat) as yearSubtracted
-insert into OutputStream;
+time:dateSub('2019-11-11 13:23:44.657', 5, 'YEAR', 'yyyy-MM-dd HH:mm:ss.SSS')
 ```
-<p style="word-wrap: break-word">This query gets the date value from the input stream, decrements the 'YEAR'value of the 'dateValue' by the 'expr' value given, formats the resultant value into the 'dateFormat' format in the input stream and returns the formatted value to the 'OutputStream' as 'yearSubtracted' with the symbol.</p>
+<p style="word-wrap: break-word">Subtracts five years to the given date value and returns <code>2014-11-11 13:23:44.657</code>.</p>
 
 <span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span>
 ```
-define stream InputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long,expr int);
-from InputStream
- time:dateSub(timestampInMilliseconds,expr,'HOUR') as hourSubtractedMills
- insert into OutputStream;
+time:dateSub('2019-11-11 13:23:44.657', 5, 'YEAR')
 ```
-<p style="word-wrap: break-word">This query gets the value of the 'timestampInMilliseconds' from the input stream, subtracts the 'expr' number of hours from it and returns the  resultant value in milliseconds as 'hourSubtractedMills', to the 'OutputStream' with the symbol.</p>
+<p style="word-wrap: break-word">Subtracts five years to the given date value and returns <code>2014-11-11 13:23:44.657</code> using the default date.format <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</p>
 
-### dayOfWeek *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span>
+```
+time:dateSub( 1415715824000L, 1, 'HOUR')
+```
+<p style="word-wrap: break-word">Subtracts one hour and <code>1415712224000</code> as a <code>string</code>.</p>
 
-<p style="word-wrap: break-word">This function returns the day on which a given date falls.</p>
-
+### dayOfWeek *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Extracts the day on which a given date falls.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <STRING> time:dayOfWeek(<STRING> date.value, <STRING> date.format)
 ```
@@ -443,7 +473,7 @@ from InputStream
     </tr>
     <tr>
         <td style="vertical-align: top">date.value</td>
-        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657".</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">No</td>
@@ -451,8 +481,8 @@ from InputStream
     </tr>
     <tr>
         <td style="vertical-align: top">date.format</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date format of the date value provided. For example, 'yyyy-MM-dd HH:mm:ss.SSS'.</td>
-        <td style="vertical-align: top">yyyy-MM-dd HH:mm:ss.SSS</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy/MM/dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top">`yyyy-MM-dd HH:mm:ss.SSS`</td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
@@ -462,18 +492,20 @@ from InputStream
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string, dateValue string,dateFormat string);
-from InputStream
-select symbol,time:dayOfWeek(dateValue,dateFormat) as dayOfWeekExtracted
-insert into OutputStream;
+time:date('2014/12/11 13:23:44', 'yyyy/MM/dd HH:mm:ss')
 ```
-<p style="word-wrap: break-word">The Query extracts the day on which the date given as 'dateValue' in the 'dateFormat' format falls. It returns the symbol and the extracted day as 'dayOfWeekExtracted', to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Extracts the date and returns <code>Thursday</code>.</p>
 
-### extract *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span>
+```
+time:date('2014-11-11 13:23:44.345')
+```
+<p style="word-wrap: break-word">Extracts the date and returns <code>Tuesday</code>.</p>
 
-<p style="word-wrap: break-word">This function returns date attributes from a date expression. If the first argument passed is of 'String' type then the function accepts three arguments with the last parameter, i.e., 'date.format' as an optional one. The order of the parameter is extract(unit,date.value,date.format). Instead, if the first argument passed is of 'Long' type, then the function accepts two parameters.In this case, the parameter order is extract(timestamp.in.milliseconds,unit).</p>
-
+### extract *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Function extracts a date unit from the date.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <INT> time:extract(<STRING> unit, <STRING> date.value, <STRING> date.format, <LONG> timestamp.in.milliseconds)
 ```
@@ -490,7 +522,7 @@ insert into OutputStream;
     </tr>
     <tr>
         <td style="vertical-align: top">unit</td>
-        <td style="vertical-align: top; word-wrap: break-word">The part of the date that needs to be manipulated. For example, "MINUTE", "HOUR", "MONTH", "YEAR", "QUARTER",<br>"WEEK", "DAY", "SECOND".</td>
+        <td style="vertical-align: top; word-wrap: break-word">This is the part of the date that needs to be modified. For example, <code>MINUTE</code>, <code>HOUR</code>, <code>MONTH</code>, <code>YEAR</code>, <code>QUARTER</code>, <code>WEEK</code>, <code>DAY</code>, <code>SECOND</code>.</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">No</td>
@@ -498,26 +530,26 @@ insert into OutputStream;
     </tr>
     <tr>
         <td style="vertical-align: top">date.value</td>
-        <td style="vertical-align: top; word-wrap: break-word">The value of date. For example, "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657".</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">STRING</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">date.format</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date format of the date value provided. For example, 'yyyy-MM-dd HH:mm:ss.SSS'.</td>
-        <td style="vertical-align: top">yyyy-MM-dd HH:mm:ss.SSS</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top">`yyyy-MM-dd HH:mm:ss.SSS`</td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">timestamp.in.milliseconds</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds from the epoch. For example, 1415712224000L.</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The date value in milliseconds. For example, <code>1415712224000L</code>.</td>
+        <td style="vertical-align: top">-</td>
         <td style="vertical-align: top">LONG</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
 </table>
@@ -525,18 +557,26 @@ insert into OutputStream;
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds long);
-from InputStream 
-select symbol, time:extract('YEAR',dateValue,dateFormat) as YEAR,time:extract(timestampInMilliseconds,'HOUR') as HOUR
- insert into OutputStream;
+time:extract('YEAR', '2019/11/11 13:23:44.657', 'yyyy/MM/dd HH:mm:ss.SSS')
 ```
-<p style="word-wrap: break-word">This query extracts the year value from the 'dateValue' as 'YEAR'. The 'dateValue' is in the 'dateFormat' format. It also extracts the hours from 'timestampInMilliseconds' as 'HOUR'. The query then returns the symbols, 'YEAR' and 'HOUR' to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Extracts the year amount and returns <code>2019</code>.</p>
 
-### timestampInMilliseconds *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span>
+```
+time:extract('DAY', '2019-11-12 13:23:44.657')
+```
+<p style="word-wrap: break-word">Extracts the day amount and returns <code>12</code>.</p>
 
-<p style="word-wrap: break-word">This function returns the system time or given time in milliseconds.If two parameters of 'String' type are sent as the first argument, the order of the parameters should be timestampInMilliseconds(date.value,date.format) with the last parameter, i.e., 'date.format', as the optional oneInstead, if no argument method is invoked, the system time is returned in milliseconds.</p>
+<span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span>
+```
+time:extract(1394556804000L, 'HOUR')
+```
+<p style="word-wrap: break-word">Extracts the hour amount and returns <code>22</code>.</p>
 
+### timestampInMilliseconds *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Returns the system time or the given time in milliseconds.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <LONG> time:timestampInMilliseconds(<STRING> date.value, <STRING> date.format)
 ```
@@ -553,16 +593,16 @@ select symbol, time:extract('YEAR',dateValue,dateFormat) as YEAR,time:extract(ti
     </tr>
     <tr>
         <td style="vertical-align: top">date.value</td>
-        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657".</td>
-        <td style="vertical-align: top"></td>
+        <td style="vertical-align: top; word-wrap: break-word">The value of the date. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11</code>, <code>13:23:44.657</code>.</td>
+        <td style="vertical-align: top">Current system time</td>
         <td style="vertical-align: top">STRING</td>
-        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
     </tr>
     <tr>
         <td style="vertical-align: top">date.format</td>
-        <td style="vertical-align: top; word-wrap: break-word">The date format of the date value provided. For example, 'yyyy-MM-dd HH:mm:ss.SSS'.</td>
-        <td style="vertical-align: top">yyyy-MM-dd HH:mm:ss.SSS</td>
+        <td style="vertical-align: top; word-wrap: break-word">The format of the date value provided. For example, <code>yyyy/MM/dd HH:mm:ss.SSS</code>.</td>
+        <td style="vertical-align: top">`yyyy-MM-dd HH:mm:ss.SSS`</td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">Yes</td>
         <td style="vertical-align: top">No</td>
@@ -572,27 +612,26 @@ select symbol, time:extract('YEAR',dateValue,dateFormat) as YEAR,time:extract(ti
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string, price long, volume long);
-from InputStream
-select symbol , time:timestampInMilliseconds('2007-11-30 10:30:19','yyyy-MM-DD HH:MM:SS') as timestampInMilliseconds
-insert into OutputStream;
+time:timestampInMilliseconds()
 ```
-<p style="word-wrap: break-word">The query converts 2007-11-30 10:30:19 which is in 'yyyy-MM-DD HH:MM:SS' format to  milliseconds as 'timestampInMilliseconds' and returns the symbol and 'timestampInMilliseconds' to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Returns the system current time in milliseconds.</p>
 
 <span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span>
 ```
-define stream InputStream (symbol string, price long, volume long);
-from InputStream
-select symbol , time:timestampInMilliseconds()as timestampInMilliseconds
-insert into OutputStream;
+time:timestampInMilliseconds('2007-11-30 10:30:19', 'yyyy-MM-DD HH:MM:SS')
 ```
-<p style="word-wrap: break-word">The query gets the system time in milliseconds as 'timestampInMilliseconds' and returns the symbol from the 'InputStream' and 'timestampInMilliseconds' to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Converts <code>2007-11-30 10:30:19</code> in <code>yyyy-MM-DD HH:MM:SS</code> format to  milliseconds as <code>1170131400019</code>.</p>
 
-### utcTimestamp *<a target="_blank" href="https://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<span id="example-3" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 3</span>
+```
+time:timestampInMilliseconds('2007-11-30 10:30:19.000')
+```
+<p style="word-wrap: break-word">Converts <code>2007-11-30 10:30:19</code> in <code>yyyy-MM-DD HH:MM:ss.SSS</code> format to  milliseconds as <code>1196398819000</code>.</p>
 
-<p style="word-wrap: break-word">This function returns the system time in 'yyyy-MM-dd HH:mm:ss' format.</p>
-
+### utcTimestamp *<a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a>*
+<p style="word-wrap: break-word">Function returns the system current time in UTC timezone with <code>yyyy-MM-dd HH:mm:ss</code> format.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
+
 ```
 <STRING> time:utcTimestamp()
 ```
@@ -600,7 +639,7 @@ insert into OutputStream;
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-define stream InputStream (symbol string, price long, volume long);from InputStream select symbol , time:utcTimestamp() as utcTimestamp insert into OutputStream;
+time:utcTimestamp()
 ```
-<p style="word-wrap: break-word">The query returns the symbol in the 'InputStream', and the system time stamp in 'yyyy-MM-dd HH:mm:ss' format as 'utcTimestamp', to the 'OutputStream'.</p>
+<p style="word-wrap: break-word">Returns the system current time in UTC timezone with <code>yyyy-MM-dd HH:mm:ss</code> format, and a sample output will be like <code>2019-07-03 09:58:34</code>.</p>
 
