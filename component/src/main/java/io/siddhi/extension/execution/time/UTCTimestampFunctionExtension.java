@@ -20,6 +20,7 @@ package io.siddhi.extension.execution.time;
 
 import io.siddhi.annotation.Example;
 import io.siddhi.annotation.Extension;
+import io.siddhi.annotation.ParameterOverload;
 import io.siddhi.annotation.ReturnAttribute;
 import io.siddhi.annotation.util.DataType;
 import io.siddhi.core.config.SiddhiQueryContext;
@@ -48,6 +49,9 @@ import java.util.TimeZone;
         name = "utcTimestamp",
         namespace = "time",
         description = "Function returns the system current time in UTC timezone with `yyyy-MM-dd HH:mm:ss` format.",
+        parameterOverloads = {
+                @ParameterOverload()
+        },
         returnAttributes = @ReturnAttribute(
                 description = "Returns the system current time in UTC timezone with `yyyy-MM-dd HH:mm:ss` format.",
                 type = {DataType.STRING}),

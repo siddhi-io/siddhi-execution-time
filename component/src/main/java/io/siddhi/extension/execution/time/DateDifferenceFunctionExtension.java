@@ -21,6 +21,7 @@ package io.siddhi.extension.execution.time;
 import io.siddhi.annotation.Example;
 import io.siddhi.annotation.Extension;
 import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ParameterOverload;
 import io.siddhi.annotation.ReturnAttribute;
 import io.siddhi.annotation.util.DataType;
 import io.siddhi.core.config.SiddhiQueryContext;
@@ -74,6 +75,7 @@ import java.util.concurrent.TimeUnit;
                         description =  "The value of the first date parameter. " +
                                 "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, `13:23:44.657`.",
                         type = {DataType.STRING},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "-"),
                 @Parameter(name = "date.value2",
@@ -81,17 +83,20 @@ import java.util.concurrent.TimeUnit;
                                 "For example, `2014-11-11 13:23:44.657`, `2014-11-11` , " +
                                 "`13:23:44.657`.",
                         type = {DataType.STRING},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "-"),
                 @Parameter(name = "date.format1",
                         description = "The format of the first date value provided. " +
                                 "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
                 @Parameter(name = "date.format2",
                         description = "The format of the second date value provided. " +
                                 "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
+                        dynamic = true,
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
@@ -99,14 +104,21 @@ import java.util.concurrent.TimeUnit;
                         description = "The first date value in milliseconds from the epoch." +
                                 " For example, `1415712224000L`.",
                         type = {DataType.LONG},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "-"),
                 @Parameter(name = "timestamp.in.milliseconds2",
                         description = "The second date value in milliseconds from the epoch." +
                                 " For example, `1415712224000L`.",
                         type = {DataType.LONG},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "-")
+        },
+        parameterOverloads = {
+                @ParameterOverload(parameterNames = {"date.value1", "date.format1", "date.value2", "date.format2"}),
+                @ParameterOverload(parameterNames = {"date.value1", "date.value2"}),
+                @ParameterOverload(parameterNames = {"timestamp.in.milliseconds1", "timestamp.in.milliseconds2"})
         },
         returnAttributes = @ReturnAttribute(
                 description = "This returns the difference of the two given dates.",

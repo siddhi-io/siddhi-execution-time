@@ -20,6 +20,7 @@ package io.siddhi.extension.execution.time;
 
 import io.siddhi.annotation.Example;
 import io.siddhi.annotation.Extension;
+import io.siddhi.annotation.ParameterOverload;
 import io.siddhi.annotation.ReturnAttribute;
 import io.siddhi.annotation.util.DataType;
 import io.siddhi.core.config.SiddhiQueryContext;
@@ -50,6 +51,9 @@ import java.util.Date;
         returnAttributes = @ReturnAttribute(
                 description = "Returns system time in the `HH:mm:ss` format.",
                 type = {DataType.STRING}),
+        parameterOverloads = {
+                @ParameterOverload()
+        },
         examples = {
                 @Example(
                         syntax = "time:currentTime()",

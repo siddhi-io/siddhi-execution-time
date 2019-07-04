@@ -21,6 +21,7 @@ package io.siddhi.extension.execution.time;
 import io.siddhi.annotation.Example;
 import io.siddhi.annotation.Extension;
 import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ParameterOverload;
 import io.siddhi.annotation.ReturnAttribute;
 import io.siddhi.annotation.util.DataType;
 import io.siddhi.core.config.SiddhiQueryContext;
@@ -63,13 +64,19 @@ import java.util.Date;
                         description = "The value of the date. " +
                                 "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, " +
                                 "`13:23:44.657`.",
-                        type = {DataType.STRING}),
+                        type = {DataType.STRING},
+                        dynamic = true),
                 @Parameter(name = "date.format",
                         description = "The format of the date value provided. " +
                                 "For example, `yyyy/MM/dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
+        },
+        parameterOverloads = {
+                @ParameterOverload(parameterNames = {"date.value", "date.format"}),
+                @ParameterOverload(parameterNames = {"date.value"})
         },
         returnAttributes = @ReturnAttribute(
                 description = "Returns the extracted date value from a date or date-time in `yyyy-MM-dd` format.",

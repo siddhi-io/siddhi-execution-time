@@ -21,6 +21,7 @@ package io.siddhi.extension.execution.time;
 import io.siddhi.annotation.Example;
 import io.siddhi.annotation.Extension;
 import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ParameterOverload;
 import io.siddhi.annotation.ReturnAttribute;
 import io.siddhi.annotation.util.DataType;
 import io.siddhi.core.config.SiddhiQueryContext;
@@ -65,6 +66,10 @@ import java.util.Date;
                         type = {DataType.STRING},
                         optional = true,
                         defaultValue = "System timezone")
+        },
+        parameterOverloads = {
+                @ParameterOverload(),
+                @ParameterOverload(parameterNames = {"timezone"})
         },
         returnAttributes = @ReturnAttribute(
                 description = "The value returned is of 'string' type.",
