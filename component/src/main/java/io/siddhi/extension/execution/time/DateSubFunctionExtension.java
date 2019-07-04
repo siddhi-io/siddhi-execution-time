@@ -21,6 +21,7 @@ package io.siddhi.extension.execution.time;
 import io.siddhi.annotation.Example;
 import io.siddhi.annotation.Extension;
 import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ParameterOverload;
 import io.siddhi.annotation.ReturnAttribute;
 import io.siddhi.annotation.util.DataType;
 import io.siddhi.core.config.SiddhiQueryContext;
@@ -77,12 +78,14 @@ import java.util.Locale;
                                 "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, " +
                                 "`13:23:44.657`.",
                         type = {DataType.STRING},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "-"),
                 @Parameter(name = "expr",
                         description = "The amount by which the selected part of the date " +
                                 "should be decremented. " +
                                 "For example `2` ,`5 `,`10`, etc.",
+                        dynamic = true,
                         type = {DataType.INT}),
                 @Parameter(name = "unit",
                         description = "This is the part of the date that needs to be modified. " +
@@ -93,14 +96,21 @@ import java.util.Locale;
                         description = "The format of the date value provided. " +
                                 "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
                 @Parameter(name = "timestamp.in.milliseconds",
                         description = "The date value in milliseconds. " +
                                 "For example, `1415712224000L`.",
                         type = {DataType.LONG},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "-")
+        },
+        parameterOverloads = {
+                @ParameterOverload(parameterNames = {"date.value", "expr", "unit"}),
+                @ParameterOverload(parameterNames = {"date.value", "expr", "unit", "date.format"}),
+                @ParameterOverload(parameterNames = {"timestamp.in.milliseconds", "expr", "unit"})
         },
         returnAttributes = @ReturnAttribute(
                 description = "Returns data value as a `string` in the provided date.format, default date.format or " +

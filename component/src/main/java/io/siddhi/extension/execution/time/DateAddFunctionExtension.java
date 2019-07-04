@@ -21,6 +21,7 @@ package io.siddhi.extension.execution.time;
 import io.siddhi.annotation.Example;
 import io.siddhi.annotation.Extension;
 import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ParameterOverload;
 import io.siddhi.annotation.ReturnAttribute;
 import io.siddhi.annotation.util.DataType;
 import io.siddhi.core.config.SiddhiQueryContext;
@@ -43,27 +44,6 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * dateAdd(dateValue,expr,unit,dateFormat)/dateAdd(dateValue,expr,unit)/dateAdd(timestampInMilliseconds,expr,unit)
- * Returns added specified time interval to a date.
- * dateValue - value of date. eg: "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657"
- * unit - Which part of the date format you want to manipulate. eg: "MINUTE" , "HOUR" , "MONTH" , "YEAR" , "QUARTER" ,
- *        "WEEK" , "DAY" , "SECOND"
- * expr - In which amount, selected date format part should be incremented. eg: 2 ,5 ,10 etc
- * dateFormat - Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS
- * timestampInMilliseconds - date value in milliseconds.(from the epoch) eg: 1415712224000L
- * Accept Type(s) for dateAdd(dateValue,expr,unit,dateFormat):
- *         dateValue : STRING
- *         expr : INT
- *         unit : STRING
- *         dateFormat : STRING
- * Accept Type(s) for dateAdd(timestampInMilliseconds,expr,unit):
- *         expr : INT
- *         unit : STRING
- *         timestampInMilliseconds : LONG
- * Return Type(s): STRING
- */
-
-/**
  * Class representing the Time dateAdd implementation.
  */
 @Extension(
@@ -76,29 +56,38 @@ import java.util.Locale;
                                 "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, `13:23:44.657`.",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "-"),
+                        defaultValue = "-",
+                        dynamic = true),
                 @Parameter(name = "expr",
                         description = "The amount by which the selected part of the date " +
                                 "should be incremented. " +
                                 "For example `2` ,`5 `,`10`, etc.",
-                        type = {DataType.INT}),
+                        type = {DataType.INT},
+                        dynamic = true),
                 @Parameter(name = "unit",
                         description = "This is the part of the date that needs to be modified. " +
-                                      "For example, `MINUTE`, `HOUR`, `MONTH`, `YEAR`, `QUARTER`," +
+                                "For example, `MINUTE`, `HOUR`, `MONTH`, `YEAR`, `QUARTER`," +
                                 " `WEEK`, `DAY`, `SECOND`.",
                         type = {DataType.STRING}),
                 @Parameter(name = "date.format",
                         description = "The format of the date value provided. " +
                                 "For example, `yyyy-MM-dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "`yyyy-MM-dd HH:mm:ss.SSS`"),
                 @Parameter(name = "timestamp.in.milliseconds",
                         description = "The date value in milliseconds. " +
                                 "For example, `1415712224000L`.",
                         type = {DataType.LONG},
+                        dynamic = true,
                         optional = true,
                         defaultValue = "-")
+        },
+        parameterOverloads = {
+                @ParameterOverload(parameterNames = {"date.value", "expr", "unit"}),
+                @ParameterOverload(parameterNames = {"timestamp.in.milliseconds", "expr", "unit"}),
+                @ParameterOverload(parameterNames = {"date.value", "expr", "unit", "date.format"})
         },
         returnAttributes = @ReturnAttribute(
                 description = "Returns data value as a `string` in the provided date.format, default date.format or " +
@@ -130,7 +119,7 @@ public class DateAddFunctionExtension extends FunctionExecutor {
 
     @Override
     protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
-                                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
+                                ConfigReader configReader, SiddhiQueryContext siddhiQueryContext) {
         if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG && attributeExpressionExecutors
                 .length == 3) {
             useDefaultDateFormat = true;
@@ -339,3 +328,24 @@ public class DateAddFunctionExtension extends FunctionExecutor {
     }
 
 }
+
+/**
+ * dateAdd(dateValue,expr,unit,dateFormat)/dateAdd(dateValue,expr,unit)/dateAdd(timestampInMilliseconds,expr,unit)
+ * Returns added specified time interval to a date.
+ * dateValue - value of date. eg: "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657"
+ * unit - Which part of the date format you want to manipulate. eg: "MINUTE" , "HOUR" , "MONTH" , "YEAR" , "QUARTER" ,
+ *        "WEEK" , "DAY" , "SECOND"
+ * expr - In which amount, selected date format part should be incremented. eg: 2 ,5 ,10 etc
+ * dateFormat - Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS
+ * timestampInMilliseconds - date value in milliseconds.(from the epoch) eg: 1415712224000L
+ * Accept Type(s) for dateAdd(dateValue,expr,unit,dateFormat):
+ *         dateValue : STRING
+ *         expr : INT
+ *         unit : STRING
+ *         dateFormat : STRING
+ * Accept Type(s) for dateAdd(timestampInMilliseconds,expr,unit):
+ *         expr : INT
+ *         unit : STRING
+ *         timestampInMilliseconds : LONG
+ * Return Type(s): STRING
+ */
