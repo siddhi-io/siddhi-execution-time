@@ -116,7 +116,7 @@ import java.util.concurrent.TimeUnit;
                         defaultValue = "-")
         },
         parameterOverloads = {
-                @ParameterOverload(parameterNames = {"date.value1", "date.format1", "date.value2", "date.format2"}),
+                @ParameterOverload(parameterNames = {"date.value1", "date.value2", "date.format1", "date.format2"}),
                 @ParameterOverload(parameterNames = {"date.value1", "date.value2"}),
                 @ParameterOverload(parameterNames = {"timestamp.in.milliseconds1", "timestamp.in.milliseconds2"})
         },
@@ -125,8 +125,8 @@ import java.util.concurrent.TimeUnit;
                 type = {DataType.INT}),
         examples = {
                 @Example(
-                        syntax = "time:dateDiff('2014-11-11 13:23:44', 'yyyy-MM-dd HH:mm:ss', " +
-                                "'2014-11-9 13:23:44', 'yyyy-MM-dd HH:mm:ss')",
+                        syntax = "time:dateDiff('2014-11-11 13:23:44', '2014-11-9 13:23:44', " +
+                                "'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss')",
                         description = "Returns the date difference between the two given dates as `2`."
                 ),
                 @Example(
