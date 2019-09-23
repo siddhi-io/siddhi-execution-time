@@ -1010,7 +1010,7 @@
 <h3 id="datediff-function">dateDiff <em><a target="_blank" href="http://siddhi.io/en/v5.0/docs/query-guide/#function">(Function)</a></em></h3>
 <p><p style="word-wrap: break-word">Returns difference between two dates in days.</p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
-<pre><code>&lt;INT&gt; time:dateDiff(&lt;STRING&gt; date.value1, &lt;STRING&gt; date.format1, &lt;STRING&gt; date.value2, &lt;STRING&gt; date.format2)
+<pre><code>&lt;INT&gt; time:dateDiff(&lt;STRING&gt; date.value1, &lt;STRING&gt; date.value2, &lt;STRING&gt; date.format1, &lt;STRING&gt; date.format2)
 &lt;INT&gt; time:dateDiff(&lt;STRING&gt; date.value1, &lt;STRING&gt; date.value2)
 &lt;INT&gt; time:dateDiff(&lt;LONG&gt; timestamp.in.milliseconds1, &lt;LONG&gt; timestamp.in.milliseconds2)
 </code></pre>
@@ -1076,7 +1076,7 @@
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<pre><code>time:dateDiff('2014-11-11 13:23:44', 'yyyy-MM-dd HH:mm:ss', '2014-11-9 13:23:44', 'yyyy-MM-dd HH:mm:ss')
+<pre><code>time:dateDiff('2014-11-11 13:23:44', '2014-11-9 13:23:44', 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss')
 </code></pre>
 
 <p style="word-wrap: break-word">Returns the date difference between the two given dates as <code>2</code>.</p>
