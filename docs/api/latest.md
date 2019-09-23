@@ -225,7 +225,7 @@ time:dateAdd( 1415712224000L, 1, 'HOUR')
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span>
 
 ```
-<INT> time:dateDiff(<STRING> date.value1, <STRING> date.format1, <STRING> date.value2, <STRING> date.format2)
+<INT> time:dateDiff(<STRING> date.value1, <STRING> date.value2, <STRING> date.format1, <STRING> date.format2)
 <INT> time:dateDiff(<STRING> date.value1, <STRING> date.value2)
 <INT> time:dateDiff(<LONG> timestamp.in.milliseconds1, <LONG> timestamp.in.milliseconds2)
 ```
@@ -293,7 +293,7 @@ time:dateAdd( 1415712224000L, 1, 'HOUR')
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
-time:dateDiff('2014-11-11 13:23:44', 'yyyy-MM-dd HH:mm:ss', '2014-11-9 13:23:44', 'yyyy-MM-dd HH:mm:ss')
+time:dateDiff('2014-11-11 13:23:44', '2014-11-9 13:23:44', 'yyyy-MM-dd HH:mm:ss', c'yyyy-MM-dd HH:mm:ss')
 ```
 <p style="word-wrap: break-word">Returns the date difference between the two given dates as <code>2</code>.</p>
 
