@@ -27,23 +27,27 @@ import io.siddhi.core.stream.StreamJunction;
 import io.siddhi.core.stream.input.InputHandler;
 import io.siddhi.core.util.EventPrinter;
 import io.siddhi.core.util.SiddhiTestHelper;
+import io.siddhi.extension.execution.time.util.TimeExtensionConstants;
 import io.siddhi.extension.execution.time.util.UnitTestAppender;
+import org.apache.commons.lang3.LocaleUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Logger;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ExtractAttributesFunctionExtensionTestCase {
 
     private static Logger log = Logger.getLogger(ExtractAttributesFunctionExtensionTestCase.class);
     private volatile boolean eventArrived;
-    private int waitTime = 50;
-    private int timeout = 30000;
     private AtomicInteger eventCount;
-    LocalDateTime currentTime = LocalDateTime.now();
+    private LocalDateTime currentTime = LocalDateTime.now();
 
     @BeforeMethod
     public void init() {
@@ -82,9 +86,11 @@ public class ExtractAttributesFunctionExtensionTestCase {
 
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", 1394484824000L });
-        inputHandler.send(new Object[] { "IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", 1394484824000L });
-        inputHandler.send(new Object[] { "IBM", "2014-3-11 22:23:44", "yyyy-MM-dd hh:mm:ss", 1394556804000L });
+        inputHandler.send(new Object[]{"IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", 1394484824000L});
+        inputHandler.send(new Object[]{"IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", 1394484824000L});
+        inputHandler.send(new Object[]{"IBM", "2014-3-11 22:23:44", "yyyy-MM-dd hh:mm:ss", 1394556804000L});
+        int timeout = 30000;
+        int waitTime = 50;
         SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
         AssertJUnit.assertEquals(3, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
@@ -118,9 +124,9 @@ public class ExtractAttributesFunctionExtensionTestCase {
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler
-                .send(new Object[] { "IBM", "2014:3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis() });
+                .send(new Object[]{"IBM", "2014:3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis()});
         AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-dd hh:mm:ss does not match "
-                                                                       + "with the timestamp 2014:3-11 02:23:44"));
+                + "with the timestamp 2014:3-11 02:23:44"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -213,11 +219,11 @@ public class ExtractAttributesFunctionExtensionTestCase {
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", null, "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis() });
+        inputHandler.send(new Object[]{"IBM", null, "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis()});
         Thread.sleep(100);
         AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:extract(unit,dateValue,"
-                                                                       + "dateFormat) function. Second argument cannot"
-                                                                       + " be null"));
+                + "dateFormat) function. Second argument cannot"
+                + " be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -247,11 +253,11 @@ public class ExtractAttributesFunctionExtensionTestCase {
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] { "IBM", "2014:3-11 02:23:44", null, System.currentTimeMillis() });
+        inputHandler.send(new Object[]{"IBM", "2014:3-11 02:23:44", null, System.currentTimeMillis()});
         Thread.sleep(100);
         AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:extract(unit,dateValue,"
-                                                                       + "dateFormat) function. Third argument cannot "
-                                                                       + "be null"));
+                + "dateFormat) function. Third argument cannot "
+                + "be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -346,11 +352,227 @@ public class ExtractAttributesFunctionExtensionTestCase {
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler
-                .send(new Object[] { "IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis() });
+                .send(new Object[]{"IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis()});
         inputHandler
-                .send(new Object[] { "IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis() });
+                .send(new Object[]{"IBM", "2014-3-11 02:23:44", "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis()});
         Thread.sleep(100);
         AssertJUnit.assertEquals(2, eventCount.get());
+        AssertJUnit.assertTrue(eventArrived);
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void extractAttributesFunctionExtension14() throws InterruptedException, ParseException {
+        log.info("ExtractAttributesFunctionExtensionTestCase2: " +
+                "<int>  time: extract (<string> unit ,<string>  dateValue, <string> dataFormat, <string> locale)");
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        Calendar calendarEN = Calendar.getInstance(LocaleUtils.toLocale("en_US"));
+        Calendar calendarFR = Calendar.getInstance(LocaleUtils.toLocale("fr_FR"));
+        FastDateFormat userSpecificFormat;
+        userSpecificFormat = FastDateFormat.getInstance("yyyy-MM-dd");
+        Date userSpecifiedDate = userSpecificFormat.parse("2017-10-8");
+        calendarEN.setTime(userSpecifiedDate);
+        calendarFR.setTime(userSpecifiedDate);
+        final Integer valueEN = calendarEN.get(Calendar.WEEK_OF_YEAR);
+        final Integer valueFR = calendarFR.get(Calendar.WEEK_OF_YEAR);
+
+        String inStreamDefinition = ""
+                + "define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds"
+                + " long);";
+        String query1 = ("@info(name = 'query1') " +
+                "from inputStream " +
+                "select symbol , time:extract('WEEK',dateValue,dateFormat, 'en_US') as WEEK " +
+                "insert into outputStream;");
+        String query2 = ("@info(name = 'query2') " +
+                "from inputStream " +
+                "select symbol , time:extract('WEEK',dateValue,dateFormat, 'fr_FR') as WEEK " +
+                "insert into outputStream2;");
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query1 + query2);
+
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                eventArrived = true;
+                for (Event inEvent : inEvents) {
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",WEEK : " + inEvent.getData(1));
+                    AssertJUnit.assertEquals(valueEN, inEvent.getData(1));
+                }
+            }
+        });
+
+        siddhiAppRuntime.addCallback("query2", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                eventArrived = true;
+                for (Event inEvent : inEvents) {
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",WEEK : " + inEvent.getData(1));
+                    AssertJUnit.assertEquals(valueFR, inEvent.getData(1));
+                }
+            }
+        });
+
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
+        inputHandler
+                .send(new Object[]{"IBM", "2017-10-8", "yyyy-MM-dd", 1507401000000L});
+        Thread.sleep(100);
+        AssertJUnit.assertEquals(2, eventCount.get());
+        AssertJUnit.assertTrue(eventArrived);
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void extractAttributesFunctionExtension15() throws InterruptedException, ParseException {
+        log.info("extractAttributesFunctionExtension15: " +
+                "<int>  time: extract (<long> timestampInMilliseconds ,<string>  unit, <string> locale)");
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        Calendar calendarEN = Calendar.getInstance(LocaleUtils.toLocale("en_US"));
+        Calendar calendarFR = Calendar.getInstance(LocaleUtils.toLocale("fr_FR"));
+        calendarEN.setTimeInMillis(1507401000000L);
+        calendarFR.setTimeInMillis(1507401000000L);
+        final Integer valueEN = calendarEN.get(Calendar.WEEK_OF_YEAR);
+        final Integer valueFR = calendarFR.get(Calendar.WEEK_OF_YEAR);
+
+        String inStreamDefinition = ""
+                + "define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds"
+                + " long);";
+        String query1 = ("@info(name = 'query1') " +
+                "from inputStream " +
+                "select symbol , time:extract(timestampInMilliseconds, 'WEEK', 'en_US') as WEEK " +
+                "insert into outputStream;");
+        String query2 = ("@info(name = 'query2') " +
+                "from inputStream " +
+                "select symbol , time:extract(timestampInMilliseconds, 'WEEK', 'fr_FR') as WEEK " +
+                "insert into outputStream2;");
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query1 + query2);
+
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                eventArrived = true;
+                for (Event inEvent : inEvents) {
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",WEEK : " + inEvent.getData(1));
+                    AssertJUnit.assertEquals(valueEN, inEvent.getData(1));
+                }
+            }
+        });
+
+        siddhiAppRuntime.addCallback("query2", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                eventArrived = true;
+                for (Event inEvent : inEvents) {
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",WEEK : " + inEvent.getData(1));
+                    AssertJUnit.assertEquals(valueFR, inEvent.getData(1));
+                }
+            }
+        });
+
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
+        inputHandler
+                .send(new Object[]{"IBM", "2017-10-8", "yyyy-MM-dd", 1507401000000L});
+        Thread.sleep(100);
+        AssertJUnit.assertEquals(2, eventCount.get());
+        AssertJUnit.assertTrue(eventArrived);
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void extractAttributesFunctionExtension16() throws InterruptedException, ParseException {
+        log.info("extractAttributesFunctionExtension16: " +
+                "<int>  time: extract (<long> timestampInMilliseconds ,<string>  unit)");
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        Calendar calendarEN = Calendar.getInstance();
+        calendarEN.setTimeInMillis(1507401000000L);
+        final Integer valueEN = calendarEN.get(Calendar.WEEK_OF_YEAR);
+
+        String inStreamDefinition = ""
+                + "define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds"
+                + " long);";
+        String query1 = ("@info(name = 'query1') " +
+                "from inputStream " +
+                "select symbol , time:extract(timestampInMilliseconds, 'WEEK') as WEEK " +
+                "insert into outputStream;");
+
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query1);
+
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                eventArrived = true;
+                for (Event inEvent : inEvents) {
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",WEEK : " + inEvent.getData(1));
+                    AssertJUnit.assertEquals(valueEN, inEvent.getData(1));
+                }
+            }
+        });
+
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
+        inputHandler
+                .send(new Object[]{"IBM", "2017-10-8", "yyyy-MM-dd", 1507401000000L});
+        Thread.sleep(100);
+        AssertJUnit.assertEquals(1, eventCount.get());
+        AssertJUnit.assertTrue(eventArrived);
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void extractAttributesFunctionExtension17() throws InterruptedException, ParseException {
+        log.info("extractAttributesFunctionExtension17: " +
+                "<int>  time: extract (<string> unit ,<string>  dateValue)");
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        FastDateFormat userSpecificFormat;
+        userSpecificFormat = FastDateFormat.getInstance(TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT);
+        Date userSpecifiedDate = userSpecificFormat.parse("2017-10-8 02:23:44.999");
+        Calendar calendarEN = Calendar.getInstance();
+        calendarEN.setTime(userSpecifiedDate);
+        final Integer valueEN = calendarEN.get(Calendar.WEEK_OF_YEAR);
+
+        String inStreamDefinition = ""
+                + "define stream inputStream (symbol string,dateValue string,dateFormat string,timestampInMilliseconds"
+                + " long);";
+        String query1 = ("@info(name = 'query1') " +
+                "from inputStream " +
+                "select symbol , time:extract('WEEK', dateValue) as WEEK " +
+                "insert into outputStream;");
+
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query1);
+
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                eventArrived = true;
+                for (Event inEvent : inEvents) {
+                    eventCount.incrementAndGet();
+                    log.info("Event : " + eventCount.get() + ",WEEK : " + inEvent.getData(1));
+                    AssertJUnit.assertEquals(valueEN, inEvent.getData(1));
+                }
+            }
+        });
+
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
+        inputHandler
+                .send(new Object[]{"IBM", "2017-10-8 02:23:44.999", 1507401000000L});
+        Thread.sleep(100);
+        AssertJUnit.assertEquals(1, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         siddhiAppRuntime.shutdown();
     }

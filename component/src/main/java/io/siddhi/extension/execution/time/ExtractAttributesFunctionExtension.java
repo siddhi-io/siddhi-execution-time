@@ -36,6 +36,7 @@ import io.siddhi.core.util.snapshot.state.StateFactory;
 import io.siddhi.extension.execution.time.util.TimeExtensionConstants;
 import io.siddhi.query.api.definition.Attribute;
 import io.siddhi.query.api.exception.SiddhiAppValidationException;
+import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.text.ParseException;
@@ -44,13 +45,16 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * extract(unit,dateValue,dateFormat)/extract(unit,dateValue)/extract(timestampInMilliseconds,unit)
+ * extract(unit,dateValue,dateFormat)/extract(unit,dateValue,dateFormat,locale)/extract(unit,dateValue)
+ * /extract(timestampInMilliseconds,unit)/extract(timestampInMilliseconds,unit,locale)
  * Returns date attributes from a date expression.
  * dateValue - value of date. eg: "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657"
  * unit - Which part of the date format you want to manipulate. eg: "MINUTE" , "HOUR" , "MONTH" , "YEAR" , "QUARTER" ,
  * "WEEK" , "DAY" , "SECOND"
  * dateFormat - Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS
  * timestampInMilliseconds - date value in milliseconds.(from the epoch) eg: 1415712224000L
+ * locale - optional parameter which represents a specific geographical, political or cultural region.
+ * eg: "en_US", "fr_FR"
  * Accept Type(s) for extract(unit,dateValue,dateFormat):
  * unit : STRING
  * dateValue : STRING
@@ -94,12 +98,20 @@ import java.util.Locale;
                         type = {DataType.LONG},
                         dynamic = true,
                         optional = true,
-                        defaultValue = "-")
+                        defaultValue = "-"),
+                @Parameter(name = "locale",
+                        description = "Represents a specific geographical, political or cultural region. " +
+                                "For example `en_US` and `fr_FR`",
+                        type = {DataType.STRING},
+                        optional = true,
+                        defaultValue = "EMPTY_STRING")
         },
         parameterOverloads = {
-                @ParameterOverload(parameterNames = {"unit", "date.value", "date.format"}),
                 @ParameterOverload(parameterNames = {"unit", "date.value"}),
-                @ParameterOverload(parameterNames = {"timestamp.in.milliseconds", "unit"})
+                @ParameterOverload(parameterNames = {"unit", "date.value", "date.format"}),
+                @ParameterOverload(parameterNames = {"unit", "date.value", "date.format", "locale"}),
+                @ParameterOverload(parameterNames = {"timestamp.in.milliseconds", "unit"}),
+                @ParameterOverload(parameterNames = {"timestamp.in.milliseconds", "unit", "locale"})
         },
         returnAttributes = @ReturnAttribute(
                 description = "Returns the extracted data unit value.",
@@ -126,6 +138,9 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
     private String dateFormat = null;
     private Calendar cal = Calendar.getInstance();
     private String unit = null;
+    private boolean isLocaleDefined = false;
+    private boolean useTimestampInMilliseconds = false;
+    private Locale locale = null;
 
     @Override
     protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,
@@ -135,98 +150,73 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
             useDefaultDateFormat = true;
             dateFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
         }
-        if (attributeExpressionExecutors.length == 3) {
-            if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
-                throw new SiddhiAppValidationException("Invalid parameter type found for the first argument of " +
-                        "time:extract(unit, dateValue, dateFormat) function, " +
-                        "required " + Attribute.Type.STRING + " but found " +
-                        attributeExpressionExecutors[0].getReturnType().toString());
-            }
-            if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
-                throw new SiddhiAppValidationException("Invalid parameter type found for the second argument of " +
-                        "time:extract(unit, dateValue, dateFormat) function, " +
-                        "required " + Attribute.Type.STRING + " but found " +
-                        attributeExpressionExecutors[1].getReturnType().toString());
-            }
-            if (attributeExpressionExecutors[2].getReturnType() != Attribute.Type.STRING) {
-                throw new SiddhiAppValidationException("Invalid parameter type found for the third argument of " +
-                        "time:extract(unit, dateValue, dateFormat) function, " +
-                        "required " + Attribute.Type.STRING + " but found " +
-                        attributeExpressionExecutors[2].getReturnType().toString());
-            }
-
-            if (attributeExpressionExecutors[0] instanceof ConstantExpressionExecutor) {
-                unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[0])
-                        .getValue()).toUpperCase(Locale.getDefault());
+        if (attributeExpressionExecutors.length == 4) {
+            locale = LocaleUtils.toLocale((String) ((ConstantExpressionExecutor)
+                    attributeExpressionExecutors[3]).getValue());
+            unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[0])
+                    .getValue()).toUpperCase(Locale.getDefault());
+        } else if (attributeExpressionExecutors.length == 3) {
+            if (attributeExpressionExecutors[0].getReturnType() == Attribute.Type.LONG) {
+                useTimestampInMilliseconds = true;
+                locale = LocaleUtils.toLocale((String) ((ConstantExpressionExecutor)
+                        attributeExpressionExecutors[2]).getValue());
+                unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[1]).getValue()).
+                        toUpperCase();
             } else {
-                throw new OperationNotSupportedException("unit value has to be a constant");
+                unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[0]).getValue()).
+                        toUpperCase();
             }
-
         } else if (attributeExpressionExecutors.length == 2) {
             if (useDefaultDateFormat) {
-                if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.STRING) {
-                    throw new SiddhiAppValidationException("Invalid parameter type found for the first " +
-                            "argument of " + "time:extract(unit, dateValue)" +
-                            " function," + "required " + Attribute.Type.STRING +
-                            " but found " + attributeExpressionExecutors[0]
-                            .getReturnType().toString());
-                }
-                if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
-                    throw new SiddhiAppValidationException("Invalid parameter type found for the second " +
-                            "argument of " + "time:extract(unit, dateValue) " +
-                            "function," + "required " + Attribute.Type.STRING +
-                            " but found " + attributeExpressionExecutors[1]
-                            .getReturnType().toString());
-                }
+                unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[0]).getValue()).
+                        toUpperCase();
             } else {
-                if (attributeExpressionExecutors[0].getReturnType() != Attribute.Type.LONG) {
-                    throw new SiddhiAppValidationException("Invalid parameter type found for the first" +
-                            " argument of " + "time:extract" +
-                            "(timestampInMilliseconds, unit) function, " + "required "
-                            + Attribute.Type.LONG + " but found " +
-                            attributeExpressionExecutors[0]
-                                    .getReturnType().toString());
-                }
-                if (attributeExpressionExecutors[1].getReturnType() != Attribute.Type.STRING) {
-                    throw new SiddhiAppValidationException("Invalid parameter type found for the second" +
-                            " argument of " + "time:extract" +
-                            "(timestampInMilliseconds, unit) function, " + "required "
-                            + Attribute.Type.STRING +
-                            " but found " + attributeExpressionExecutors[1]
-                            .getReturnType().toString());
-                }
+                unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[1]).getValue()).
+                        toUpperCase();
             }
-
-            if (attributeExpressionExecutors[1] instanceof ConstantExpressionExecutor) {
-                unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[1])
-                        .getValue()).toUpperCase(Locale.getDefault());
-            } else {
-                throw new OperationNotSupportedException("unit value has to be a constant");
-            }
-
         } else {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:extract() function, " +
                     "required 2 or 3, but found " +
                     attributeExpressionExecutors.length);
         }
+
+        if (locale != null) {
+            isLocaleDefined = true;
+            cal = Calendar.getInstance(locale);
+        } else {
+            cal = Calendar.getInstance();
+        }
+
         return null;
     }
 
     @Override
     protected Object execute(Object[] data, State state) {
         String source = null;
-        if (data.length == 3 || useDefaultDateFormat) {
+        if ((data.length == 3 || data.length == 4 || useDefaultDateFormat) && !useTimestampInMilliseconds) {
             try {
                 if (data[1] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
-                            "dateFormat) function" + ". Second " +
-                            "argument cannot be null");
+                    if (isLocaleDefined) {
+                        throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
+                                "dateFormat, locale) function" + ". Second " +
+                                "argument cannot be null");
+                    } else {
+                        throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
+                                "dateFormat) function" + ". Second " +
+                                "argument cannot be null");
+                    }
                 }
                 if (!useDefaultDateFormat) {
                     if (data[2] == null) {
-                        throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
-                                "dateFormat) function" + ". Third " +
-                                "argument cannot be null");
+                        if (isLocaleDefined) {
+                            throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
+                                    "dateFormat, locale) function" + ". Third " +
+                                    "argument cannot be null");
+                        } else {
+                            throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
+                                    "dateFormat) function" + ". Third " +
+                                    "argument cannot be null");
+                        }
                     }
                     dateFormat = (String) data[2];
                 }
@@ -245,10 +235,15 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
                 throw new SiddhiAppRuntimeException(errorMsg, e);
             }
         } else {
-
             if (data[0] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to time:extract(timestampInMilliseconds," +
-                        "unit) function" + ". First " + "argument cannot be null");
+                if (isLocaleDefined) {
+                    throw new SiddhiAppRuntimeException("Invalid input given to time:extract(timestampInMilliseconds," +
+                            "unit, locale) function" + ". First " + "argument cannot be null");
+
+                } else {
+                    throw new SiddhiAppRuntimeException("Invalid input given to time:extract(timestampInMilliseconds," +
+                            "unit) function" + ". First " + "argument cannot be null");
+                }
             }
             try {
                 long millis = (Long) data[0];
