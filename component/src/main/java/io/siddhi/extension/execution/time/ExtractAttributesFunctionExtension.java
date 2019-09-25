@@ -25,7 +25,6 @@ import io.siddhi.annotation.ParameterOverload;
 import io.siddhi.annotation.ReturnAttribute;
 import io.siddhi.annotation.util.DataType;
 import io.siddhi.core.config.SiddhiQueryContext;
-import io.siddhi.core.exception.OperationNotSupportedException;
 import io.siddhi.core.exception.SiddhiAppRuntimeException;
 import io.siddhi.core.executor.ConstantExpressionExecutor;
 import io.siddhi.core.executor.ExpressionExecutor;
@@ -161,18 +160,18 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
                 locale = LocaleUtils.toLocale((String) ((ConstantExpressionExecutor)
                         attributeExpressionExecutors[2]).getValue());
                 unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[1]).getValue()).
-                        toUpperCase();
+                        toUpperCase(Locale.getDefault());
             } else {
                 unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[0]).getValue()).
-                        toUpperCase();
+                        toUpperCase(Locale.getDefault());
             }
         } else if (attributeExpressionExecutors.length == 2) {
             if (useDefaultDateFormat) {
                 unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[0]).getValue()).
-                        toUpperCase();
+                        toUpperCase(Locale.getDefault());
             } else {
                 unit = ((String) ((ConstantExpressionExecutor) attributeExpressionExecutors[1]).getValue()).
-                        toUpperCase();
+                        toUpperCase(Locale.getDefault());
             }
         } else {
             throw new SiddhiAppValidationException("Invalid no of arguments passed to time:extract() function, " +
