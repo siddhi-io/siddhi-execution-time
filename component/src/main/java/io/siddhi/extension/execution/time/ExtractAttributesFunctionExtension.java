@@ -103,7 +103,7 @@ import java.util.Locale;
                                 "For example `en_US` and `fr_FR`",
                         type = {DataType.STRING},
                         optional = true,
-                        defaultValue = "EMPTY_STRING")
+                        defaultValue = "Gets the current value of the default locale of the Java Virtual Machine.")
         },
         parameterOverloads = {
                 @ParameterOverload(parameterNames = {"unit", "date.value"}),
