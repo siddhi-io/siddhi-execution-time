@@ -196,9 +196,6 @@ public class DateSubFunctionExtensionTestCase {
     public void dateSubFunctionExtension7() throws InterruptedException {
 
         log.info("DateSubFunctionExtensionTestCaseFirstArgumentNull");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = ""
@@ -215,6 +212,7 @@ public class DateSubFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
 
@@ -222,9 +220,6 @@ public class DateSubFunctionExtensionTestCase {
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", null, "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2 });
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to str:dateSub(date,expr,unit,"
-                                                                       + "dateFormat) function. First argument "
-                                                                       + "cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -232,9 +227,6 @@ public class DateSubFunctionExtensionTestCase {
     public void dateSubFunctionExtension8() throws InterruptedException {
 
         log.info("DateSubFunctionExtensionTestCaseFourthArgumentNull");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = ""
@@ -251,6 +243,7 @@ public class DateSubFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
@@ -258,9 +251,6 @@ public class DateSubFunctionExtensionTestCase {
         inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44", null, 1415692424000L, 2 });
         inputHandler.send(new Object[] { "IBM", "2015-11-11 13:23:44", null, 1415692424000L, 2 });
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to str:dateSub(date,expr,unit,"
-                                                                       + "dateFormat) function. Fourth argument "
-                                                                       + "cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -268,9 +258,6 @@ public class DateSubFunctionExtensionTestCase {
     public void dateSubFunctionExtension9() throws InterruptedException {
 
         log.info("DateSubFunctionExtensionTestCaseSecondArgumentNull");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = ""
@@ -287,15 +274,13 @@ public class DateSubFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, null });
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to str:dateSub(date,expr,unit,"
-                                                                       + "dateFormat) function. Second argument cannot "
-                                                                       + "be null"));
         siddhiAppRuntime.shutdown();
     }
 

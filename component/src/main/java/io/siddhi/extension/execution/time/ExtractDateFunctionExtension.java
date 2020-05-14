@@ -132,14 +132,11 @@ public class ExtractDateFunctionExtension extends FunctionExecutor {
     protected Object execute(Object[] data, State state) {
         String userFormat;
         if (data[0] == null) {
-            throw new SiddhiAppRuntimeException("Invalid input given to time:date(dateValue," +
-                    "dateFormat) function" + ". First " + "argument cannot be null");
+            return null;
         }
         if (data.length > 0) {
             if (data[1] == null) {
-                throw new SiddhiAppRuntimeException(
-                        "Invalid input given to time:date(dateValue,dateFormat) function" + ". Second " +
-                                "argument cannot be null");
+                return null;
             }
             userFormat = (String) data[1];
         } else {

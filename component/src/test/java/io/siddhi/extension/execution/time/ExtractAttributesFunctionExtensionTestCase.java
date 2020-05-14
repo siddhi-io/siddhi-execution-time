@@ -197,9 +197,6 @@ public class ExtractAttributesFunctionExtensionTestCase {
     public void extractAttributesFunctionExtension7() throws InterruptedException {
 
         log.info("ExtractAttributesFunctionExtensionSecondArgumentNullTestCase");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = ""
@@ -215,15 +212,13 @@ public class ExtractAttributesFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[]{"IBM", null, "yyyy-MM-dd hh:mm:ss", System.currentTimeMillis()});
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:extract(unit,dateValue,"
-                + "dateFormat) function. Second argument cannot"
-                + " be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -231,9 +226,6 @@ public class ExtractAttributesFunctionExtensionTestCase {
     public void extractAttributesFunctionExtension8() throws InterruptedException {
 
         log.info("ExtractAttributesFunctionExtensionThirdArgumentNullTestCase");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = ""
@@ -249,15 +241,13 @@ public class ExtractAttributesFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[]{"IBM", "2014:3-11 02:23:44", null, System.currentTimeMillis()});
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:extract(unit,dateValue,"
-                + "dateFormat) function. Third argument cannot "
-                + "be null"));
         siddhiAppRuntime.shutdown();
     }
 
