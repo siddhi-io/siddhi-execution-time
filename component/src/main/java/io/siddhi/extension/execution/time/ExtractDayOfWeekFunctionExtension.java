@@ -136,14 +136,11 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
     protected Object execute(Object[] data, State state) {
         String userFormat;
         if (data[0] == null) {
-            throw new SiddhiAppRuntimeException("Invalid input given to time:dayOfWeek(dateValue," +
-                    "dateFormat) function" + ". First " + "argument cannot be null");
+            return null;
         }
         if (data.length > 1) {
             if (data[1] == null) {
-                throw new SiddhiAppRuntimeException(
-                        "Invalid input given to time:dayOfWeek(dateValue,dateFormat) function" + ". Second " +
-                                "argument cannot be null");
+                return null;
             } else {
                 userFormat = (String) data[1];
             }
@@ -172,8 +169,7 @@ public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
     protected Object execute(Object data, State state) {
         String userFormat;
         if (data == null) {
-            throw new SiddhiAppRuntimeException("Invalid input given to time:dayOfWeek(dateValue," +
-                    "dateFormat) function" + ". First " + "argument cannot be null");
+            return null;
         }
         userFormat = TimeExtensionConstants.EXTENSION_TIME_DEFAULT_DATE_FORMAT;
         String source;

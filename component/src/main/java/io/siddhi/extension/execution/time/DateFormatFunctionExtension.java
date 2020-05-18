@@ -208,18 +208,12 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
             FastDateFormat userSpecifiedSourceFormat;
 
             try {
-                if (data[0] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to time:dateFormat(dateValue," +
-                            "dateTargetFormat,dateSourceFormat) function" + ". First " + "argument cannot be null");
-                }
-                if (data[1] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to time:dateFormat(dateValue," +
-                            "dateTargetFormat,dateSourceFormat) function" + ". Second " + "argument cannot be null");
+                if (data[0] == null || data[1] == null) {
+                    return null;
                 }
                 if (!useDefaultDateFormat) {
                     if (data[2] == null) {
-                        throw new SiddhiAppRuntimeException("Invalid input given to time:dateFormat(dateValue," +
-                                "dateTargetFormat,dateSourceFormat) function" + ". Third " + "argument cannot be null");
+                        return null;
                     }
                     sourceDateFormat = (String) data[2];
                 }
@@ -241,13 +235,8 @@ public class DateFormatFunctionExtension extends FunctionExecutor {
             }
         } else if (data.length == 2) {
 
-            if (data[0] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to dateFormat(timestampInMilliseconds," +
-                        "dateTargetFormat) function" + ". First " + "argument cannot be null");
-            }
-            if (data[1] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to dateFormat(timestampInMilliseconds," +
-                        "dateTargetFormat) function" + ". Second " + "argument cannot be null");
+            if (data[0] == null || data[1] == null) {
+                return null;
             }
 
             // Format the Date to specified Format

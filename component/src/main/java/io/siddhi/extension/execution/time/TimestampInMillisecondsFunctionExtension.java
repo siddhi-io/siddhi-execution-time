@@ -155,15 +155,11 @@ public class TimestampInMillisecondsFunctionExtension extends FunctionExecutor {
 
         if (data.length == 2) {
             if (data[0] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to " +
-                        "time:timestampInMilliseconds(dateValue," +
-                        "dateFormat) function" + ". First argument cannot be null");
+                return null;
             }
             if (!useDefaultDateFormat) {
                 if (data[1] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to " +
-                            "time:timestampInMilliseconds(dateValue," +
-                            "dateFormat) function" + ". First argument cannot be null");
+                    return null;
                 }
                 dateFormat = (String) data[1];
             }

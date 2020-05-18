@@ -137,7 +137,6 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
     private String dateFormat = null;
     private Calendar cal = Calendar.getInstance();
     private String unit = null;
-    private boolean isLocaleDefined = false;
     private boolean useTimestampInMilliseconds = false;
     private Locale locale = null;
 
@@ -180,7 +179,6 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
         }
 
         if (locale != null) {
-            isLocaleDefined = true;
             cal = Calendar.getInstance(locale);
         } else {
             cal = Calendar.getInstance();
@@ -195,27 +193,11 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
         if ((data.length == 3 || data.length == 4 || useDefaultDateFormat) && !useTimestampInMilliseconds) {
             try {
                 if (data[1] == null) {
-                    if (isLocaleDefined) {
-                        throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
-                                "dateFormat, locale) function" + ". Second " +
-                                "argument cannot be null");
-                    } else {
-                        throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
-                                "dateFormat) function" + ". Second " +
-                                "argument cannot be null");
-                    }
+                    return null;
                 }
                 if (!useDefaultDateFormat) {
                     if (data[2] == null) {
-                        if (isLocaleDefined) {
-                            throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
-                                    "dateFormat, locale) function" + ". Third " +
-                                    "argument cannot be null");
-                        } else {
-                            throw new SiddhiAppRuntimeException("Invalid input given to time:extract(unit,dateValue," +
-                                    "dateFormat) function" + ". Third " +
-                                    "argument cannot be null");
-                        }
+                        return null;
                     }
                     dateFormat = (String) data[2];
                 }
@@ -235,14 +217,7 @@ public class ExtractAttributesFunctionExtension extends FunctionExecutor {
             }
         } else {
             if (data[0] == null) {
-                if (isLocaleDefined) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to time:extract(timestampInMilliseconds," +
-                            "unit, locale) function" + ". First " + "argument cannot be null");
-
-                } else {
-                    throw new SiddhiAppRuntimeException("Invalid input given to time:extract(timestampInMilliseconds," +
-                            "unit) function" + ". First " + "argument cannot be null");
-                }
+                return null;
             }
             try {
                 long millis = (Long) data[0];

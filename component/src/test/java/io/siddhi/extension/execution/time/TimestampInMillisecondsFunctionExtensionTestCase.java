@@ -299,9 +299,6 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
     public void timestampInMillisecondsWithAllArgumentsFunctionExtension8() throws InterruptedException {
 
         log.info("TimestampInMillisecondsWithAllArgumentsFunctionExtensionFirstArgumentNullTestCase");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         String dateTime = "2007-11-30 10:30:19.000";
         final Timestamp timestamp = Timestamp.valueOf(dateTime);
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -317,15 +314,13 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[]{"IBM", null, 100L});
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:timestampInMilliseconds("
-                + "dateValue,dateFormat) function. First "
-                + "argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -333,9 +328,6 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
     public void timestampInMillisecondsWithAllArgumentsFunctionExtension9() throws InterruptedException {
 
         log.info("TimestampInMillisecondsWithAllArgumentsFunctionExtensionSecondArgumentNullTestCase");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         String dateTime = "2007-11-30 10:30:19.000";
         final Timestamp timestamp = Timestamp.valueOf(dateTime);
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -351,15 +343,13 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[]{"IBM", 700f, null});
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:timestampInMilliseconds("
-                + "dateValue,dateFormat) function. First "
-                + "argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 }

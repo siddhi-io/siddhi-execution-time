@@ -150,9 +150,6 @@ public class DateAddFunctionExtensionTestCase {
     public void dateAddFunctionExtension5() throws InterruptedException {
 
         log.info("DateAddFunctionExtensionTestCaseFirstArgumentNull");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = ""
@@ -169,15 +166,20 @@ public class DateAddFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (inEvents[0].getData(0).toString().equals("IBM")) {
+                    AssertJUnit.assertNull(inEvents[0].getData(1));
+                }
+                if (inEvents[0].getData(0).toString().equals("WSO2")) {
+                    AssertJUnit.assertEquals("2012-05-11 13:23:44", inEvents[0].getData(1));
+                    AssertJUnit.assertEquals("2010-07-11 13:23:44", inEvents[0].getData(2));
+                    AssertJUnit.assertEquals("1415699624000", inEvents[0].getData(3));
+                }
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", null, "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2 });
-        inputHandler.send(new Object[] { "IBM", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2 });
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateAdd("
-                                                                       + "date,expr,unit,dateFormat) function. "
-                                                                       + "First argument cannot be null"));
+        inputHandler.send(new Object[] { "WSO2", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2 });
         siddhiAppRuntime.shutdown();
     }
 
@@ -185,9 +187,6 @@ public class DateAddFunctionExtensionTestCase {
     public void dateAddFunctionExtension6() throws InterruptedException {
 
         log.info("DateAddFunctionExtensionTestCaseFourthArgumentNull");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = ""
@@ -203,34 +202,31 @@ public class DateAddFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                for (Event event : inEvents) {
                     count.incrementAndGet();
-                    AssertJUnit.assertEquals("2012-05-11 13:23:44", event.getData(1));
-                    AssertJUnit.assertEquals("2010-07-11 13:23:44", event.getData(2));
-                    AssertJUnit.assertEquals("1415699624000", event.getData(3));
-                    eventArrived = true;
+                    if (inEvents[0].getData(0).toString().equals("IBM")) {
+                        AssertJUnit.assertNull(inEvents[0].getData(1));
                     }
+                    if (inEvents[0].getData(0).toString().equals("WSO2")) {
+                        AssertJUnit.assertEquals("2012-05-11 13:23:44", inEvents[0].getData(1));
+                        AssertJUnit.assertEquals("2010-07-11 13:23:44", inEvents[0].getData(2));
+                        AssertJUnit.assertEquals("1415699624000", inEvents[0].getData(3));
+                    }
+                    eventArrived = true;
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44", null, 1415692424000L, 2 });
-        inputHandler.send(new Object[] { "IBM", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2 });
-        SiddhiTestHelper.waitForEvents(100, 1, count, 60000);
-        AssertJUnit.assertEquals(1, count.get());
+        inputHandler.send(new Object[] { "WSO2", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2 });
+        SiddhiTestHelper.waitForEvents(100, 2, count, 60000);
+        AssertJUnit.assertEquals(2, count.get());
         AssertJUnit.assertTrue(eventArrived);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateAdd("
-                                                                       + "date,expr,unit,dateFormat) function. "
-                                                                       + "Fourth argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
     @Test
     public void dateAddFunctionExtension7() throws InterruptedException {
         log.info("DateAddFunctionExtensionTestCaseSecondArgumentNull");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" + "define stream inputStream (symbol string,dateValue string,dateFormat string,"
@@ -246,25 +242,24 @@ public class DateAddFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                for (Event event : inEvents) {
-                    count.incrementAndGet();
-                        AssertJUnit.assertEquals("2012-05-11 13:23:44", event.getData(1));
-                        AssertJUnit.assertEquals("2010-07-11 13:23:44", event.getData(2));
-                        AssertJUnit.assertEquals("1415699624000", event.getData(3));
-                        eventArrived = true;
+                if (inEvents[0].getData(0).toString().equals("IBM")) {
+                    AssertJUnit.assertNull(inEvents[0].getData(1));
                 }
+                if (inEvents[0].getData(0).toString().equals("WSO2")) {
+                    AssertJUnit.assertEquals("2012-05-11 13:23:44", inEvents[0].getData(1));
+                    AssertJUnit.assertEquals("2010-07-11 13:23:44", inEvents[0].getData(2));
+                    AssertJUnit.assertEquals("1415699624000", inEvents[0].getData(3));
+                }
+                count.incrementAndGet();
             }
         });
 
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, null });
-        inputHandler.send(new Object[] { "IBM", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2 });
-        SiddhiTestHelper.waitForEvents(100, 1, count, 60000);
-        AssertJUnit.assertEquals(1, count.get());
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateAdd("
-                                                                       + "date,expr,unit,dateFormat) function. "
-                                                                       + "Second argument cannot be null"));
+        inputHandler.send(new Object[] { "WSO2", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2 });
+        SiddhiTestHelper.waitForEvents(100, 2, count, 60000);
+        AssertJUnit.assertEquals(2, count.get());
         siddhiAppRuntime.shutdown();
     }
 
@@ -466,9 +461,6 @@ public class DateAddFunctionExtensionTestCase {
     public void dateAddFunctionExtension18() throws InterruptedException {
 
         log.info("DateAddFunctionExtensionTestCaseFirstArgumentNull");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = ""
@@ -483,6 +475,7 @@ public class DateAddFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
 
@@ -490,9 +483,6 @@ public class DateAddFunctionExtensionTestCase {
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", null, 2 });
         inputHandler.send(new Object[] { "IBM", "2010-05-11 13:23:44", "yyyy-MM-dd HH:mm:ss", null, 2 });
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateAdd("
-                                                                       + "timestampInMilliseconds,expr,unit) function. "
-                                                                       + "First argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 

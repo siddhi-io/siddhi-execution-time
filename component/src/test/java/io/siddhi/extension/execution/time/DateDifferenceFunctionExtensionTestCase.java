@@ -251,9 +251,6 @@ public class DateDifferenceFunctionExtensionTestCase {
     public void dateDifferenceFunctionExtension8() throws InterruptedException {
 
         log.info("DateDifferenceFunctionExtensionFirstArgumetNullTestCase");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -269,6 +266,7 @@ public class DateDifferenceFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
 
@@ -283,10 +281,6 @@ public class DateDifferenceFunctionExtensionTestCase {
                 1415519624000L
         });
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateDiff("
-                                                                       + "dateValue1,dateValue2,dateFormat1,"
-                                                                       + "dateFormat2) function. First argument "
-                                                                       + "cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -294,9 +288,6 @@ public class DateDifferenceFunctionExtensionTestCase {
     public void dateDifferenceFunctionExtension9() throws InterruptedException {
 
         log.info("DateDifferenceFunctionExtensionThirdArgumetNullTestCase");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -312,6 +303,7 @@ public class DateDifferenceFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
@@ -325,9 +317,6 @@ public class DateDifferenceFunctionExtensionTestCase {
                 1415519624000L
         });
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateDiff(dateValue1,"
-                                                                       + "dateValue2,dateFormat1,dateFormat2) "
-                                                                       + "function. Third argument cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 
@@ -335,9 +324,6 @@ public class DateDifferenceFunctionExtensionTestCase {
     public void dateDifferenceFunctionExtension10() throws InterruptedException {
 
         log.info("DateDifferenceFunctionExtensionSecondArgumetNullTestCase");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -353,6 +339,7 @@ public class DateDifferenceFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
                 eventArrived = true;
             }
         });
@@ -367,11 +354,6 @@ public class DateDifferenceFunctionExtensionTestCase {
                 "IBM", "2015-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", null, "yyyy-MM-dd HH:mm:ss", 1415692424000L,
                 1415519624000L
         });
-        Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:dateDiff("
-                                                                       + "dateValue1,dateValue2,dateFormat1,"
-                                                                       + "dateFormat2) function. Second argument "
-                                                                       + "cannot be null"));
         siddhiAppRuntime.shutdown();
     }
 

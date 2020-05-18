@@ -252,19 +252,12 @@ public class DateAddFunctionExtension extends FunctionExecutor {
 
         if (data.length == 4 || useDefaultDateFormat) {
             try {
-                if (data[0] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to time:dateAdd(date,expr," +
-                            "unit,dateFormat) function" + ". First " +
-                            "argument cannot be null");
-                }
-                if (data[1] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to time:dateAdd(date,expr," +
-                            "unit,dateFormat) function" + ". Second " + "argument cannot be null");
+                if (data[0] == null || data[1] == null) {
+                    return null;
                 }
                 if (!useDefaultDateFormat) {
                     if (data[3] == null) {
-                        throw new SiddhiAppRuntimeException("Invalid input given to time:dateAdd(date,expr," +
-                                "unit,dateFormat) function" + ". Fourth " + "argument cannot be null");
+                        return null;
                     }
                     dateFormat = (String) data[3];
                 }
@@ -287,17 +280,8 @@ public class DateAddFunctionExtension extends FunctionExecutor {
 
         } else if (data.length == 3) {
 
-            if (data[0] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to time:dateAdd(timestampInMilliseconds," +
-                        "expr,unit) function" + ". First " + "argument cannot be null");
-            }
-            if (data[1] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to time:dateAdd(timestampInMilliseconds," +
-                        "expr,unit) function" + ". Second " + "argument cannot be null");
-            }
-            if (data[2] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to time:dateAdd(timestampInMilliseconds," +
-                        "expr,unit) function" + ". Third " + "argument cannot be null");
+            if (data[0] == null || data[1] == null || data[2] == null) {
+                return null;
             }
 
             try {

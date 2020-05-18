@@ -161,9 +161,6 @@ public class ExtractDateFunctionExtensionTestCase {
     public void extractDateFunctionExtension6() throws InterruptedException {
 
         log.info("ExtractDateFunctionExtensionTestCaseFirstArgumentNull");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -176,14 +173,13 @@ public class ExtractDateFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44.657", null });
         siddhiAppRuntime.shutdown();
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:date(dateValue,dateFormat)"
-                                                                       + " function. First argument cannot be null"));
 
     }
 
@@ -191,9 +187,6 @@ public class ExtractDateFunctionExtensionTestCase {
     public void extractDateFunctionExtension7() throws InterruptedException {
 
         log.info("ExtractDateFunctionExtensionTestCaseSecondArgumentNull");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -206,6 +199,7 @@ public class ExtractDateFunctionExtensionTestCase {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                AssertJUnit.assertNull(inEvents[0].getData(1));
             }
         });
 
@@ -213,7 +207,5 @@ public class ExtractDateFunctionExtensionTestCase {
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", null, "yyyy-MM-dd HH:mm:ss" });
         siddhiAppRuntime.shutdown();
-        AssertJUnit.assertTrue(appender.getMessages().contains("Invalid input given to time:date(dateValue,dateFormat)"
-                                                                       + " function. Second argument cannot be null"));
     }
 }

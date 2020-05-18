@@ -255,26 +255,13 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor {
 
         if (data.length == 4 || useDefaultDateFormat) {
             try {
-                if (data[0] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to time:dateDiff(dateValue1," +
-                            "dateValue2,dateFormat1,dateFormat2) function" + ". " +
-                            "First " + "argument cannot be null");
-                }
-                if (data[1] == null) {
-                    throw new SiddhiAppRuntimeException("Invalid input given to time:dateDiff(dateValue1," +
-                            "dateValue2,dateFormat1,dateFormat2) function" + ". Second " + "argument cannot be null");
+                if (data[0] == null || data[1] == null) {
+                    return null;
                 }
 
                 if (!useDefaultDateFormat) {
-                    if (data[2] == null) {
-                        throw new SiddhiAppRuntimeException("Invalid input given to time:dateDiff(dateValue1," +
-                                "dateValue2,dateFormat1,dateFormat2) function" + ". " +
-                                "Third " + "argument cannot be null");
-                    }
-                    if (data[3] == null) {
-                        throw new SiddhiAppRuntimeException("Invalid input given to time:dateDiff(dateValue1," +
-                                "dateValue2,dateFormat1,dateFormat2) function" + ". " +
-                                "Fourth " + "argument cannot be null");
+                    if (data[2] == null || data[3] == null) {
+                        return null;
                     }
                     firstDateFormat = (String) data[2];
                     secondDateFormat = (String) data[3];
@@ -311,15 +298,8 @@ public class DateDifferenceFunctionExtension extends FunctionExecutor {
 
         } else if (data.length == 2) {
 
-            if (data[0] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to time:dateDiff" +
-                        "(timestampInMilliseconds1,timestampInMilliseconds2) function" + ". First " +
-                        "argument cannot be null");
-            }
-            if (data[1] == null) {
-                throw new SiddhiAppRuntimeException("Invalid input given to time:dateDiff" +
-                        "(timestampInMilliseconds1,timestampInMilliseconds2) function" + ". Second " +
-                        "argument cannot be null");
+            if (data[0] == null || data[1] == null) {
+                return null;
             }
 
             try {
