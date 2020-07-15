@@ -31,6 +31,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UTCTimestampFunctionExtensionTestCase {
 
@@ -102,10 +104,28 @@ public class UTCTimestampFunctionExtensionTestCase {
         executionPlanRuntime.addCallback("query1", new QueryCallback() {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                Matcher matcher;
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
                 eventArrived = true;
                 for (Event inEvent : inEvents) {
                     eventCount.incrementAndGet();
+                    switch (eventCount.get()) {
+                        case 1:
+                            matcher = Pattern.compile("\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}.\\d{3}").
+                                    matcher(inEvent.getData(1).toString());
+                            AssertJUnit.assertEquals(true, matcher.matches());
+                            break;
+                        case 2:
+                            matcher = Pattern.compile("\\d{4}/\\d{2}/\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}").
+                                    matcher(inEvent.getData(1).toString());
+                            AssertJUnit.assertEquals(true, matcher.matches());
+                            break;
+                        case 3:
+                            matcher = Pattern.compile("\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}").
+                                    matcher(inEvent.getData(1).toString());
+                            AssertJUnit.assertEquals(true, matcher.matches());
+                            break;
+                    }
                     log.info("Event : " + eventCount.get() + ",utcTimestamp : " + inEvent.getData(1));
                 }
             }
@@ -114,7 +134,7 @@ public class UTCTimestampFunctionExtensionTestCase {
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
         executionPlanRuntime.start();
         inputHandler.send(new Object[]{"IBM", 700f, "yyyy-MM-dd HH:mm:ss.SSS"});
-        inputHandler.send(new Object[]{"WSO2", 60.5f, "yyyy-MM-dd HH:mm:ss"});
+        inputHandler.send(new Object[]{"WSO2", 60.5f, "yyyy/MM/dd HH:mm:ss"});
         inputHandler.send(new Object[]{"XYZ", 60.5f, "yyyy-MM-dd HH:mm"});
         SiddhiTestHelper.waitForEvents(waitTime, 3, eventCount, timeout);
         AssertJUnit.assertEquals(3, eventCount.get());

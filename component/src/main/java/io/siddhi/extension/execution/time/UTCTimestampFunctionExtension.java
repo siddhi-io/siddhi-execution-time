@@ -54,7 +54,8 @@ import java.util.TimeZone;
                 "defaults to `yyyy-MM-dd HH:mm:ss` if not provided.",
         parameters = {
                 @Parameter(name = "date.format",
-                        description = "The format of the date value provided. " +
+                        description = "The format of the date value provided.This date format can be anything which " +
+                                "complies to SimpleDateFormat compatible patterns." +
                                 "For example, `yyyy/MM/dd HH:mm:ss.SSS`.",
                         type = {DataType.STRING},
                         dynamic = true,
