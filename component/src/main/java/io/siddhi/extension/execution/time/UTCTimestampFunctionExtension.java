@@ -78,12 +78,12 @@ import java.util.TimeZone;
                 @Example(
                         syntax = "time:utcTimestamp('yyyy-MM-DD HH:MM:ss.SSS')",
                         description = "Returns the system current time in UTC timezone with `yyyy-MM-dd HH:mm:ss.SSS` "
-                                + "format, and a sample output will be like `2019-07-03 09:58:34`."
+                                + "format, and a sample output will be like `2020-07-15 10:49:41.103`."
                 )
         }
 )
 public class UTCTimestampFunctionExtension extends FunctionExecutor {
-    
+
     private Attribute.Type returnType = Attribute.Type.STRING;
     private FastDateFormat fastDateFormat = null;
     private String dateFormat = null;
