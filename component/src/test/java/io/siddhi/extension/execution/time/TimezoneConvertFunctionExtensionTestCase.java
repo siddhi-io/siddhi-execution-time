@@ -125,6 +125,9 @@ public class TimezoneConvertFunctionExtensionTestCase {
                     if (eventCount.intValue() == 6) {
                         AssertJUnit.assertEquals("2014/11/11 07:53:44", inEvent.getData(1));
                     }
+                    if (eventCount.intValue() == 7) {
+                        AssertJUnit.assertEquals("2019-08-07 07:19:10", inEvent.getData(1));
+                    }
                 }
             }
         });
@@ -146,7 +149,7 @@ public class TimezoneConvertFunctionExtensionTestCase {
         inputHandler.send(new Object[] {
                 "IBM", "2019-08-07 07:19:10.02", "yyyy-MM-dd HH:mm:ss", "UTC", "PT"});
         Thread.sleep(100);
-        AssertJUnit.assertEquals(6, eventCount.get());
+        AssertJUnit.assertEquals(7, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
         siddhiAppRuntime.shutdown();
     }
