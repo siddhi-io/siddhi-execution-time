@@ -192,15 +192,12 @@ public class TimezoneConvertFunctionExtension extends FunctionExecutor {
             if (data[0] == null || data[1] == null || data[2] == null) {
                 return null;
             }
-            log.info("RAN default : ");
             sourceZoneId = ZoneId.systemDefault();
         } else if (data.length == 4) {
             if (data[0] == null || data[1] == null || data[2] == null || data[3] == null) {
                 return null;
             }
             sourceZoneId = ZoneId.of((String) data[3], ZoneId.SHORT_IDS);
-            log.info("Given value : " + sourceZoneId.toString());
-
         } else {
             throw new SiddhiAppRuntimeException("Invalid set of arguments given to time:timezoneConvert() function." +
                     "Arguments should be either 3 or 4. ");
