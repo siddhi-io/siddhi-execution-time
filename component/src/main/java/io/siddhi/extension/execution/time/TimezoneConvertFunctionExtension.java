@@ -23,7 +23,7 @@ package io.siddhi.extension.execution.time;
 /**
  * timezoneConvert(dateValue,dateSourceFormat,targetTimezone,sourceTimezone)
  * Returns the converted date string of same format as source.
- * dateValue - value of date. eg: "2014-11-11 13:23:44.657", "2014-11-11" , "13:23:44.657"
+ * dateValue - value of date. eg: "2014-11-11 13:23:44.657", "2014-11-11 05:23:44" , "2014/11/11 24:10:44.657"
  * dateSourceFormat - Date format of the provided date value. eg: yyyy-MM-dd HH:mm:ss.SSS
  * targetTimezone - Time zone which the date value need to be converted to
  * sourceTimezone - Time zone which source date belongs to
@@ -65,11 +65,12 @@ import java.time.format.DateTimeParseException;
 @Extension(
         name = "timezoneConvert",
         namespace = "time",
-        description = "Converts source date to provided target timezone and return the date string",
+        description = "Converts source datetime to provided target timezone and return the datetime string",
         parameters = {
                 @Parameter(name = "date.value",
-                        description = "The value of the date. " +
-                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11`, `13:23:44.657`.",
+                        description = "The value of the date with time. " +
+                                "For example, `2014-11-11 13:23:44.657`, `2014-11-11 05:23:44`," +
+                                " `2014/11/11 24:10:44.657`.",
                         type = {DataType.STRING},
                         dynamic = true,
                         defaultValue = "-"),
@@ -111,13 +112,13 @@ import java.time.format.DateTimeParseException;
 
                 @Example(
                         syntax = "time:timezoneConvert('2014/11/11 13:23:44','yyyy/MM/dd HH:mm:ss','UTC', 'IST') ",
-                        description = "Converts date based on the target timezone `UTC` considering given source " +
+                        description = "Converts datetime based on the target timezone `UTC` considering given source " +
                                 "timizone `IST` and returns `2014/11/11 07:53:44`."
                 ),
 
                 @Example(
                         syntax = "time:timezoneConvert('2020-11-11 06:23:44', 'yyyy/MM/dd HH:mm:ss', 'CST') ",
-                        description = "Converts date based on the target timezone `CST` and since source timezone " +
+                        description = "Converts datetime based on the target timezone `CST` and since source timezone " +
                                 "is not given it will take system timezone as default and " +
                                 "returns `2020-11-11 00:53:44`."
                 )
