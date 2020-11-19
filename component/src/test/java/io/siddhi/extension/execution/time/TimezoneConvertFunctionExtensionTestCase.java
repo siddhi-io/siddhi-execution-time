@@ -166,6 +166,8 @@ public class TimezoneConvertFunctionExtensionTestCase {
     @Test
     public void timezoneConvertFunctionWithMandatoryArgumentsTestCase() throws InterruptedException {
 
+        //Note reverting to send source timezone too as expected value will vary according to where the code is built
+
         log.info("timezoneConvertFunctionWithMandatoryArgumentsTestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
 
@@ -203,11 +205,11 @@ public class TimezoneConvertFunctionExtensionTestCase {
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] {
-                "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", "PST"});
+                "IBM", "2014-11-11 13:23:44", "yyyy-MM-dd HH:mm:ss", "PST", "IST"});
         inputHandler.send(new Object[] {
-                "IBM", "2016-04-21T00:00:00+0530", "yyyy-MM-dd'T'HH:mm:ssZ", "America/New_York"});
+                "IBM", "2016-04-21T00:00:00+0530", "yyyy-MM-dd'T'HH:mm:ssZ", "America/New_York", "IST"});
         inputHandler.send(new Object[] {
-                "IBM", "2020/11/11 06:23:44", "yyyy/MM/dd HH:mm:ss", "CST"});
+                "IBM", "2020/11/11 06:23:44", "yyyy/MM/dd HH:mm:ss", "CST", "IST"});
         Thread.sleep(100);
         AssertJUnit.assertEquals(3, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
