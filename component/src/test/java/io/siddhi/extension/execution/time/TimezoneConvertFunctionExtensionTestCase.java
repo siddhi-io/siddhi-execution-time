@@ -126,7 +126,7 @@ public class TimezoneConvertFunctionExtensionTestCase {
                         AssertJUnit.assertEquals("2014/11/11 07:53:44", inEvent.getData(1));
                     }
                     if (eventCount.intValue() == 7) {
-                        AssertJUnit.assertEquals("2019-08-07 07:19:10", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2019-08-07 14:19:10", inEvent.getData(1));
                     }
                 }
             }
@@ -135,19 +135,19 @@ public class TimezoneConvertFunctionExtensionTestCase {
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] {
-                "IBM", "2020-11-18 6:21:19", "yyyy-MM-dd HH:mm:ss", "PST", "IST"});
+                "IBM", "2020-11-18 06:21:19", "yyyy-MM-dd HH:mm:ss", "PST", "IST"});
         inputHandler.send(new Object[] {
                 "IBM", "2016-04-21T00:00:00+0530", "yyyy-MM-dd'T'HH:mm:ssZ", "America/New_York", "IST"});
         inputHandler.send(new Object[] {
-                "IBM", "2020-11-18 6:54:19", "yyyy-MM-dd HH:mm:ss", "PST", "CST"});
+                "IBM", "2020-11-18 06:54:19", "yyyy-MM-dd HH:mm:ss", "PST", "CST"});
         inputHandler.send(new Object[] {
-                "IBM", "2020-11-18 6:56:20", "yyyy-MM-dd HH:mm", "NST", "IST"});
+                "IBM", "2020-11-18 06:56", "yyyy-MM-dd HH:mm", "NST", "IST"});
         inputHandler.send(new Object[] {
-                "IBM", "2020-11-18 6:56:20", "yyyy-MM-dd HH:mm", "UTC", "IST"});
+                "IBM", "2020-11-18 06:56", "yyyy-MM-dd HH:mm", "UTC", "IST"});
         inputHandler.send(new Object[] {
                 "IBM", "2014/11/11 13:23:44", "yyyy/MM/dd HH:mm:ss", "UTC", "IST"});
         inputHandler.send(new Object[] {
-                "IBM", "2019-08-07 07:19:10.02", "yyyy-MM-dd HH:mm:ss", "UTC", "PT"});
+                "IBM", "2019-08-07 07:19:10", "yyyy-MM-dd HH:mm:ss", "UTC", "PST"});
         Thread.sleep(100);
         AssertJUnit.assertEquals(7, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);
@@ -195,7 +195,7 @@ public class TimezoneConvertFunctionExtensionTestCase {
         inputHandler.send(new Object[] {
                 "IBM", "2016-04-21T00:00:00+0530", "yyyy-MM-dd'T'HH:mm:ssZ", "America/New_York"});
         inputHandler.send(new Object[] {
-                "IBM", "2020/11/11 6:23:44", "yyyy/MM/dd HH:mm:ss", "CST"});
+                "IBM", "2020/11/11 06:23:44", "yyyy/MM/dd HH:mm:ss", "CST"});
         Thread.sleep(100);
         AssertJUnit.assertEquals(3, eventCount.get());
         AssertJUnit.assertTrue(eventArrived);

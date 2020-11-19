@@ -53,10 +53,11 @@ import io.siddhi.query.api.definition.Attribute;
 import io.siddhi.query.api.exception.SiddhiAppValidationException;
 import org.apache.log4j.Logger;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Class representing the Timezone conversion implementation.
@@ -184,40 +185,46 @@ public class TimezoneConvertFunctionExtension extends FunctionExecutor {
 
     @Override
     protected Object execute(Object[] data, State state) {
-
-        TimeZone srcTimeZone;
-        String sourceDate;
-        Date userSpecifiedSourceDate;
+        String sourceDate = null;
+        ZoneId sourceZoneId;
 
         if (data.length == 3) {
             if (data[0] == null || data[1] == null || data[2] == null) {
                 return null;
             }
-            srcTimeZone = TimeZone.getDefault();
+            log.info("RAN default : ");
+            sourceZoneId = ZoneId.systemDefault();
         } else if (data.length == 4) {
             if (data[0] == null || data[1] == null || data[2] == null || data[3] == null) {
                 return null;
             }
-            srcTimeZone = TimeZone.getTimeZone((String) data[3]);
+            sourceZoneId = ZoneId.of((String) data[3], ZoneId.SHORT_IDS);
+            log.info("Given value : " + sourceZoneId.toString());
+
         } else {
             throw new SiddhiAppRuntimeException("Invalid set of arguments given to time:timezoneConvert() function." +
                     "Arguments should be either 3 or 4. ");
         }
 
-        sourceDate = (String) data[0];
-        SimpleDateFormat sourceFormatter = new SimpleDateFormat((String) data[1]);
-        SimpleDateFormat targetFormatter = new SimpleDateFormat((String) data[1]);
-        sourceFormatter.setTimeZone(srcTimeZone);
-        targetFormatter.setTimeZone(TimeZone.getTimeZone((String) data[2]));
+        ZoneId targetZoneId;
+        ZonedDateTime srcZonedDateTime;
+        DateTimeFormatter sourceFormat;
 
         try {
-            userSpecifiedSourceDate = sourceFormatter.parse(sourceDate);
-            return targetFormatter.format(userSpecifiedSourceDate);
-        } catch (ParseException e) {
-            String errorMsg = "Provided format " + data[1] + " does not match with the date value " +
-                    sourceDate + " " + e.getMessage();
-            throw new SiddhiAppRuntimeException(errorMsg, e);
+            sourceDate = (String) data[0];
+            targetZoneId = ZoneId.of((String) data[2], ZoneId.SHORT_IDS);
+            sourceFormat = DateTimeFormatter.ofPattern((String) data[1]);
+            LocalDateTime sourceDateTime = LocalDateTime.parse(sourceDate, sourceFormat);
+            srcZonedDateTime = sourceDateTime.atZone(sourceZoneId);
+        } catch (Exception e){
+            String errorMsg = "";
+            if (e instanceof DateTimeParseException) {
+                errorMsg = "Provided date value : " + sourceDate + " cannot be parsed by given pattern " + data[1] +
+                        ".";
+            }
+            throw new SiddhiAppRuntimeException(errorMsg + e.getMessage(), e);
         }
+        return srcZonedDateTime.withZoneSameInstant(targetZoneId).format(sourceFormat);
     }
 
     @Override
