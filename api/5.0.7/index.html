@@ -38,7 +38,7 @@
     
     
       
-        <title>5.0.4 - Siddhi Execution Time</title>
+        <title>5.0.7 - Siddhi Execution Time</title>
       
     
     
@@ -114,7 +114,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#api-docs-v504" tabindex="1" class="md-skip">
+      <a href="#api-docs-v507" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -140,7 +140,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                5.0.4
+                5.0.7
               
             </span>
           
@@ -294,42 +294,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="../5.0.7/" title="5.0.7" class="md-nav__link">
-      5.0.7
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../5.0.6/" title="5.0.6" class="md-nav__link">
-      5.0.6
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../5.0.5/" title="5.0.5" class="md-nav__link">
-      5.0.5
-    </a>
-  </li>
-
-        
-          
-          
-          
-
   
 
 
@@ -341,11 +305,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        5.0.4
+        5.0.7
       </label>
     
-    <a href="./" title="5.0.4" class="md-nav__link md-nav__link--active">
-      5.0.4
+    <a href="./" title="5.0.7" class="md-nav__link md-nav__link--active">
+      5.0.7
     </a>
     
       
@@ -444,6 +408,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#timezoneconvert-function" title="timezoneConvert (Function)" class="md-nav__link">
+    timezoneConvert (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utctimestamp-function" title="utcTimestamp (Function)" class="md-nav__link">
     utcTimestamp (Function)
   </a>
@@ -463,6 +434,42 @@
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../5.0.6/" title="5.0.6" class="md-nav__link">
+      5.0.6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../5.0.5/" title="5.0.5" class="md-nav__link">
+      5.0.5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../5.0.4/" title="5.0.4" class="md-nav__link">
+      5.0.4
+    </a>
   </li>
 
         
@@ -817,6 +824,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#timezoneconvert-function" title="timezoneConvert (Function)" class="md-nav__link">
+    timezoneConvert (Function)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utctimestamp-function" title="utcTimestamp (Function)" class="md-nav__link">
     utcTimestamp (Function)
   </a>
@@ -844,12 +858,12 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/siddhi-io/siddhi-execution-time/blob/master/api/5.0.4.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/siddhi-io/siddhi-execution-time/blob/master/api/5.0.7.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="api-docs-v504">API Docs - v5.0.4</h1>
+                <h1 id="api-docs-v507">API Docs - v5.0.7</h1>
 <div class="admonition info">
-<p class="admonition-title">Tested Siddhi Core version: <em><a target="_blank" href="http://siddhi.io/en/v5.1/docs/query-guide/">5.1.5</a></em></p>
+<p class="admonition-title">Tested Siddhi Core version: <em><a target="_blank" href="http://siddhi.io/en/v5.1/docs/query-guide/">5.1.13</a></em></p>
 <p>It could also support other Siddhi Core minor versions.</p>
 </div>
 <h2 id="time">Time</h2>
@@ -1604,14 +1618,107 @@
 
 <p></p>
 
+<h3 id="timezoneconvert-function">timezoneConvert <em><a target="_blank" href="http://siddhi.io/en/v5.1/docs/query-guide/#function">(Function)</a></em></h3>
+<p><p></p>
+<p style="word-wrap: break-word;margin: 0;">Converts source datetime to provided target timezone and return the datetime string</p>
+<p></p>
+<span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
+<pre><code>&lt;STRING&gt; time:timezoneConvert(&lt;STRING&gt; date.value, &lt;STRING&gt; date.source.format, &lt;STRING&gt; target.timezone)
+&lt;STRING&gt; time:timezoneConvert(&lt;STRING&gt; date.value, &lt;STRING&gt; date.source.format, &lt;STRING&gt; target.timezone, &lt;STRING&gt; source.timezone)
+</code></pre>
+
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.value</td>
+        <td style="vertical-align: top; word-wrap: break-word"><p style="word-wrap: break-word;margin: 0;">The value of the date with time. For example, <code>2014-11-11 13:23:44.657</code>, <code>2014-11-11 05:23:44</code>, <code>2014/11/11 24:10:44.657</code>.</p></td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.source.format</td>
+        <td style="vertical-align: top; word-wrap: break-word"><p style="word-wrap: break-word;margin: 0;">The format input date.value.For example, <code>yyyy-MM-dd HH:mm:ss.SSS</code>. This is mandatory if you want to convert to different timezone</p></td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">target.timezone</td>
+        <td style="vertical-align: top; word-wrap: break-word"><p style="word-wrap: break-word;margin: 0;">The timezone to which the target date need to be converted. For example, <code>Asia/Kolkata</code>, <code>PST</code>. Get the supported timezone IDs from <a href="https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html">here</a></p></td>
+        <td style="vertical-align: top">-</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">No</td>
+        <td style="vertical-align: top">Yes</td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">source.timezone</td>
+        <td style="vertical-align: top; word-wrap: break-word"><p style="word-wrap: break-word;margin: 0;">The timezone to which the source time points to. For example, <code>Asia/Kolkata</code>, <code>PST</code>. Get the supported timezone IDs from <a href="https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html">here</a></p></td>
+        <td style="vertical-align: top">System timezone</td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">Yes</td>
+    </tr>
+</table></p>
+<p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
+<span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
+<pre><code>time:timezoneConvert('2014/11/11 13:23:44','yyyy/MM/dd HH:mm:ss','UTC', 'IST') 
+</code></pre>
+
+<p></p>
+
+<p style="word-wrap: break-word;margin: 0;">Converts datetime based on the target timezone <code>UTC</code> considering given source timizone <code>IST</code> and returns <code>2014/11/11 07:53:44</code>.</p>
+
+<p></p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:timezoneConvert('2020-11-11 06:23:44', 'yyyy/MM/dd HH:mm:ss', 'CST') 
+</code></pre>
+
+<p></p>
+
+<p style="word-wrap: break-word;margin: 0;">Converts datetime based on the target timezone <code>CST</code> and since source timezone is not given it will take system timezone as default and returns <code>2020-11-11 00:53:44</code>.</p>
+
+<p></p>
+
 <h3 id="utctimestamp-function">utcTimestamp <em><a target="_blank" href="http://siddhi.io/en/v5.1/docs/query-guide/#function">(Function)</a></em></h3>
 <p><p></p>
-<p style="word-wrap: break-word;margin: 0;">Function returns the system current time in UTC timezone with <code>yyyy-MM-dd HH:mm:ss</code> format.</p>
+<p style="word-wrap: break-word;margin: 0;">Function returns the system current time in UTC timezone with given date format which defaults to <code>yyyy-MM-dd HH:mm:ss</code> if not provided.</p>
 <p></p>
 <span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
 <pre><code>&lt;STRING&gt; time:utcTimestamp()
+&lt;STRING&gt; time:utcTimestamp(&lt;STRING&gt; date.format)
 </code></pre>
 
+<p><span id="query-parameters" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">QUERY PARAMETERS</span>
+<table>
+    <tr>
+        <th>Name</th>
+        <th style="min-width: 20em">Description</th>
+        <th>Default Value</th>
+        <th>Possible Data Types</th>
+        <th>Optional</th>
+        <th>Dynamic</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">date.format</td>
+        <td style="vertical-align: top; word-wrap: break-word"><p style="word-wrap: break-word;margin: 0;">The format of the date value provided.This date format can be anything which complies to SimpleDateFormat compatible patterns.For example, <code>yyyy/MM/dd HH:mm:ss.SSS</code>.</p></td>
+        <td style="vertical-align: top"><code>yyyy-MM-dd HH:mm:ss</code></td>
+        <td style="vertical-align: top">STRING</td>
+        <td style="vertical-align: top">Yes</td>
+        <td style="vertical-align: top">Yes</td>
+    </tr>
+</table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
 <pre><code>time:utcTimestamp()
@@ -1620,6 +1727,16 @@
 <p></p>
 
 <p style="word-wrap: break-word;margin: 0;">Returns the system current time in UTC timezone with <code>yyyy-MM-dd HH:mm:ss</code> format, and a sample output will be like <code>2019-07-03 09:58:34</code>.</p>
+
+<p></p>
+
+<p><span id="example-2" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 2</span></p>
+<pre><code>time:utcTimestamp('yyyy-MM-DD HH:MM:ss.SSS')
+</code></pre>
+
+<p></p>
+
+<p style="word-wrap: break-word;margin: 0;">Returns the system current time in UTC timezone with <code>yyyy-MM-dd HH:mm:ss.SSS</code> format, and a sample output will be like <code>2020-07-15 10:49:41.103</code>.</p>
 
 <p></p>
                 
@@ -1642,7 +1759,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../5.0.5/" title="5.0.5" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../latest/" title="latest" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1651,19 +1768,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                5.0.5
+                latest
               </span>
             </div>
           </a>
         
         
-          <a href="../5.0.3/" title="5.0.3" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../5.0.6/" title="5.0.6" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                5.0.3
+                5.0.6
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
