@@ -174,8 +174,8 @@ public class TimezoneConvertFunctionExtensionTestCase {
         String inStreamDefinition = "define stream inputStream (symbol string,"
                 + "dateValue string,sourceFormat string,targetTimezone string,sourceTimezone string);";
         String query = ("@info(name = 'query1') from inputStream select symbol , "
-                + "time:timezoneConvert(dateValue,sourceFormat,targetTimezone) as convertedDate,dateValue "
-                + "insert into outputStream;");
+                + "time:timezoneConvert(dateValue,sourceFormat,targetTimezone, sourceTimezone) as " +
+                "convertedDate,dateValue insert into outputStream;");
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
 
         siddhiAppRuntime.addCallback("query1", new QueryCallback() {
