@@ -118,8 +118,8 @@ import java.time.format.DateTimeParseException;
 
                 @Example(
                         syntax = "time:timezoneConvert('2020-11-11 06:23:44', 'yyyy/MM/dd HH:mm:ss', 'CST') ",
-                        description = "Converts datetime based on the target timezone `CST` and since source timezone " +
-                                "is not given it will take system timezone as default and " +
+                        description = "Converts datetime based on the target timezone `CST` and since source " +
+                                "timezone is not given it will take system timezone as default and " +
                                 "returns `2020-11-11 00:53:44`."
                 )
         }
