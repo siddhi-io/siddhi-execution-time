@@ -213,7 +213,7 @@ public class TimezoneConvertFunctionExtension extends FunctionExecutor {
             sourceFormat = DateTimeFormatter.ofPattern((String) data[1]);
             LocalDateTime sourceDateTime = LocalDateTime.parse(sourceDate, sourceFormat);
             srcZonedDateTime = sourceDateTime.atZone(sourceZoneId);
-        } catch (Exception e){
+        } catch (Exception e) {
             String errorMsg = "";
             if (e instanceof DateTimeParseException) {
                 errorMsg = "Provided date value : " + sourceDate + " cannot be parsed by given pattern " + data[1] +

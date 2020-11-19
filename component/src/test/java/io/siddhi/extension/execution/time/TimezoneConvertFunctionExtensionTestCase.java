@@ -54,8 +54,8 @@ public class TimezoneConvertFunctionExtensionTestCase {
         String inStreamDefinition = "define stream inputStream (symbol string,"
                 + "dateValue string,sourceFormat string,targetTimezone string,sourceTimezone string);";
         String query = ("@info(name = 'query1') from inputStream select symbol , "
-                + "time:timezoneConvert(dateValue,sourceFormat,targetTimezone,sourceTimezone) as convertedDate "
-                + "insert into outputStream;");
+                + "time:timezoneConvert(dateValue,sourceFormat,targetTimezone,sourceTimezone) as convertedDate, " +
+                "dateValue insert into outputStream;");
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
 
         siddhiAppRuntime.addCallback("query1", new QueryCallback() {
@@ -67,9 +67,11 @@ public class TimezoneConvertFunctionExtensionTestCase {
                     eventCount.incrementAndGet();
                     if (eventCount.intValue() == 1) {
                         AssertJUnit.assertEquals("2014-11-10 23:53:44", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2014-11-11 13:23:44", inEvent.getData(2));
                     }
                     if (eventCount.intValue() == 2) {
                         AssertJUnit.assertEquals("2016-04-20T14:30:00-0400", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2016-04-21T00:00:00+0530", inEvent.getData(2));
                     }
                 }
             }
@@ -96,8 +98,8 @@ public class TimezoneConvertFunctionExtensionTestCase {
         String inStreamDefinition = "define stream inputStream (symbol string,"
                 + "dateValue string,sourceFormat string,targetTimezone string,sourceTimezone string);";
         String query = ("@info(name = 'query1') from inputStream select symbol , "
-                + "time:timezoneConvert(dateValue,sourceFormat,targetTimezone,sourceTimezone) as convertedDate "
-                + "insert into outputStream;");
+                + "time:timezoneConvert(dateValue,sourceFormat,targetTimezone,sourceTimezone) as convertedDate, " +
+                "dateValue insert into outputStream;");
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
 
         siddhiAppRuntime.addCallback("query1", new QueryCallback() {
@@ -109,24 +111,31 @@ public class TimezoneConvertFunctionExtensionTestCase {
                     eventCount.incrementAndGet();
                     if (eventCount.intValue() == 1) {
                         AssertJUnit.assertEquals("2020-11-17 16:51:19", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2020-11-18 06:21:19", inEvent.getData(2));
                     }
                     if (eventCount.intValue() == 2) {
                         AssertJUnit.assertEquals("2016-04-20T14:30:00-0400", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2016-04-21T00:00:00+0530", inEvent.getData(2));
                     }
                     if (eventCount.intValue() == 3) {
                         AssertJUnit.assertEquals("2020-11-18 04:54:19", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2020-11-18 06:54:19", inEvent.getData(2));
                     }
                     if (eventCount.intValue() == 4) {
                         AssertJUnit.assertEquals("2020-11-18 14:26", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2020-11-18 06:56", inEvent.getData(2));
                     }
                     if (eventCount.intValue() == 5) {
                         AssertJUnit.assertEquals("2020-11-18 01:26", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2020-11-18 06:56", inEvent.getData(2));
                     }
                     if (eventCount.intValue() == 6) {
                         AssertJUnit.assertEquals("2014/11/11 07:53:44", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2014/11/11 13:23:44", inEvent.getData(2));
                     }
                     if (eventCount.intValue() == 7) {
                         AssertJUnit.assertEquals("2019-08-07 14:19:10", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2019-08-07 07:19:10", inEvent.getData(2));
                     }
                 }
             }
@@ -163,7 +172,7 @@ public class TimezoneConvertFunctionExtensionTestCase {
         String inStreamDefinition = "define stream inputStream (symbol string,"
                 + "dateValue string,sourceFormat string,targetTimezone string,sourceTimezone string);";
         String query = ("@info(name = 'query1') from inputStream select symbol , "
-                + "time:timezoneConvert(dateValue,sourceFormat,targetTimezone) as convertedDate "
+                + "time:timezoneConvert(dateValue,sourceFormat,targetTimezone) as convertedDate,dateValue "
                 + "insert into outputStream;");
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
 
@@ -176,12 +185,15 @@ public class TimezoneConvertFunctionExtensionTestCase {
                     eventCount.incrementAndGet();
                     if (eventCount.intValue() == 1) {
                         AssertJUnit.assertEquals("2014-11-10 23:53:44", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2014-11-11 13:23:44", inEvent.getData(2));
                     }
                     if (eventCount.intValue() == 2) {
                         AssertJUnit.assertEquals("2016-04-20T14:30:00-0400", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2016-04-21T00:00:00+0530", inEvent.getData(2));
                     }
                     if (eventCount.intValue() == 3) {
                         AssertJUnit.assertEquals("2020/11/10 18:53:44", inEvent.getData(1));
+                        AssertJUnit.assertEquals("2020/11/11 06:23:44", inEvent.getData(2));
                     }
 
                 }
