@@ -35,7 +35,6 @@ import io.siddhi.extension.execution.time.util.TimeExtensionConstants;
 import io.siddhi.query.api.definition.Attribute;
 import io.siddhi.query.api.exception.SiddhiAppValidationException;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.apache.log4j.Logger;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -141,8 +140,8 @@ import java.util.concurrent.TimeUnit;
 )
 public class DateDifferenceFunctionExtension extends FunctionExecutor {
 
+    private static final long serialVersionUID = 1L;
     private Attribute.Type returnType = Attribute.Type.LONG;
-    private static final Logger log = Logger.getLogger(DateDifferenceFunctionExtension.class);
     private boolean useDefaultDateFormat = false;
     private String firstDateFormat = null;
     private String secondDateFormat = null;

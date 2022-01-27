@@ -98,6 +98,7 @@ import java.util.Date;
 )
 public class CurrentTimestampFunctionExtension extends FunctionExecutor {
 
+    private static final long serialVersionUID = 1L;
     private Attribute.Type returnType = Attribute.Type.STRING;
     private FastDateFormat dateFormat = null;
     private static final DateTimeFormatter DATE_TIME_FORMATTER =

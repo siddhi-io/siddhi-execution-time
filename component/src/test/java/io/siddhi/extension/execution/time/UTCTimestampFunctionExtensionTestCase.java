@@ -25,7 +25,8 @@ import io.siddhi.core.query.output.callback.QueryCallback;
 import io.siddhi.core.stream.input.InputHandler;
 import io.siddhi.core.util.EventPrinter;
 import io.siddhi.core.util.SiddhiTestHelper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -36,7 +37,7 @@ import java.util.regex.Pattern;
 
 public class UTCTimestampFunctionExtensionTestCase {
 
-    private static final Logger log = Logger.getLogger(UTCTimestampFunctionExtensionTestCase.class);
+    private static final Logger log = LogManager.getLogger(UTCTimestampFunctionExtensionTestCase.class);
     private volatile boolean eventArrived;
     private int waitTime = 50;
     private int timeout = 30000;

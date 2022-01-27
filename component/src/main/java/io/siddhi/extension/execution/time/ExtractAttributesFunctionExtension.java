@@ -132,6 +132,7 @@ import java.util.Locale;
 )
 public class ExtractAttributesFunctionExtension extends FunctionExecutor {
 
+    private static final long serialVersionUID = 1L;
     private Attribute.Type returnType = Attribute.Type.INT;
     private boolean useDefaultDateFormat = false;
     private String dateFormat = null;

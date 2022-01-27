@@ -23,12 +23,13 @@ import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.event.Event;
 import io.siddhi.core.exception.SiddhiAppCreationException;
 import io.siddhi.core.query.output.callback.QueryCallback;
-import io.siddhi.core.stream.StreamJunction;
 import io.siddhi.core.stream.input.InputHandler;
 import io.siddhi.core.util.EventPrinter;
 import io.siddhi.extension.execution.time.util.SiddhiTestHelper;
 import io.siddhi.extension.execution.time.util.UnitTestAppender;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -37,7 +38,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ExtractDateFunctionExtensionTestCase {
 
-    private static Logger log = Logger.getLogger(ExtractDateFunctionExtensionTestCase.class);
+    private static final Logger log = (Logger) LogManager.getLogger(ExtractDateFunctionExtensionTestCase.class);
     private volatile boolean eventArrived;
     private int waitTime = 50;
     private int timeout = 30000;
@@ -89,9 +90,11 @@ public class ExtractDateFunctionExtensionTestCase {
     @Test
     public void extractDateFunctionExtensionTest2() throws InterruptedException {
         log.info("ExtractDateFunctionExtensionWithInvalidFormatTestCase");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
+        UnitTestAppender appender = new UnitTestAppender("UnitTestAppender", null);
+        final Logger logger = (Logger) LogManager.getRootLogger();
+        logger.setLevel(Level.ALL);
+        logger.addAppender(appender);
+        appender.start();
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition =
@@ -111,8 +114,10 @@ public class ExtractDateFunctionExtensionTestCase {
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", "2014:11:11", "yyyy-MM-dd" });
         siddhiAppRuntime.shutdown();
-        AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-dd does not match with the "
+        AssertJUnit.assertTrue(((UnitTestAppender) logger.getAppenders().
+                get("UnitTestAppender")).getMessages().contains("Provided format yyyy-MM-dd does not match with the "
                                                                        + "timestamp 2014:11:11"));
+        logger.removeAppender(appender);
 
     }
 
