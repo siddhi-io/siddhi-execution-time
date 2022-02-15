@@ -27,7 +27,7 @@
 
     <groupId>io.siddhi.extension.execution.time</groupId>
     <artifactId>siddhi-execution-time-parent</artifactId>
-    <version>5.0.8-SNAPSHOT</version>
+    <version>5.0.8</version>
     <packaging>pom</packaging>
     <name>WSO2 Siddhi Execution Extension - Time Aggregator Parent</name>
     <url>http://wso2.org</url>
@@ -60,7 +60,7 @@
         <url>https://github.com/siddhi-io/siddhi-execution-time.git</url>
         <developerConnection>scm:git:https://github.com/siddhi-io/siddhi-execution-time.git
         </developerConnection>
-        <tag>HEAD</tag>
+        <tag>v5.0.8</tag>
     </scm>
 
     <dependencyManagement>
