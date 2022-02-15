@@ -23,12 +23,13 @@ import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.event.Event;
 import io.siddhi.core.exception.SiddhiAppCreationException;
 import io.siddhi.core.query.output.callback.QueryCallback;
-import io.siddhi.core.stream.StreamJunction;
 import io.siddhi.core.stream.input.InputHandler;
 import io.siddhi.core.util.EventPrinter;
 import io.siddhi.core.util.SiddhiTestHelper;
 import io.siddhi.extension.execution.time.util.UnitTestAppender;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -37,7 +38,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DateSubFunctionExtensionTestCase {
 
-    private static Logger log = Logger.getLogger(DateSubFunctionExtensionTestCase.class);
+    private static final Logger log = (Logger) LogManager.getLogger(DateSubFunctionExtensionTestCase.class);
     private volatile boolean eventArrived;
     private int waitTime = 50;
     private int timeout = 30000;
@@ -161,9 +162,11 @@ public class DateSubFunctionExtensionTestCase {
     public void dateSubFunctionExtension6() throws InterruptedException {
 
         log.info("DateSubFunctionExtensionInvalidFormatTestCase");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
+        UnitTestAppender appender = new UnitTestAppender("UnitTestAppender", null);
+        final Logger logger = (Logger) LogManager.getRootLogger();
+        logger.setLevel(Level.ALL);
+        logger.addAppender(appender);
+        appender.start();
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = ""
@@ -187,9 +190,11 @@ public class DateSubFunctionExtensionTestCase {
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", "2014:11:11 13:23:44", "yyyy-MM-dd HH:mm:ss", 1415692424000L, 2 });
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-dd HH:mm:ss does not match "
+        AssertJUnit.assertTrue(((UnitTestAppender) logger.getAppenders().
+                get("UnitTestAppender")).getMessages().contains("Provided format yyyy-MM-dd HH:mm:ss does not match "
                                                                        + "with the timestamp 2014:11:11 13:23:44"));
         siddhiAppRuntime.shutdown();
+        logger.removeAppender(appender);
     }
 
     @Test
@@ -367,9 +372,11 @@ public class DateSubFunctionExtensionTestCase {
     public void dateSubFunctionExtension15() throws InterruptedException {
 
         log.info("DateSubFunctionExtensionTestCaseCastDesireFormat");
-        UnitTestAppender appender = new UnitTestAppender();
-        log = Logger.getLogger(StreamJunction.class);
-        log.addAppender(appender);
+        UnitTestAppender appender = new UnitTestAppender("UnitTestAppender", null);
+        final Logger logger = (Logger) LogManager.getRootLogger();
+        logger.setLevel(Level.ALL);
+        logger.addAppender(appender);
+        appender.start();
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String inStreamDefinition = "" + "define stream inputStream (symbol string,dateValue string,dateFormat string,"
@@ -389,10 +396,12 @@ public class DateSubFunctionExtensionTestCase {
         siddhiAppRuntime.start();
         inputHandler.send(new Object[] { "IBM", "2014-11-11 13:23:44", 1415692424000L, "yyyy-MM-dd HH:mm:ss", 2 });
         Thread.sleep(100);
-        AssertJUnit.assertTrue(appender.getMessages().contains("Provided Data type cannot be cast to desired format. "
+        AssertJUnit.assertTrue(((UnitTestAppender) logger.getAppenders().
+                get("UnitTestAppender")).getMessages().contains("Provided Data type cannot be cast to desired format. "
                                                                        + "java.lang.String cannot be cast to "
                                                                        + "java.lang.Long"));
         siddhiAppRuntime.shutdown();
+        logger.removeAppender(appender);
     }
 
     @Test(expectedExceptions = SiddhiAppCreationException.class)

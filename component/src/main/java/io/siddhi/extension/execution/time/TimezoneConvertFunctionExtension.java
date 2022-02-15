@@ -51,7 +51,6 @@ import io.siddhi.core.util.snapshot.state.State;
 import io.siddhi.core.util.snapshot.state.StateFactory;
 import io.siddhi.query.api.definition.Attribute;
 import io.siddhi.query.api.exception.SiddhiAppValidationException;
-import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -126,8 +125,8 @@ import java.time.format.DateTimeParseException;
 )
 public class TimezoneConvertFunctionExtension extends FunctionExecutor {
 
+    private static final long serialVersionUID = 1L;
     private Attribute.Type returnType = Attribute.Type.STRING;
-    private static final Logger log = Logger.getLogger(TimezoneConvertFunctionExtension.class);
 
     @Override
     protected StateFactory init(ExpressionExecutor[] attributeExpressionExecutors,

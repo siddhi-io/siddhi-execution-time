@@ -35,7 +35,6 @@ import io.siddhi.extension.execution.time.util.TimeExtensionConstants;
 import io.siddhi.query.api.definition.Attribute;
 import io.siddhi.query.api.exception.SiddhiAppValidationException;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.apache.log4j.Logger;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -99,8 +98,7 @@ import java.util.Date;
         }
 )
 public class ExtractDayOfWeekFunctionExtension extends FunctionExecutor {
-
-    private static final Logger log = Logger.getLogger(ExtractDayOfWeekFunctionExtension.class);
+    private static final long serialVersionUID = 1L;
     private Attribute.Type returnType = Attribute.Type.STRING;
 
     @Override

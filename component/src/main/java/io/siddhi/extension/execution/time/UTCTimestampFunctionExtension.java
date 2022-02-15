@@ -85,6 +85,7 @@ import java.util.TimeZone;
 )
 public class UTCTimestampFunctionExtension extends FunctionExecutor {
 
+    private static final long serialVersionUID = 1L;
     private Attribute.Type returnType = Attribute.Type.STRING;
     private FastDateFormat fastDateFormat = null;
     private String dateFormat = null;

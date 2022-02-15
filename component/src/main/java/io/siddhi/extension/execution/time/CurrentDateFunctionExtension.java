@@ -63,6 +63,7 @@ import java.util.Date;
 )
 public class CurrentDateFunctionExtension extends FunctionExecutor {
 
+    private static final long serialVersionUID = 1L;
     private Attribute.Type returnType = Attribute.Type.STRING;
     private FastDateFormat dateFormat = null;
 
