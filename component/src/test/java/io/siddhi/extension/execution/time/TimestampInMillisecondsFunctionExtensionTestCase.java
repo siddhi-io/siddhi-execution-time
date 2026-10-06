@@ -34,7 +34,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.sql.Timestamp;
+import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TimestampInMillisecondsFunctionExtensionTestCase {
 
@@ -361,5 +365,100 @@ public class TimestampInMillisecondsFunctionExtensionTestCase {
         inputHandler.send(new Object[]{"IBM", 700f, null});
         Thread.sleep(100);
         siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void timestampInMillisecondsWithIsoOffsetPattern() throws InterruptedException {
+
+        log.info("TimestampInMillisecondsWithIsoOffsetPatternTestCase");
+        AssertJUnit.assertEquals(Long.valueOf(1512018019000L),
+                timestampInMilliseconds("2017-11-30T10:30:19+05:30", "yyyy-MM-dd'T'HH:mm:ssXXX"));
+        AssertJUnit.assertEquals(Long.valueOf(1512037819000L),
+                timestampInMilliseconds("2017-11-30T10:30:19Z", "yyyy-MM-dd'T'HH:mm:ssXXX"));
+    }
+
+    @Test
+    public void timestampInMillisecondsWithGmtOffsetZoneName() throws InterruptedException {
+
+        log.info("TimestampInMillisecondsWithGmtOffsetZoneNameTestCase");
+        AssertJUnit.assertEquals(Long.valueOf(1512018019000L),
+                timestampInMilliseconds("2017-11-30 10:30:19 GMT+05:30", "yyyy-MM-dd HH:mm:ss z"));
+    }
+
+    @Test
+    public void timestampInMillisecondsWithDaylightSavingZoneName() throws InterruptedException {
+
+        log.info("TimestampInMillisecondsWithDaylightSavingZoneNameTestCase");
+        AssertJUnit.assertEquals(Long.valueOf(1793511000000L),
+                timestampInMilliseconds("2026-11-01 01:30:00 EDT", "yyyy-MM-dd HH:mm:ss z"));
+    }
+
+    @Test
+    public void timestampInMillisecondsWithLowerCaseMonthName() throws InterruptedException {
+
+        log.info("TimestampInMillisecondsWithLowerCaseMonthNameTestCase");
+        Locale defaultLocale = Locale.getDefault();
+        try {
+            Locale.setDefault(Locale.ENGLISH);
+            AssertJUnit.assertEquals(Long.valueOf(1512018019000L),
+                    timestampInMilliseconds("30-nov-2017 10:30:19 +0530", "dd-MMM-yyyy HH:mm:ss Z"));
+        } finally {
+            Locale.setDefault(defaultLocale);
+        }
+    }
+
+    @Test
+    public void timestampInMillisecondsRejectsColonOffsetForRfc822Pattern() throws InterruptedException {
+
+        log.info("TimestampInMillisecondsRejectsColonOffsetForRfc822PatternTestCase");
+        UnitTestAppender appender = new UnitTestAppender("UnitTestAppender", null);
+        final Logger logger = (Logger) LogManager.getRootLogger();
+        logger.setLevel(Level.ALL);
+        logger.addAppender(appender);
+        appender.start();
+        try {
+            AssertJUnit.assertNull(timestampInMilliseconds("2017-11-30T10:30:19+05:30",
+                    "yyyy-MM-dd'T'HH:mm:ssZ", false));
+            AssertJUnit.assertTrue(appender.getMessages().contains("Provided format yyyy-MM-dd'T'HH:mm:ssZ does not "
+                    + "match with the timestamp 2017-11-30T10:30:19+05:30"));
+        } finally {
+            logger.removeAppender(appender);
+        }
+    }
+
+    private Long timestampInMilliseconds(String date, String format) throws InterruptedException {
+
+        return timestampInMilliseconds(date, format, true);
+    }
+
+    private Long timestampInMilliseconds(String date, String format, boolean callbackExpected)
+            throws InterruptedException {
+
+        SiddhiManager siddhiManager = new SiddhiManager();
+        String inStreamDefinition = "define stream inputStream (date string, format string);";
+        String query = "@info(name = 'query1') from inputStream "
+                + "select time:timestampInMilliseconds(date, format) as millis insert into outputStream;";
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
+        AtomicReference<Long> result = new AtomicReference<>();
+        CountDownLatch callbackReceived = new CountDownLatch(1);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                result.set((Long) inEvents[0].getData(0));
+                callbackReceived.countDown();
+            }
+        });
+        siddhiAppRuntime.start();
+        try {
+            siddhiAppRuntime.getInputHandler("inputStream").send(new Object[]{date, format});
+            if (callbackExpected) {
+                AssertJUnit.assertTrue("Siddhi callback was not received within 5 seconds",
+                        callbackReceived.await(5, TimeUnit.SECONDS));
+            }
+            return result.get();
+        } finally {
+            siddhiAppRuntime.shutdown();
+        }
     }
 }
